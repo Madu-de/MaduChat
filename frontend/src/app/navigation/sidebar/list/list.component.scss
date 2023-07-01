@@ -1,0 +1,14 @@
+mat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+mat-card {
+    cursor: pointer;
+}
+
+mat-card-content {
+    display: flex;
+    gap: 8px;
+}

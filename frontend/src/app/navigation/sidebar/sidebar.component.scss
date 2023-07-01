@@ -1,0 +1,11 @@
+@import '../variables.scss';
+
+.container {
+    width: 100%;
+    height: calc(100vh - $header-height);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav {
+    padding: 20px;
+}
