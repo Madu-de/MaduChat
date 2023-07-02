@@ -1,0 +1,9 @@
+<div id="chat">
+    <chat-message *ngFor="let message of messages" [message]="message"></chat-message>
+</div>
+
+<mat-form-field color="primary">
+  <mat-label>{{languageService.getValue('writeAMessage')}}</mat-label>
+  <input matInput [placeholder]="languageService.getValue('exampleMessage')">
+  <mat-icon matSuffix color="primary">send</mat-icon>
+</mat-form-field>

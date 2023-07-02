@@ -1,16 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationService } from '../services/navigation.service';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'navigation-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {  
-  constructor(public navigation: NavigationService) {}
+export class HeaderComponent {  
+  showPopUp = false;
+  constructor(public navigation: NavigationService, public languageService: LanguageService) {}
 
-  ngOnInit() {
-    
+  togglePopup() {
+    this.showPopUp = !this.showPopUp;
   }
 }

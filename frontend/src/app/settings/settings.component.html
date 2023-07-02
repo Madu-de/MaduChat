@@ -1,0 +1,23 @@
+<mat-list>
+  <mat-list-item>
+    <h2>{{languageService.getValue('general')}}</h2>
+  </mat-list-item>
+  <mat-list-item>
+    <p class="item">
+      {{languageService.getValue('showAvatar')}}
+      <mat-slide-toggle></mat-slide-toggle>
+    </p>
+  </mat-list-item>
+  <mat-list-item>
+    <p class="item">
+      <mat-label>{{languageService.getValue('language')}}</mat-label>
+      <mat-select [value]="languageService.lang" (selectionChange)="languageService.setLanguage($event.value)">
+        <mat-option *ngFor="let lang of languageService.getLanguages()" [value]="lang" #lang>
+          {{lang}}
+        </mat-option>
+      </mat-select>
+    </p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+</mat-list>

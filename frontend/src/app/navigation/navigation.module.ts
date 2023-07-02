@@ -8,11 +8,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from './header/header.component';
 import { NavigationService } from './services/navigation.service';
 import { SidebarModule } from './sidebar/sidebar.module';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { ProfilePopupComponent } from './header/profile-popup/profile-popup.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    ProfilePopupComponent
   ],
   exports: [
     HeaderComponent,
@@ -25,7 +30,11 @@ import { SidebarModule } from './sidebar/sidebar.module';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    SidebarModule
+    SidebarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCardModule,
+    MatTooltipModule
   ],
   providers: [
     NavigationService

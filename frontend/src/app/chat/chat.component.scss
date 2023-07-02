@@ -1,0 +1,25 @@
+@import '../variables.scss';
+
+#chat {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 90px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: scroll;
+}
+
+mat-form-field {
+  width: 90%;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  translate: -50%;
+
+  mat-icon {
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,16 @@
 <mat-toolbar>
-    <button mat-icon-button (click)="navigation.toggleSidebar()">
-        <mat-icon>menu</mat-icon>
-    </button>
-    <span>MaduChat</span>
+    <span id="left-side">
+        <button mat-icon-button (click)="navigation.toggleSidebar()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>MaduChat</span>
+    </span>
+    <span id="right-side">
+        <button mat-icon-button (click)="togglePopup()" [matTooltip]="languageService.getValue('account')">
+            <mat-icon>
+                account_circle
+            </mat-icon>
+        </button>
+    </span>
 </mat-toolbar>
+<header-profile-popup *ngIf="showPopUp"></header-profile-popup>

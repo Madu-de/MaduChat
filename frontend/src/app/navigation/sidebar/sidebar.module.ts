@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { ListComponent } from './list/list.component';
 import { MatCardModule } from '@angular/material/card';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatListModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    RouterModule
   ],
   exports: [
     SidebarComponent

@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+#left-side,
+#right-side {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+header-profile-popup {
+  position: absolute;
+  top: $header-height;
+  right: 5px;
+  color: white;
+  z-index: 999;
+}
+
+.invisible {
+  display: none;
+}
