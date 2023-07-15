@@ -10,8 +10,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Settings } from './settings';
+import { Chat } from '../chat/chat';
 
 @Entity()
 export class User {
@@ -24,7 +27,7 @@ export class User {
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ select: false })
   @IsString()
   @MinLength(8)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
@@ -47,6 +50,22 @@ export class User {
   @ManyToMany(() => User, {
     cascade: true,
   })
-  @JoinTable()
+  @JoinTable({
+    name: 'friends',
+  })
   friends: User[];
+
+  @ManyToOne(() => Settings, {
+    cascade: true,
+  })
+  @JoinTable()
+  settings: Settings;
+
+  @ManyToMany(() => Chat, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'chatmembers',
+  })
+  chats: Chat[];
 }

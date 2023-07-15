@@ -12,6 +12,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { AuthService } from './services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ChatService } from './services/chat.service';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { CookieService } from './services/cookie.service';
 
 
 @NgModule({
@@ -29,9 +34,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatListModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    MatSelectModule
+    MatSelectModule,
+    HttpClientModule,
+    AuthenticationModule,
   ],
-  providers: [LanguageService],
+  providers: [LanguageService, AuthService, ChatService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

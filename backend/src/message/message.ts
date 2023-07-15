@@ -1,8 +1,12 @@
-import { IsString } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
+import { Chat } from '../chat/chat';
+import { User } from '../user/user';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -11,15 +15,23 @@ export class Message {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('text')
   @IsString()
+  @MinLength(1)
+  @MaxLength(1000)
   message: string;
 
-  @Column()
-  chatid: string;
+  @ManyToOne(() => Chat, {
+    cascade: true,
+  })
+  @JoinTable()
+  chat: Chat;
 
-  @Column()
-  authorid: string;
+  @ManyToOne(() => User, {
+    cascade: true,
+  })
+  @JoinTable()
+  author: User;
 
   @CreateDateColumn()
   createdAt: Date;

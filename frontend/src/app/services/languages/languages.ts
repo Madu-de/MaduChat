@@ -8,5 +8,5 @@ export const LANGUAGES: {[key: string]: Language} = {
   'Deutsch': DE,
   'English': EN,
   'Français': FR,
-  'Español': ES
+  'Español': ES,
 };

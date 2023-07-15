@@ -15,7 +15,7 @@ $frontend-primary: mat.define-palette(mat.$light-blue-palette);
 $frontend-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$frontend-warn: mat.define-palette(mat.$orange-palette);
+$frontend-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
@@ -35,7 +35,7 @@ $frontend-theme: mat.define-dark-theme((
 /* You can add global styles to this file, and also import other style files */
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-* { padding: 0; margin: 0; box-sizing: border-box;}
+* { padding: 0; margin: 0; box-sizing: border-box; color: white;}
 
 a {
   color: white;

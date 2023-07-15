@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatComponent } from './chat.component';
+import { LanguageService } from '../services/language.service';
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -8,7 +9,8 @@ describe('ChatComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChatComponent]
+      declarations: [ChatComponent],
+      providers: [{ provide: LanguageService, useValue: {}}]
     });
     fixture = TestBed.createComponent(ChatComponent);
     component = fixture.componentInstance;

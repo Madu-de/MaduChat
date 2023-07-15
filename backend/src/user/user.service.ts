@@ -3,28 +3,38 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user';
 import * as sha256 from 'sha256';
+import { Settings } from './settings';
+import { Chat } from 'src/chat/chat';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private userRepo: Repository<User>,
+    @InjectRepository(Chat) private chatRepo: Repository<Chat>,
+  ) {}
 
-  async getUser(id: string): Promise<User> {
-    const user = await this.userRepo.findOne({ where: { id } });
-    delete user.password;
+  async getUser(
+    id: string,
+    friends?: boolean,
+    chats?: boolean,
+    settings?: boolean,
+  ): Promise<User> {
+    const user = await this.userRepo.findOne({
+      where: { id },
+      relations: { chats, friends, settings },
+    });
     return user;
   }
 
   async createUser(user: User): Promise<User> {
-    const dataAlreadyExist = await this.isDataAlreadyUsed(user);
+    const [dataAlreadyExist, msg] = await this.isDataAlreadyUsed(user);
     if (dataAlreadyExist) {
-      throw new HttpException(
-        'Email or Tag already exist',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException(msg, HttpStatus.BAD_REQUEST);
     }
     delete user.id;
     user.password = sha256.x2(user.password);
     user.username = user.username.toLocaleLowerCase();
+    user.settings = new Settings();
     user = await this.userRepo.save(user);
     delete user.password;
     return user;
@@ -34,19 +44,24 @@ export class UserService {
     return this.userRepo.findOne({ where: { id } });
   }
 
-  async findOneByUsername(username: string): Promise<User | undefined> {
-    return this.userRepo.findOne({ where: { username } });
+  async findOneByUsernameWithPassword(
+    username: string,
+  ): Promise<User | undefined> {
+    return this.userRepo.findOne({
+      where: { username },
+      select: { password: true, username: true, id: true },
+    });
   }
 
-  async isDataAlreadyUsed(user: User): Promise<boolean> {
+  async isDataAlreadyUsed(user: User): Promise<[boolean, string]> {
     if (
       (await this.userRepo.find({ where: { username: user.username } }))
         .length > 0
     )
-      return true;
+      return [true, 'Username already exists'];
     if ((await this.userRepo.find({ where: { email: user.email } })).length > 0)
-      return true;
-    return false;
+      return [true, 'Email already exists'];
+    return [false, ''];
   }
 
   async addFriend(user1Id: string, user2Id: string) {

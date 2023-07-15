@@ -2,8 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Message } from './message';
-import { Chat } from 'src/chat/chat';
-import { User } from 'src/user/user';
+import { Chat } from '../chat/chat';
+import { User } from '../user/user';
 
 @Injectable()
 export class MessageService {
@@ -13,8 +13,15 @@ export class MessageService {
     @InjectRepository(User) private userRepo: Repository<User>,
   ) {}
 
-  async getMessage(id: string): Promise<Message> {
-    const message = await this.messageRepo.findOne({ where: { id } });
+  async getMessage(
+    id: string,
+    author?: boolean,
+    chat?: boolean,
+  ): Promise<Message> {
+    const message = await this.messageRepo.findOne({
+      where: { id },
+      relations: { author, chat },
+    });
     return message;
   }
 
@@ -24,19 +31,26 @@ export class MessageService {
     authorid: string,
   ): Promise<Message> {
     const author = await this.userRepo.findOne({ where: { id: authorid } });
-    const chat = await this.chatRepo.findOne({ where: { id: chatid } });
+    const chat = await this.chatRepo.findOne({
+      where: { id: chatid },
+      relations: { members: true },
+    });
     if (!author) {
       throw new HttpException('Author does not exist', HttpStatus.BAD_REQUEST);
     }
     if (!chat) {
       throw new HttpException('Chat does not exist', HttpStatus.BAD_REQUEST);
     }
-    const newMessage = this.messageRepo.save({
+    if (chat.id != 'global' && !chat.members.includes(author)) {
+      throw new HttpException(
+        'Author does not exist in chat',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.messageRepo.save({
       message,
-      chatid,
-      authorid,
+      chat,
+      author,
     });
-    console.log('newMessage', newMessage);
-    return newMessage;
   }
 }

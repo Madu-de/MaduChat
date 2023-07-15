@@ -9,6 +9,7 @@ import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
 import { Message } from './message/message';
 import { Chat } from './chat/chat';
+import { Settings } from './user/settings';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { Chat } from './chat/chat';
       username: 'root',
       password: '',
       database: 'maduchat',
-      entities: [User, Message, Chat],
+      entities: [User, Message, Chat, Settings],
       synchronize: true,
     }),
     AuthModule,

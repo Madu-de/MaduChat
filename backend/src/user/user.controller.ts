@@ -4,12 +4,14 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { User } from './user';
 import { UserService } from './user.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../auth/auth.guard';
+import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 
 @Controller('user')
 export class UserController {
@@ -17,14 +19,17 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Get(':id')
-  async getUser(@Param('id') id: string): Promise<User> {
-    return await this.userService.getUser(id);
+  async getUser(
+    @Param('id') id: string,
+    @Query('friends', BooleanPipe) friends: boolean,
+    @Query('chats', BooleanPipe) chats: boolean,
+    @Query('settings', BooleanPipe) settings: boolean,
+  ): Promise<User> {
+    return await this.userService.getUser(id, friends, chats, settings);
   }
 
-  @UseGuards(AuthGuard)
   @Post()
   async createUser(@Body() user: User): Promise<User> {
-    console.log(user);
     return await this.userService.createUser(user);
   }
 

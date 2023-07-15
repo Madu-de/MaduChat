@@ -3,8 +3,8 @@ import { MessageController } from './message.controller';
 import { MessageService } from './message.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from './message';
-import { Chat } from 'src/chat/chat';
-import { User } from 'src/user/user';
+import { Chat } from '../chat/chat';
+import { User } from '../user/user';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Message, Chat, User])],

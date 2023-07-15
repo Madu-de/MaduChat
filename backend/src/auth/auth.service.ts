@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as sha256 from 'sha256';
 
@@ -11,9 +11,11 @@ export class AuthService {
   ) {}
 
   async signIn(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOneByUsername(username);
-    if (user.password != sha256.x2(pass)) {
-      throw new UnauthorizedException('Password is incorrect');
+    const user = await this.usersService.findOneByUsernameWithPassword(
+      username,
+    );
+    if (user?.password != sha256.x2(pass)) {
+      throw new UnauthorizedException('Password or Username wrong');
     }
     const payload = { id: user.id, username: user.username };
     return {

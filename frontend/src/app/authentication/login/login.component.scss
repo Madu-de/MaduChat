@@ -1,0 +1,31 @@
+mat-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 500000;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: right;
+}
+
+mat-card-actions button {
+  margin: 5px;
+}
+
+mat-card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: rgb(255, 57, 57);
+  font-size: 15px;
+}

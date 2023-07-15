@@ -9,4 +9,14 @@ export interface Language {
   account: string;
   writeAMessage: string;
   exampleMessage: string;
+  login: string;
+  register: string;
+  username: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+  isRequiredErr: string;
+  passwordorusernamewrongErr: string;
+  passwordConfirmSameErr: string;
+  userAlreadyExistsErr: string;
 }
