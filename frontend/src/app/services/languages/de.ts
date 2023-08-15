@@ -19,6 +19,6 @@ export const DE: Language = {
   confirmPassword: 'Passwort bestätigen',
   isRequiredErr: 'ist notwendig',
   passwordorusernamewrongErr: 'Passwort oder Nutzername ist falsch',
-  passwordConfirmSameErr: 'Passwort und Passwort bestätigen, müssen gleich sein',
+  passwordConfirmSameErr: 'Passwort und Passwort bestätigen müssen gleich sein',
   userAlreadyExistsErr: 'Nutzer existiert bereits',
 };

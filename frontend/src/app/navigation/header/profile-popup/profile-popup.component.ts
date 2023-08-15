@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/classes/User';
+import { AuthService } from 'src/app/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'header-profile-popup',
   templateUrl: './profile-popup.component.html',
   styleUrls: ['./profile-popup.component.scss']
 })
-export class ProfilePopupComponent {
-  constructor(public languageService: LanguageService) {}
+export class ProfilePopupComponent implements OnInit {
+  public user: User | undefined;
+
+  constructor(public languageService: LanguageService, public auth: AuthService, public userService: UserService) {}
+  
+  ngOnInit() {
+    this.userService.getuserData((data) => {
+      this.user = data;
+      console.log(this.user);
+    });
+  }
 }

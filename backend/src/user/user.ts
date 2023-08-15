@@ -23,7 +23,7 @@ export class User {
 
   @Column()
   @IsString()
-  @MinLength(4)
+  @MinLength(1)
   @IsEmail()
   email: string;
 

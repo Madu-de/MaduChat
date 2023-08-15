@@ -8,7 +8,12 @@ import { CookieService } from './cookie.service';
 })
 export class AuthService {
   public baseURL: string = 'http://localhost:3000';
-  public token: string = this.cookie.getCookie('access_token') || '';
+  get token(): string {
+    return this.cookie.getCookie('access_token') || '';
+  }
+  set token(value: string) {
+    this.cookie.setCookie('access_token', value, 500, '/');
+  }
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
@@ -22,8 +27,6 @@ export class AuthService {
       )
       .subscribe((res) => {
         this.token = res.access_token;
-        // document.cookie = `access_token=${this.token};max-age=10;path=/`;
-        this.cookie.setCookie('access_token', this.token, 10, '/');
         if (callback) callback(true);
       });
   }
@@ -44,7 +47,11 @@ export class AuthService {
       });
   }
 
-  private handleError(error: HttpErrorResponse, callback?: LoggedInCallback) {
+  public logout() {
+    this.token = '';
+  }
+
+  handleError(error: HttpErrorResponse, callback?: LoggedInCallback) {
     if (callback) callback(false);
     return throwError(() => new Error(error.error.message));
   }

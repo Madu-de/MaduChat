@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
 
@@ -21,10 +21,16 @@ export class LoginComponent {
   });
 
   public registerForm = new FormGroup({
-    email: new FormControl(''),
+    email: new FormControl('', [Validators.email]),
     username: new FormControl(''),
-    name: new FormControl(''),
-    password: new FormControl(''),
+    name: new FormControl('', [
+      Validators.minLength(4),
+      Validators.maxLength(20),
+    ]),
+    password: new FormControl('', [
+      Validators.pattern(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/), 
+      Validators.minLength(8)
+    ]),
     passwordConfirm: new FormControl(''),
   });
 

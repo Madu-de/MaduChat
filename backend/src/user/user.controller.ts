@@ -18,13 +18,15 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @UseGuards(AuthGuard)
-  @Get(':id')
+  @Get([':id', 'me'])
   async getUser(
     @Param('id') id: string,
     @Query('friends', BooleanPipe) friends: boolean,
     @Query('chats', BooleanPipe) chats: boolean,
     @Query('settings', BooleanPipe) settings: boolean,
+    @Req() request: Request,
   ): Promise<User> {
+    if (id === 'me') id = request['user'].id;
     return await this.userService.getUser(id, friends, chats, settings);
   }
 

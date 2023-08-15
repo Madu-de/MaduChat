@@ -1,11 +1,10 @@
+import { Chat } from "./Chat";
 import { User } from "./User";
 
-export class Message {
+export interface Message {
   message: string;
-  sender: User;
-
-  constructor(message: string, sender: User) {
-    this.message = message;
-    this.sender = sender;
-  }
+  author: User;
+  chat: Chat;
+  createdAt: string;
+  id: string;
 }

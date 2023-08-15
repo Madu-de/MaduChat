@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar [src]="message?.sender?.image" [alt]="'Profilepicture from' + message?.sender?.username">
-    <mat-card-title>{{message?.sender?.name}}</mat-card-title>
-    <mat-card-subtitle>@{{message?.sender?.username}}</mat-card-subtitle>
+    <img mat-card-avatar [src]="message?.author?.image || 'assets/defaultpb.png'" [alt]="'Profilepicture from' + message?.author?.username">
+    <mat-card-title>{{message?.author?.name}}</mat-card-title>
+    <mat-card-subtitle>@{{message?.author?.username}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     {{message?.message}}

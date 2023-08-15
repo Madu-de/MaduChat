@@ -12,9 +12,7 @@ import { ChatService } from '../services/chat.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  public messages: Message[] = [
-    new Message('Moin mein Name ist Madu', new User(23, 'madu', 'Madu', './assets/madu.png'))
-  ];
+  public messages: Message[] = [];
 
   private chat: Chat | undefined;
 
@@ -25,7 +23,11 @@ export class ChatComponent implements OnInit {
     if (!chatId) return;
     this.chatService.get(chatId).subscribe((chat) => {
       this.chat = chat;
-      console.log(chat);
+      console.log(this.chat);
+    });
+    this.chatService.getMessages(chatId).subscribe((messages) => {
+      this.messages = messages;
+      console.log(this.messages);
     });
     this.languageService.getValue('general');
   }
