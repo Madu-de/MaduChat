@@ -81,4 +81,26 @@ export class UserService {
     }
     return this.userRepo.save(user1);
   }
+
+  async changeSetting(id: string, key: string, value: any): Promise<Settings> {
+    const user = await this.userRepo.findOne({
+      where: { id },
+      relations: ['settings'],
+    });
+    if (key === 'id') {
+      throw new HttpException(
+        `Id change is not allowed`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    if (typeof user.settings[key] !== typeof value) {
+      throw new HttpException(
+        `Datatype of value is not the same as needed. Is: '${typeof value}' Has to be: '${typeof user
+          .settings[key]}'`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    user.settings[key] = value;
+    return (await this.userRepo.save(user)).settings;
+  }
 }

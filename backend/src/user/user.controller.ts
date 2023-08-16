@@ -12,6 +12,7 @@ import { User } from './user';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
+import { Settings } from './settings';
 
 @Controller('user')
 export class UserController {
@@ -39,5 +40,15 @@ export class UserController {
   @Post('addFriend')
   async addFriend(@Body('friendId') id: string, @Req() request: Request) {
     this.userService.addFriend(request['user'].id, id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('me/settings/:key')
+  async changeSetting(
+    @Param('key') key: string,
+    @Body('value') value: any,
+    @Req() request: Request,
+  ): Promise<Settings> {
+    return await this.userService.changeSetting(request['user'].id, key, value);
   }
 }
