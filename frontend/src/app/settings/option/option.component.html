@@ -1,0 +1,17 @@
+<mat-list-item *ngIf="type == 'toggle'">
+  <p class="item" [id]="settingsId">
+    {{label}}
+    <mat-slide-toggle [checked]="user?.settings?.[settingsId]"></mat-slide-toggle>
+  </p>
+</mat-list-item>
+
+<mat-list-item *ngIf="type === 'select'">
+  <p class="item" [id]="settingsId">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [value]="user?.settings?.[settingsId]" (selectionChange)="onSelectionChange.emit($event.value)">
+      <mat-option *ngFor="let selection of selectionList" [value]="selection">
+        {{selection}}
+      </mat-option>
+    </mat-select>
+  </p>
+</mat-list-item>

@@ -17,13 +17,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChatService } from './services/chat.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CookieService } from './services/cookie.service';
+import { SettingsModule } from './settings/settings.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ import { CookieService } from './services/cookie.service';
     MatSelectModule,
     HttpClientModule,
     AuthenticationModule,
+    SettingsModule
   ],
   providers: [LanguageService, AuthService, ChatService, CookieService],
   bootstrap: [AppComponent]

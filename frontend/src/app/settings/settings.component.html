@@ -2,13 +2,25 @@
   <mat-list-item>
     <h2>{{languageService.getValue('general')}}</h2>
   </mat-list-item>
-  <mat-list-item>
+  <settings-option
+    type="toggle"
+    settingsId="showAvatar"
+    [label]="languageService.getValue('showAvatar')">
+  </settings-option>
+  <!-- <mat-list-item>
     <p class="item">
       {{languageService.getValue('showAvatar')}}
       <mat-slide-toggle></mat-slide-toggle>
     </p>
-  </mat-list-item>
-  <mat-list-item>
+  </mat-list-item> -->
+  <settings-option 
+    type="select" 
+    settingsId="language" 
+    [label]="languageService.getValue('language')" 
+    [selectionList]="languageService.getLanguages()"
+    (onSelectionChange)="languageService.setLanguage($event)">
+  </settings-option>
+  <!-- <mat-list-item>
     <p class="item">
       <mat-label>{{languageService.getValue('language')}}</mat-label>
       <mat-select [value]="languageService.lang" (selectionChange)="languageService.setLanguage($event.value)">
@@ -17,7 +29,7 @@
         </mat-option>
       </mat-select>
     </p>
-  </mat-list-item>
+  </mat-list-item> -->
 
   <mat-divider></mat-divider>
 </mat-list>

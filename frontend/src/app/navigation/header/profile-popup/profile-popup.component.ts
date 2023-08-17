@@ -15,9 +15,8 @@ export class ProfilePopupComponent implements OnInit {
   constructor(public languageService: LanguageService, public auth: AuthService, public userService: UserService) {}
   
   ngOnInit() {
-    this.userService.getuserData((data) => {
-      this.user = data;
-      console.log(this.user);
+    this.userService.getMe().subscribe((user) => {
+      this.user = user;
     });
   }
 }
