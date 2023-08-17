@@ -82,11 +82,32 @@ export class UserService {
     return this.userRepo.save(user1);
   }
 
-  async changeSetting(id: string, key: string, value: any): Promise<Settings> {
-    const user = await this.userRepo.findOne({
-      where: { id },
-      relations: ['settings'],
+  async changeSettings(id: string, settings: Settings): Promise<User> {
+    let user = await this.getUser(id, false, false, true);
+    const keys = Object.keys(settings);
+    const datas = keys.map(async (key) => {
+      user = await this.changeSetting(user, key, settings[key]);
     });
+    const allPromise = Promise.allSettled(datas);
+    const statuses = await allPromise;
+    if (statuses.some((status) => status.status === 'rejected')) {
+      throw statuses.find((status) => status.status === 'rejected')['reason'];
+    }
+    return user;
+  }
+
+  /**
+   * @param user User or UserID
+   */
+  async changeSetting(
+    user: string | User,
+    key: string,
+    value: any,
+  ): Promise<User> {
+    user =
+      typeof user === 'string'
+        ? await this.getUser(user, false, false, true)
+        : user;
     if (key === 'id') {
       throw new HttpException(
         `Id change is not allowed`,
@@ -95,12 +116,12 @@ export class UserService {
     }
     if (typeof user.settings[key] !== typeof value) {
       throw new HttpException(
-        `Datatype of value is not the same as needed. Is: '${typeof value}' Has to be: '${typeof user
+        `Datatype of '${key}' value is not the same as needed. Is: '${typeof value}' Has to be: '${typeof user
           .settings[key]}'`,
         HttpStatus.BAD_REQUEST,
       );
     }
     user.settings[key] = value;
-    return (await this.userRepo.save(user)).settings;
+    return await this.userRepo.save(user);
   }
 }
