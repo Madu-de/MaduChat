@@ -1,5 +1,6 @@
 export interface Language {
   publicChat: string;
+  friends: string;
   addFriend: string;
   settings: string;
   logout: string;

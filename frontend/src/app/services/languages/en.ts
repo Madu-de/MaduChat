@@ -2,6 +2,7 @@ import { Language } from "./language.interface";
 
 export const EN: Language = {
   publicChat: 'Public',
+  friends: 'Friends',
   addFriend: 'Add Friend',
   settings: 'Settings',
   logout: 'Logout',
