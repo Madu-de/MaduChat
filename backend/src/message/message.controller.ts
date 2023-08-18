@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Req,
@@ -29,7 +30,7 @@ export class MessageController {
   @UseGuards(AuthGuard)
   @Post(':chatid')
   async createMessage(
-    chatid: string,
+    @Param('chatid') chatid: string,
     @Body('message') message: string,
     @Req() request: Request,
   ): Promise<Message> {
