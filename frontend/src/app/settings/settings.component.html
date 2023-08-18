@@ -18,7 +18,7 @@
     settingsId="language" 
     [label]="languageService.getValue('language')" 
     [selectionList]="languageService.getLanguages()"
-    (onSelectionChange)="languageService.setLanguage($event)">
+    (onChange)="languageService.setLanguage($event.value)">
   </settings-option>
   <!-- <mat-list-item>
     <p class="item">

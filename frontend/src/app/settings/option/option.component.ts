@@ -22,7 +22,10 @@ export class OptionComponent implements OnInit{
   selectionList: string[] = [];
 
   @Output()
-  onSelectionChange: EventEmitter<string> = new EventEmitter<string>();
+  onChange: EventEmitter<{
+    value: string;
+    checked: boolean;
+  }> = new EventEmitter();
 
   user: User | undefined;
 
@@ -31,6 +34,15 @@ export class OptionComponent implements OnInit{
   ngOnInit() {
     this.userService.getMe(false, false, true).subscribe((user) => {
       this.user = user;
+    });
+  }
+
+  changeEvent(value: string | boolean) {
+    this.userService.setSettings(this.settingsId, value).subscribe((settings) => {
+      const event = this.type === 'select' ? 
+      { checked: false, value: <string>value, } : 
+      { checked: <boolean>value, value: '' };
+      this.onChange.emit(event);
     });
   }
 }

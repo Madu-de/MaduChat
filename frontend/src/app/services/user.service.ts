@@ -1,3 +1,4 @@
+import { Settings } from './../classes/Settings';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../classes/User';
@@ -16,7 +17,17 @@ export class UserService {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
-    })
+    });
+  }
+
+  setSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
+    return this.http.post<Settings>(`${this.auth.baseURL}/user/me/settings/${key}`, {
+      value,
+    }, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
   }
 
   handleError(error: HttpErrorResponse, callback?: UserCallback) {

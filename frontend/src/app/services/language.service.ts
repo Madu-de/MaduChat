@@ -30,7 +30,6 @@ export class LanguageService {
 
   setLanguage(key: string): void {
     this.lang = key;
-    console.log('change')
   }
 
   getLanguages(): string[] {
