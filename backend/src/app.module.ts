@@ -10,6 +10,7 @@ import { ChatModule } from './chat/chat.module';
 import { Message } from './message/message';
 import { Chat } from './chat/chat';
 import { Settings } from './user/settings';
+import { WebsocketGateway } from './websocket/websocket.gateway';
 
 @Module({
   imports: [
@@ -29,6 +30,6 @@ import { Settings } from './user/settings';
     ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, WebsocketGateway],
 })
 export class AppModule {}
