@@ -9,13 +9,14 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { Injectable, Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { WebsocketService } from './websocket.service';
 
 @WebSocketGateway(3001, {
   transports: ['polling', 'websocket'],
   cors: ['**'],
 })
-@Injectable()
 export class WebsocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit
 {
@@ -24,7 +25,10 @@ export class WebsocketGateway
 
   private readonly logger = new Logger(WebsocketGateway.name);
 
-  afterInit() {
+  constructor(private socketService: WebsocketService) {}
+
+  afterInit(server: Server) {
+    this.socketService.socket = server;
     this.logger.log(`Websocket initialized`);
   }
 
@@ -36,6 +40,7 @@ export class WebsocketGateway
     this.logger.log(`${client.id} disconnected to websocket`);
   }
 
+  @UseGuards(AuthGuard)
   @SubscribeMessage('joinChat')
   joinChat(
     @MessageBody() data: { chatid: string },
@@ -48,6 +53,7 @@ export class WebsocketGateway
     return true;
   }
 
+  @UseGuards(AuthGuard)
   @SubscribeMessage('sendMessage')
   handleMessage(
     @MessageBody() data: { message: string },
