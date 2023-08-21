@@ -12,6 +12,7 @@ import { Server, Socket } from 'socket.io';
 import { Logger, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { WebsocketService } from './websocket.service';
+import { ChatGuard } from './chat/chat.guard';
 
 @WebSocketGateway(3001, {
   transports: ['polling', 'websocket'],
@@ -40,14 +41,12 @@ export class WebsocketGateway
     this.logger.log(`${client.id} disconnected to websocket`);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, ChatGuard)
   @SubscribeMessage('joinChat')
   joinChat(
     @MessageBody() data: { chatid: string },
     @ConnectedSocket() client: Socket,
   ): boolean {
-    // AUTHENTICATION HERE
-    if (data.chatid === undefined) return false;
     client.join(`${data.chatid}`);
     this.logger.log(`${client.id} joined to ${data.chatid}`);
     return true;
@@ -55,11 +54,10 @@ export class WebsocketGateway
 
   @UseGuards(AuthGuard)
   @SubscribeMessage('sendMessage')
-  handleMessage(
+  sendMessage(
     @MessageBody() data: { message: string },
     @ConnectedSocket() client: Socket,
   ): string {
-    // AUTHENTICATION HERE
     this.logger.log(`${client.id} send a message`);
     let room: string;
     client.rooms.forEach(rm => {

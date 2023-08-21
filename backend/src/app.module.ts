@@ -10,7 +10,6 @@ import { ChatModule } from './chat/chat.module';
 import { Message } from './message/message';
 import { Chat } from './chat/chat';
 import { Settings } from './user/settings';
-import { WebsocketGateway } from './websocket/websocket.gateway';
 import { WebsocketModule } from './websocket/websocket.module';
 
 @Module({
