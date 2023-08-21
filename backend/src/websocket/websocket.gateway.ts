@@ -47,8 +47,8 @@ export class WebsocketGateway
     @MessageBody() data: { chatid: string },
     @ConnectedSocket() client: Socket,
   ): boolean {
-    client.join(`${data.chatid}`);
     this.logger.log(`${client.id} joined to ${data.chatid}`);
+    this.socketService.joinChat(client, data.chatid);
     return true;
   }
 
@@ -57,14 +57,9 @@ export class WebsocketGateway
   sendMessage(
     @MessageBody() data: { message: string },
     @ConnectedSocket() client: Socket,
-  ): string {
+  ) {
     this.logger.log(`${client.id} send a message`);
-    let room: string;
-    client.rooms.forEach(rm => {
-      if (rm === client.id) return;
-      room = rm;
-    });
-    this.server.to(room).emit('message', data);
-    return 'Hello world!';
+    if (!data.message) return false;
+    this.socketService.sendMessage(client, data.message);
   }
 }
