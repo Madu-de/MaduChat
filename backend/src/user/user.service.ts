@@ -35,6 +35,8 @@ export class UserService {
     user.password = sha256.x2(user.password);
     user.username = user.username.toLocaleLowerCase();
     user.settings = new Settings();
+    const globalchat = await this.chatRepo.findOne({ where: { id: 'global' } });
+    user.chats = [globalchat];
     user = await this.userRepo.save(user);
     delete user.password;
     return user;
@@ -54,13 +56,15 @@ export class UserService {
   }
 
   async isDataAlreadyUsed(user: User): Promise<[boolean, string]> {
-    if (
-      (await this.userRepo.find({ where: { username: user.username } }))
-        .length > 0
-    )
-      return [true, 'Username already exists'];
-    if ((await this.userRepo.find({ where: { email: user.email } })).length > 0)
-      return [true, 'Email already exists'];
+    const userWithSameUsername = await this.userRepo.findOne({
+      where: { username: user.username },
+    });
+    if (userWithSameUsername) return [true, 'Username already exists'];
+
+    const userWithSameEmail = await this.userRepo.findOne({
+      where: { email: user.email },
+    });
+    if (userWithSameEmail) return [true, 'Email already exists'];
     return [false, ''];
   }
 
@@ -76,7 +80,7 @@ export class UserService {
     if (!user1?.friends) {
       user1.friends = [];
     }
-    if (!user1?.friends.find((friend) => friend.id == user2.id)) {
+    if (!user1?.friends.find(friend => friend.id == user2.id)) {
       user1.friends.push(user2);
     }
     return this.userRepo.save(user1);
@@ -85,13 +89,13 @@ export class UserService {
   async changeSettings(id: string, settings: Settings): Promise<User> {
     let user = await this.getUser(id, false, false, true);
     const keys = Object.keys(settings);
-    const datas = keys.map(async (key) => {
+    const datas = keys.map(async key => {
       user = await this.changeSetting(user, key, settings[key]);
     });
     const allPromise = Promise.allSettled(datas);
     const statuses = await allPromise;
-    if (statuses.some((status) => status.status === 'rejected')) {
-      throw statuses.find((status) => status.status === 'rejected')['reason'];
+    if (statuses.some(status => status.status === 'rejected')) {
+      throw statuses.find(status => status.status === 'rejected')['reason'];
     }
     return user;
   }

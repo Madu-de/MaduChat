@@ -41,9 +41,9 @@ export class MessageService {
     if (!chat) {
       throw new HttpException('Chat does not exist', HttpStatus.BAD_REQUEST);
     }
-    if (chat.id != 'global' && !chat.members.includes(author)) {
+    if (!chat.members.find(member => member.id === author.id)) {
       throw new HttpException(
-        'Author does not exist in chat',
+        'Author is not allowed to write a message in this chat',
         HttpStatus.BAD_REQUEST,
       );
     }
