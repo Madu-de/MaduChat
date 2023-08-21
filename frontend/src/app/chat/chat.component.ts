@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LanguageService } from '../services/language.service';
 import { Message } from '../classes/Message';
 import { ActivatedRoute } from '@angular/router';
@@ -11,11 +11,9 @@ import { Websocket } from '../services/socket.service';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, OnDestroy {
   public messages: Message[] = [];
-
-  private chat: Chat | undefined;
-
+  
   constructor(public languageService: LanguageService, private route: ActivatedRoute, private chatService: ChatService, private websocket: Websocket) {}
 
   ngOnInit() {
@@ -25,18 +23,22 @@ export class ChatComponent implements OnInit {
       console.log(err);
     });
     this.websocket.emit('joinChat', { chatid: chatId });
-    // this.chatService.get(chatId).subscribe((chat) => {
-    //   this.chat = chat;
-    //   console.log(this.chat);
-    // });
-    // this.chatService.getMessages(chatId).subscribe((messages) => {
-    //   this.messages = messages;
-    //   console.log(this.messages);
-    // });
+    this.chatService.getMessages(chatId).subscribe((messages) => {
+      this.messages = messages;
+      this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
+    });
+    this.websocket.on('message', (message: Message) => {
+      this.messages.unshift(message);
+    });
     this.languageService.getValue('general');
   }
 
-  sendMessage(message: string) {
+  ngOnDestroy(): void {
+    this.websocket.removeAllListeners();
+  }
 
+  submitMessageInput(messageElement: HTMLInputElement) {
+    this.websocket.emit('sendMessage', { message: messageElement.value });
+    messageElement.value = '';
   }
 }

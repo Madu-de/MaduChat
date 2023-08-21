@@ -1,9 +1,9 @@
 <div id="chat">
-    <chat-message *ngFor="let message of messages" [message]="message"></chat-message>
+  <chat-message *ngFor="let message of messages" [message]="message"></chat-message>
 </div>
 
 <mat-form-field color="primary">
   <mat-label>{{languageService.getValue('writeAMessage')}}</mat-label>
-  <input matInput [placeholder]="languageService.getValue('exampleMessage')" #message>
-  <mat-icon matSuffix color="primary" (click)="sendMessage(message.value)">send</mat-icon>
+  <input matInput [placeholder]="languageService.getValue('exampleMessage')" #message (keyup.enter)="submitMessageInput(message)">
+  <mat-icon matSuffix color="primary" (click)="submitMessageInput(message)">send</mat-icon>
 </mat-form-field>
