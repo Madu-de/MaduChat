@@ -21,7 +21,7 @@
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('password')}}</mat-label>
         <input matInput [type]="hideLogin ? 'password' : 'text'" #password formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hideLogin = !hideLogin">
+        <button mat-icon-button matSuffix (click)="hideLogin = !hideLogin" type="button">
           <mat-icon color="primary">{{hideLogin ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error>{{languageService.getValue('password')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
@@ -29,7 +29,7 @@
     </mat-card-content>
   
     <mat-card-actions>
-      <button mat-button type="button" (click)="type = 'register'">{{languageService.getValue('register') | uppercase}}</button>
+      <button mat-button type="button" (click)="type = 'register'" type="button">{{languageService.getValue('register') | uppercase}}</button>
       <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid">{{languageService.getValue('login') | uppercase}}</button>
     </mat-card-actions>
     <mat-card-footer>
@@ -63,7 +63,7 @@
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('password')}}</mat-label>
         <input matInput [type]="hideRegister ? 'password' : 'text'" #password formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hideRegister = !hideRegister">
+        <button mat-icon-button matSuffix (click)="hideRegister = !hideRegister" type="button">
           <mat-icon color="primary">{{hideRegister ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error>{{languageService.getValue('password')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
@@ -72,7 +72,7 @@
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('confirmPassword')}}</mat-label>
         <input matInput [type]="hideRegisterConfirm ? 'password' : 'text'" #password formControlName="passwordConfirm" required>
-        <button mat-icon-button matSuffix (click)="hideRegisterConfirm = !hideRegisterConfirm">
+        <button mat-icon-button matSuffix (click)="hideRegisterConfirm = !hideRegisterConfirm" type="button">
           <mat-icon color="primary">{{hideRegisterConfirm ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error>{{languageService.getValue('confirmPassword')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
@@ -80,7 +80,7 @@
     </mat-card-content>
   
     <mat-card-actions>
-      <button mat-button type="button" (click)="type = 'login'">{{languageService.getValue('login') | uppercase}}</button>
+      <button mat-button type="button" (click)="type = 'login'" type="button">{{languageService.getValue('login') | uppercase}}</button>
       <button mat-flat-button color="primary" type="submit" [disabled]="!registerForm.valid">{{languageService.getValue('register') | uppercase}}</button>
     </mat-card-actions>
     <mat-card-footer>
