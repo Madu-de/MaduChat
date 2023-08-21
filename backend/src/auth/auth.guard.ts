@@ -1,10 +1,5 @@
 import { AuthService } from './auth.service';
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 
@@ -20,9 +15,7 @@ export class AuthGuard implements CanActivate {
       context.switchToWs().getClient().handshake ||
       context.switchToHttp().getRequest();
     const isWebsocket = request.url.startsWith('/socket.io');
-    const websocketId = isWebsocket
-      ? context.switchToHttp().getRequest().id
-      : 0;
+    const websocketId = isWebsocket ? context.switchToWs().getClient().id : 0;
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       return this.authService.unauthorized(websocketId);

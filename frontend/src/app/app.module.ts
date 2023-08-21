@@ -7,7 +7,6 @@ import { HomeComponent } from './home/home.component';
 import { ChatModule } from './chat/chat.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { LanguageService } from './services/language.service';
-import { SettingsComponent } from './settings/settings.component';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -18,6 +17,8 @@ import { ChatService } from './services/chat.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CookieService } from './services/cookie.service';
 import { SettingsModule } from './settings/settings.module';
+import { SocketIoModule } from 'ngx-socket-io';
+import { Websocket } from './services/socket.service';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { SettingsModule } from './settings/settings.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SocketIoModule,
     BrowserAnimationsModule,
     ChatModule,
     NavigationModule,
@@ -37,9 +39,9 @@ import { SettingsModule } from './settings/settings.module';
     MatSelectModule,
     HttpClientModule,
     AuthenticationModule,
-    SettingsModule
+    SettingsModule,
   ],
-  providers: [LanguageService, AuthService, ChatService, CookieService],
+  providers: [LanguageService, AuthService, ChatService, CookieService, Websocket],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
