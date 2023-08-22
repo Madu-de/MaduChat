@@ -12,6 +12,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user-list/user/user.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { UserComponent } from './user-list/user/user.component';
     MatIconModule,
     MatListModule,
     MatDividerModule,
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   exports: [
     FriendsComponent, 

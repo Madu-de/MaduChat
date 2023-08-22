@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { User } from './user';
 import * as sha256 from 'sha256';
 import { Settings } from './settings';
@@ -24,6 +24,21 @@ export class UserService {
       relations: { chats, friends, settings },
     });
     return user;
+  }
+
+  async getUserLike(
+    name: string,
+    friends?: boolean,
+    chats?: boolean,
+    settings?: boolean,
+  ): Promise<User[]> {
+    if (!name) return;
+    const users = await this.userRepo.find({
+      where: [{ name: Like(`%${name}%`) }, { username: Like(`%${name}%`) }],
+      relations: { chats, friends, settings },
+      take: 30,
+    });
+    return users;
   }
 
   async createUser(user: User): Promise<User> {

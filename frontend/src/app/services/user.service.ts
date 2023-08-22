@@ -13,7 +13,15 @@ export class UserService {
   constructor(private http: HttpClient, private auth: AuthService) { }
 
   getMe(chats?: boolean, friends?: boolean, settings?: boolean) {
-    return this.http.get<User>(`${this.auth.baseURL}/user/me?chats=${chats}&friends=${friends}&settings=${settings}`, {
+    return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      }
+    });
+  }
+
+  getUsersLike(name: string, chats?: boolean, friends?: boolean, settings?: boolean) {
+    return this.http.get<User[]>(`${this.auth.baseURL}/users?like=${name}&chats=${chats}&friends=${friends}&settings=${settings}`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
@@ -21,7 +29,7 @@ export class UserService {
   }
 
   setSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
-    return this.http.post<Settings>(`${this.auth.baseURL}/user/me/settings/${key}`, {
+    return this.http.post<Settings>(`${this.auth.baseURL}/users/me/settings/${key}`, {
       value,
     }, {
       headers: {

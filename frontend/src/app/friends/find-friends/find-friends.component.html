@@ -1,6 +1,10 @@
-<mat-form-field appearance="outline" id="searchbar">
-  <mat-label>Search for friends</mat-label>
-  <input matInput placeholder="madu" type="text">
-  <mat-icon matSuffix>search</mat-icon>
-</mat-form-field>
+<form [formGroup]="searchForm" (ngSubmit)="search()">
+  <mat-form-field appearance="outline" id="searchbar">
+    <mat-label>Search for friends</mat-label>
+    <input matInput placeholder="madu" type="text" formControlName="searchbar">
+    <button mat-icon-button matSuffix type="submit">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>
 <app-user-list [users]="users"></app-user-list>

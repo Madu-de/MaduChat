@@ -14,9 +14,20 @@ import { AuthGuard } from '../auth/auth.guard';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { Settings } from './settings';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
+
+  @UseGuards(AuthGuard)
+  @Get()
+  async getUsersLike(
+    @Query('like') name: string,
+    @Query('friends', BooleanPipe) friends: boolean,
+    @Query('chats', BooleanPipe) chats: boolean,
+    @Query('settings', BooleanPipe) settings: boolean,
+  ) {
+    return await this.userService.getUserLike(name, friends, chats, settings);
+  }
 
   @UseGuards(AuthGuard)
   @Get([':id', 'me'])

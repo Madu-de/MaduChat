@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { User } from 'src/app/classes/User';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'friends-find-friends',
@@ -7,8 +9,18 @@ import { User } from 'src/app/classes/User';
   styleUrls: ['./find-friends.component.scss']
 })
 export class FindFriendsComponent {
-  users: User[] = [
-    new User('John', '@john', 'John', ''),
-    new User('Mario', '@mario', 'Mario', ''),
-  ];
+  users: User[] = [];
+
+  searchForm: FormGroup = new FormGroup({
+    searchbar: new FormControl(''),
+  });
+
+  constructor(private userService: UserService) {}
+
+  search() {
+    const value = this.searchForm.value['searchbar'];
+    this.userService.getUsersLike(value).subscribe(users => {
+      this.users = users;
+    });
+  }
 }
