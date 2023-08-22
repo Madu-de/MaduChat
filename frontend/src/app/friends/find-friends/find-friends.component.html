@@ -1,1 +1,6 @@
-<p>find-friends works!</p>
+<mat-form-field appearance="outline" id="searchbar">
+  <mat-label>Search for friends</mat-label>
+  <input matInput placeholder="madu" type="text">
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+<app-user-list [users]="users"></app-user-list>

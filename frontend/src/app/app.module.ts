@@ -21,7 +21,6 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { Websocket } from './services/socket.service';
 import { FriendsModule } from './friends/friends.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +43,6 @@ import { FriendsModule } from './friends/friends.module';
     FriendsModule,
   ],
   providers: [LanguageService, AuthService, ChatService, CookieService, Websocket],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
