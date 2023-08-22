@@ -19,6 +19,7 @@ import { CookieService } from './services/cookie.service';
 import { SettingsModule } from './settings/settings.module';
 import { SocketIoModule } from 'ngx-socket-io';
 import { Websocket } from './services/socket.service';
+import { FriendsModule } from './friends/friends.module';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { Websocket } from './services/socket.service';
     HttpClientModule,
     AuthenticationModule,
     SettingsModule,
+    FriendsModule,
   ],
   providers: [LanguageService, AuthService, ChatService, CookieService, Websocket],
   bootstrap: [AppComponent]
