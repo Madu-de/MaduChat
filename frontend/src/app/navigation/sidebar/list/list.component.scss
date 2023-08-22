@@ -8,7 +8,13 @@ mat-card {
     cursor: pointer;
 }
 
-mat-card-content {
+mat-card-content a {
     display: flex;
     gap: 8px;
+}
+
+@media screen and (max-width: 600px) {
+    mat-card-content {
+        margin: auto;
+    }
 }

@@ -1,29 +1,29 @@
 <mat-list>
     <mat-list-item>
         <mat-card>
-            <a routerLink="/chat/global">
-                <mat-card-content>
+            <mat-card-content>
+                <a routerLink="/chat/global">
                     <mat-icon>public</mat-icon> {{language.getValue('publicChat')}}
-                </mat-card-content>
-            </a>
+                </a>
+            </mat-card-content>
         </mat-card>
     </mat-list-item>
     <mat-list-item>
         <mat-card>
-            <a routerLink="/friends">
-                <mat-card-content>
+            <mat-card-content>
+                <a routerLink="/friends">
                     <mat-icon>group</mat-icon> {{language.getValue('friends')}}
-                </mat-card-content>
-            </a>
+                </a>
+            </mat-card-content>
         </mat-card>
     </mat-list-item>
     <mat-list-item>
         <mat-card>
-            <a routerLink="/settings">
-                <mat-card-content>
+            <mat-card-content>
+                <a routerLink="/settings">
                     <mat-icon>settings</mat-icon> {{language.getValue('settings')}}
-                </mat-card-content>
-            </a>
+                </a>
+            </mat-card-content>
         </mat-card>
     </mat-list-item>
 
@@ -32,14 +32,18 @@
     <mat-list-item>
         <mat-card>
             <mat-card-content>
-                <mat-icon>person</mat-icon> Hans
+                <a routerLink="/">
+                    <mat-icon>person</mat-icon> Hans
+                </a>
             </mat-card-content>
         </mat-card>
     </mat-list-item>
     <mat-list-item>
         <mat-card>
             <mat-card-content>
-                <mat-icon>group</mat-icon> Wilde Kerle
+                <a routerLink="/">
+                    <mat-icon>group</mat-icon> Wilde Kerle
+                </a>
             </mat-card-content>
         </mat-card>
     </mat-list-item>

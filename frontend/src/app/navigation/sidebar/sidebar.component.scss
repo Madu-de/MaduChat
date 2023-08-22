@@ -9,3 +9,9 @@
 .sidenav {
     padding: 20px;
 }
+
+@media screen and (max-width: 600px) {
+    .sidenav {
+        width: 100%;
+    }
+}

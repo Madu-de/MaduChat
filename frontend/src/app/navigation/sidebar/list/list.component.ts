@@ -7,6 +7,5 @@ import { LanguageService } from 'src/app/services/language.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent {
-  constructor(public language: LanguageService) {
-  }
+  constructor(public language: LanguageService) {}
 }
