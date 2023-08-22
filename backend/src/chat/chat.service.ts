@@ -21,10 +21,16 @@ export class ChatService {
   async getChatMessages(id: string): Promise<Message[]> {
     const chat = await this.chatRepo.findOne({ where: { id } });
     if (!chat) throw new HttpException('No chat found', HttpStatus.BAD_REQUEST);
-    const message = await this.messageRepo.find({
+    const messages = await this.messageRepo.find({
       where: { chat },
       relations: { author: true, chat: true },
+      order: {
+        createdAt: {
+          direction: 'DESC',
+        },
+      },
+      take: 30,
     });
-    return message;
+    return messages;
   }
 }
