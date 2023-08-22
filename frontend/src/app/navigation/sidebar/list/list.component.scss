@@ -4,13 +4,13 @@ mat-list {
     gap: 2px;
 }
 
-mat-card {
-    cursor: pointer;
-}
-
 mat-card-content a {
     display: flex;
     gap: 8px;
+}
+
+a {
+    cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
