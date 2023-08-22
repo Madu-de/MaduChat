@@ -10,15 +10,22 @@ export class ChatGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const wsContext = context.switchToWs();
-    const chatid: string | undefined = wsContext.getData().chatid;
-    if (!chatid) this.authService.notAllowed(wsContext.getClient().id);
-    const userid = wsContext.getClient().handshake.user.id;
-    if (!userid) this.authService.notAllowed(wsContext.getClient().id);
+    const request =
+      context.switchToWs().getClient().handshake ||
+      context.switchToHttp().getRequest();
+    const isWebsocket = request.url.startsWith('/socket.io');
+    const websocketId = isWebsocket ? context.switchToWs().getClient().id : 0;
+
+    const wsContext = isWebsocket ? context.switchToWs() : undefined;
+    const chatid: string | undefined =
+      wsContext?.getData().chatid || request.params.id;
+    if (!chatid) return this.authService.notAllowed(websocketId);
+    const userid =
+      wsContext?.getClient().handshake.user.id || request['user'].id;
+    if (!userid) return this.authService.notAllowed(websocketId);
     const user = await this.userService.getUser(userid, false, true);
     const isAbleToJoin = user.chats.some(chat => chat.id === chatid);
-    if (!isAbleToJoin)
-      return this.authService.notAllowed(wsContext.getClient().id);
+    if (!isAbleToJoin) return this.authService.notAllowed(websocketId);
     return true;
   }
 }
