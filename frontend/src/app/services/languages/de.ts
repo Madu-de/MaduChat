@@ -22,4 +22,8 @@ export const DE: Language = {
   passwordorusernamewrongErr: 'Passwort oder Nutzername ist falsch',
   passwordConfirmSameErr: 'Passwort und Passwort bestätigen müssen gleich sein',
   userAlreadyExistsErr: 'Nutzer existiert bereits',
+  findFriends: 'Freunde finden',
+  friendsList: 'Freundesliste',
+  friendRequests: 'Freundschaftsanfragen',
+  searchForFriends: 'Freunde suchen',
 };

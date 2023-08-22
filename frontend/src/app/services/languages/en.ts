@@ -22,4 +22,8 @@ export const EN: Language = {
   passwordorusernamewrongErr: 'Username or password is incorrect',
   passwordConfirmSameErr: 'Password and Confirm passwort must be the same',
   userAlreadyExistsErr: 'This user is already registered',
+  findFriends: 'Find friends',
+  friendsList: 'Friends list',
+  friendRequests: 'Friend requests',
+  searchForFriends: 'Search for friends',
 };

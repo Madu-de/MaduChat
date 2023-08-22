@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { User } from 'src/app/classes/User';
+import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class FindFriendsComponent {
     searchbar: new FormControl(''),
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, public languageService: LanguageService) {}
 
   search() {
     const value = this.searchForm.value['searchbar'];

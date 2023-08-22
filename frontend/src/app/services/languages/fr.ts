@@ -22,4 +22,8 @@ export const FR: Language = {
   passwordorusernamewrongErr: 'Le mot de passe ou le nom d\'utilisateur est incorrect',
   passwordConfirmSameErr: 'Le mot de passe et la confirmation du mot de passe doivent être identiques',
   userAlreadyExistsErr: 'L\'utilisateur existe déjà',
+  findFriends: 'Trouver des amis',
+  friendsList: 'Liste d\'amis',
+  friendRequests: 'Demandes d\'amitié',
+  searchForFriends: 'Rechercher des amis',
 };

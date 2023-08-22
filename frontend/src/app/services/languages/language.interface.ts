@@ -20,4 +20,8 @@ export interface Language {
   passwordorusernamewrongErr: string;
   passwordConfirmSameErr: string;
   userAlreadyExistsErr: string;
+  findFriends: string;
+  friendsList: string;
+  friendRequests: string;
+  searchForFriends: string;
 }

@@ -1,6 +1,6 @@
 <form [formGroup]="searchForm" (ngSubmit)="search()">
   <mat-form-field appearance="outline" id="searchbar">
-    <mat-label>Search for friends</mat-label>
+    <mat-label>{{languageService.getValue('searchForFriends')}}</mat-label>
     <input matInput placeholder="madu" type="text" formControlName="searchbar">
     <button mat-icon-button matSuffix type="submit">
       <mat-icon>search</mat-icon>
