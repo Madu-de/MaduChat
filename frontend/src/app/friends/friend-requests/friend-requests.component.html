@@ -1,1 +1,10 @@
-<p>friend-requests works!</p>
+<mat-list>
+  <mat-list-item>
+    <span matListItemTitle>Recieved</span>
+  </mat-list-item>
+  <app-user-list [users]="user?.friendRequetsRecieved || []"></app-user-list>
+  <mat-list-item>
+    <span matListItemTitle>Sent</span>
+  </mat-list-item>
+  <app-user-list [users]="user?.friendRequestsSent || []"></app-user-list>
+</mat-list>

@@ -1,11 +1,11 @@
 <mat-tab-group>
   <mat-tab [label]="languageService.getValue('findFriends')">
-    <friends-find-friends></friends-find-friends>
+    <friends-find-friends [user]="user"></friends-find-friends>
   </mat-tab>
   <mat-tab [label]="languageService.getValue('friendsList')">
-    <friends-friends-list></friends-friends-list>
+    <friends-friends-list [user]="user"></friends-friends-list>
   </mat-tab>
   <mat-tab [label]="languageService.getValue('friendRequests')">
-    <friends-friend-requests></friends-friend-requests>
+    <friends-friend-requests [user]="user"></friends-friend-requests>
   </mat-tab>
 </mat-tab-group>

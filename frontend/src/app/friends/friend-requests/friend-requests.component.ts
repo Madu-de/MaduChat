@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { User } from 'src/app/classes/User';
 
 @Component({
   selector: 'friends-friend-requests',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./friend-requests.component.scss']
 })
 export class FriendRequestsComponent {
-
+  @Input()
+  user: User | undefined;
 }

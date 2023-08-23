@@ -7,6 +7,8 @@ export class User {
   name: string;
   image: string;
   chats?: Chat[];
+  friendRequestsSent?: User[];
+  friendRequetsRecieved?: User[];
   friends?: User[];
   settings?: Settings;
 
