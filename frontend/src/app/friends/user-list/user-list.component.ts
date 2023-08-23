@@ -9,4 +9,7 @@ import { User } from '../../classes/User';
 export class UserListComponent {
   @Input()
   users: User[] = [];
+
+  @Input()
+  clientUser: User | undefined;
 }

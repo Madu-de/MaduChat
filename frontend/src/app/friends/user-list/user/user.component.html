@@ -1,6 +1,10 @@
 <mat-list-item>
   <img matListItemAvatar [src]="user?.image || './assets/defaultpb.png'">
   <span matListItemTitle>{{user?.name}}</span>
-  <span matListItemLine>@{{user?.username}}</span>
+  <span matListItemLine class="username"><a [routerLink]=" '../user/' + user?.id ">@{{user?.username}}</a></span>
+  <button matListItemMeta mat-icon-button id="btn">
+    <mat-icon *ngIf="!isFriend">add</mat-icon>
+    <mat-icon *ngIf="isFriend">remove</mat-icon>
+  </button>
 </mat-list-item>
 <mat-divider></mat-divider>
