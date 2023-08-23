@@ -111,29 +111,39 @@ export class UserService {
       return this.addFriend(user1, user2);
     }
     user1.friendRequestsSent.push(user2);
-    return this.userRepo.save(user1);
+    await this.userRepo.save(user1);
+    return user2;
   }
 
   async addFriend(user1: User, user2: User) {
     user1.friendRequetsReceived = user1.friendRequetsReceived.filter(
       user => user.id !== user2.id,
     );
-    user2.friends.push(user1);
-    await this.userRepo.save(user2);
-    delete user2.friends;
-    delete user2.friendRequestsSent;
-    delete user2.friendRequetsReceived;
+    user2.friendRequestsSent = user2.friendRequestsSent.filter(
+      user => user.id !== user1.id,
+    );
     user1.friends.push(user2);
-    return this.userRepo.save(user1);
+    await this.userRepo.save(user1);
+    delete user1.friends;
+    delete user1.friendRequestsSent;
+    delete user1.friendRequetsReceived;
+    user2.friends.push(user1);
+    return await this.userRepo.save(user2);
   }
 
   async removeFriend(user1Id: string, user2Id: string) {
     const user1 = await this.getUser(user1Id, true);
     const user2 = await this.getUser(user2Id, true);
+    user1.friendRequestsSent = user1.friendRequestsSent.filter(
+      user => user.id !== user2Id,
+    );
+    user2.friendRequetsReceived = user2.friendRequetsReceived.filter(
+      user => user.id !== user1Id,
+    );
     user1.friends = user1.friends.filter(user => user.id !== user2Id);
     user2.friends = user2.friends.filter(user => user.id !== user1Id);
-    this.userRepo.save(user2);
-    return this.userRepo.save(user1);
+    await this.userRepo.save(user1);
+    return await this.userRepo.save(user2);
   }
 
   async changeSettings(id: string, settings: Settings): Promise<User> {

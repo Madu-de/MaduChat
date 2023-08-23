@@ -28,6 +28,27 @@ export class UserService {
     });
   }
 
+  addFriend(friendId: string) {
+    return this.http.post<User>(`${this.auth.baseURL}/friends`, {
+      friendId
+    }, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
+  }
+
+  removeFriend(friendId: string) {
+    return this.http.delete<User>(`${this.auth.baseURL}/friends`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+      body: {
+        friendId
+      }
+    });
+  }
+
   setSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
     return this.http.post<Settings>(`${this.auth.baseURL}/users/me/settings/${key}`, {
       value,
