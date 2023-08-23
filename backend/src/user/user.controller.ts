@@ -48,12 +48,6 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Post('addFriend')
-  async addFriend(@Body('friendId') id: string, @Req() request: Request) {
-    this.userService.addFriend(request['user'].id, id);
-  }
-
-  @UseGuards(AuthGuard)
   @Post('me/settings')
   async changeSettings(
     @Body() settings: Settings,

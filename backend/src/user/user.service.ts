@@ -21,7 +21,13 @@ export class UserService {
   ): Promise<User> {
     const user = await this.userRepo.findOne({
       where: { id },
-      relations: { chats, friends, settings },
+      relations: {
+        chats,
+        friends,
+        settings,
+        friendRequestsSent: friends,
+        friendRequetsRecieved: friends,
+      },
     });
     return user;
   }
@@ -83,21 +89,50 @@ export class UserService {
     return [false, ''];
   }
 
-  async addFriend(user1Id: string, user2Id: string) {
-    const user1 = await this.userRepo.findOne({
-      where: { id: user1Id },
-      relations: ['friends'],
-    });
-    const user2 = await this.userRepo.findOne({
-      where: { id: user2Id },
-      relations: ['friends'],
-    });
-    if (!user1?.friends) {
-      user1.friends = [];
+  async addFriendRequest(user1Id: string, user2Id: string) {
+    const user1 = await this.getUser(user1Id, true);
+    const user2 = await this.getUser(user2Id, true);
+    if (user1.friendRequestsSent.some(user => user.id === user2.id)) {
+      throw new HttpException('Request already sent', HttpStatus.BAD_REQUEST);
     }
-    if (!user1?.friends.find(friend => friend.id == user2.id)) {
-      user1.friends.push(user2);
+    if (user1.id === user2.id) {
+      throw new HttpException(
+        'You cannot send a friend request to yourself',
+        HttpStatus.BAD_REQUEST,
+      );
     }
+    if (user1.friends.some(user => user.id === user2.id)) {
+      throw new HttpException(
+        'You cannot send a friend request to a friend',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    if (user1.friendRequetsRecieved.some(user => user.id === user2.id)) {
+      return this.addFriend(user1, user2);
+    }
+    user1.friendRequestsSent.push(user2);
+    return this.userRepo.save(user1);
+  }
+
+  async addFriend(user1: User, user2: User) {
+    user1.friendRequetsRecieved = user1.friendRequetsRecieved.filter(
+      user => user.id !== user2.id,
+    );
+    user2.friends.push(user1);
+    await this.userRepo.save(user2);
+    delete user2.friends;
+    delete user2.friendRequestsSent;
+    delete user2.friendRequetsRecieved;
+    user1.friends.push(user2);
+    return this.userRepo.save(user1);
+  }
+
+  async removeFriend(user1Id: string, user2Id: string) {
+    const user1 = await this.getUser(user1Id, true);
+    const user2 = await this.getUser(user2Id, true);
+    user1.friends = user1.friends.filter(user => user.id !== user2Id);
+    user2.friends = user2.friends.filter(user => user.id !== user1Id);
+    this.userRepo.save(user2);
     return this.userRepo.save(user1);
   }
 

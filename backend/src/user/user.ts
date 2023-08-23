@@ -47,9 +47,16 @@ export class User {
   @MaxLength(20)
   username: string;
 
-  @ManyToMany(() => User, {
-    cascade: true,
+  @ManyToMany(() => User, user => user.friendRequetsRecieved)
+  @JoinTable({
+    name: 'friendrequests',
   })
+  friendRequestsSent: User[];
+
+  @ManyToMany(() => User, user => user.friendRequestsSent)
+  friendRequetsRecieved: User[];
+
+  @ManyToMany(() => User, user => user.friends)
   @JoinTable({
     name: 'friends',
   })
