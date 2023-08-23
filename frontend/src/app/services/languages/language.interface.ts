@@ -24,4 +24,6 @@ export interface Language {
   friendsList: string;
   friendRequests: string;
   searchForFriends: string;
+  received: string;
+  sent: string;
 }

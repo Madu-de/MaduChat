@@ -26,4 +26,6 @@ export const EN: Language = {
   friendsList: 'Friends list',
   friendRequests: 'Friend requests',
   searchForFriends: 'Search for friends',
+  received: 'Received',
+  sent: 'Sent',
 };

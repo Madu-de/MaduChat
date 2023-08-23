@@ -1,10 +1,10 @@
 <mat-list>
   <mat-list-item>
-    <span matListItemTitle>Received <span class="dark">{{user?.friendRequetsReceived?.length}}</span></span>
+    <span matListItemTitle>{{languageService.getValue('received')}} <span class="dark">{{user?.friendRequetsReceived?.length}}</span></span>
   </mat-list-item>
   <app-user-list [users]="user?.friendRequetsReceived || []" [clientUser]="user"></app-user-list>
   <mat-list-item>
-    <span matListItemTitle>Sent <span class="dark">{{user?.friendRequestsSent?.length}}</span></span>
+    <span matListItemTitle>{{languageService.getValue('sent')}} <span class="dark">{{user?.friendRequestsSent?.length}}</span></span>
   </mat-list-item>
   <app-user-list [users]="user?.friendRequestsSent || []" [clientUser]="user"></app-user-list>
 </mat-list>

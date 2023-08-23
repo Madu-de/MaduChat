@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User } from 'src/app/classes/User';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'friends-friend-requests',
@@ -9,4 +10,6 @@ import { User } from 'src/app/classes/User';
 export class FriendRequestsComponent {
   @Input()
   user: User | undefined;
+
+  constructor(public languageService: LanguageService) {}
 }
