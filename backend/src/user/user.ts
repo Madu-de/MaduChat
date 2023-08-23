@@ -47,14 +47,14 @@ export class User {
   @MaxLength(20)
   username: string;
 
-  @ManyToMany(() => User, user => user.friendRequetsRecieved)
+  @ManyToMany(() => User, user => user.friendRequetsReceived)
   @JoinTable({
     name: 'friendrequests',
   })
   friendRequestsSent: User[];
 
   @ManyToMany(() => User, user => user.friendRequestsSent)
-  friendRequetsRecieved: User[];
+  friendRequetsReceived: User[];
 
   @ManyToMany(() => User, user => user.friends)
   @JoinTable({

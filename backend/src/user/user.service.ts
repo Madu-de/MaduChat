@@ -26,7 +26,7 @@ export class UserService {
         friends,
         settings,
         friendRequestsSent: friends,
-        friendRequetsRecieved: friends,
+        friendRequetsReceived: friends,
       },
     });
     return user;
@@ -107,7 +107,7 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    if (user1.friendRequetsRecieved.some(user => user.id === user2.id)) {
+    if (user1.friendRequetsReceived.some(user => user.id === user2.id)) {
       return this.addFriend(user1, user2);
     }
     user1.friendRequestsSent.push(user2);
@@ -115,14 +115,14 @@ export class UserService {
   }
 
   async addFriend(user1: User, user2: User) {
-    user1.friendRequetsRecieved = user1.friendRequetsRecieved.filter(
+    user1.friendRequetsReceived = user1.friendRequetsReceived.filter(
       user => user.id !== user2.id,
     );
     user2.friends.push(user1);
     await this.userRepo.save(user2);
     delete user2.friends;
     delete user2.friendRequestsSent;
-    delete user2.friendRequetsRecieved;
+    delete user2.friendRequetsReceived;
     user1.friends.push(user2);
     return this.userRepo.save(user1);
   }

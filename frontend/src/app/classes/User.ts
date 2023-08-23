@@ -8,7 +8,7 @@ export class User {
   image: string;
   chats?: Chat[];
   friendRequestsSent?: User[];
-  friendRequetsRecieved?: User[];
+  friendRequetsReceived?: User[];
   friends?: User[];
   settings?: Settings;
 
