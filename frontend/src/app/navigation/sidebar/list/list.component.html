@@ -29,20 +29,15 @@
 
     <mat-divider></mat-divider>
 
-    <mat-list-item>
+    <mat-list-item *ngFor="let chat of chats">
         <mat-card>
             <mat-card-content>
-                <a routerLink="/">
-                    <mat-icon>person</mat-icon> Hans
-                </a>
-            </mat-card-content>
-        </mat-card>
-    </mat-list-item>
-    <mat-list-item>
-        <mat-card>
-            <mat-card-content>
-                <a routerLink="/">
-                    <mat-icon>group</mat-icon> Wilde Kerle
+                <a [routerLink]=" '/chat/' + chat.id ">
+                    <mat-icon *ngIf="chat.members?.length == 2; else group">person</mat-icon>
+                    <ng-template #group>
+                        <mat-icon>group</mat-icon>
+                    </ng-template>
+                    {{ chat.name }}
                 </a>
             </mat-card-content>
         </mat-card>

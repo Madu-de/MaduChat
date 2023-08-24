@@ -12,8 +12,8 @@ export class ChatService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  get(id: string): Observable<Chat> {
-    return this.http.get<Chat>(`${this.auth.baseURL}/chat/${id}`, {
+  get(id: string, members?: boolean): Observable<Chat> {
+    return this.http.get<Chat>(`${this.auth.baseURL}/chat/${id}?members=${members}`, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
   }

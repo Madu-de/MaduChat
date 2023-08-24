@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
       this.channelExists = true;
+      this.websocket.removeAllListeners();
       const chatId = this.route.snapshot.paramMap.get('id');
       if (!chatId) return;
       this.websocket.on('error', (err:string) => {
