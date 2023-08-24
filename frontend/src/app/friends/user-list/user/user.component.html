@@ -1,5 +1,5 @@
 <mat-list-item>
-  <img matListItemAvatar [src]="user?.image || './assets/defaultpb.png'">
+  <img matListItemAvatar [src]="user?.image || './assets/defaultpb.png'" *ngIf="clientUser?.settings?.showAvatar">
   <span matListItemTitle>{{user?.name}}</span>
   <span matListItemLine class="username"><a [routerLink]=" '../user/' + user?.id ">@{{user?.username}}</a></span>
   <button matListItemMeta mat-icon-button id="btn" (click)="toggleFriendStatus()">

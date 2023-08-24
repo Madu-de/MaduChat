@@ -18,7 +18,7 @@ export class FriendsComponent implements OnInit {
   }
 
   reloadUser() {
-    this.userService.getMe(false, true).subscribe(user => {
+    this.userService.getMe(false, true, true).subscribe(user => {
       this.user = user;
     });
   }
