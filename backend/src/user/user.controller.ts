@@ -42,11 +42,6 @@ export class UserController {
     return await this.userService.getUser(id, friends, chats, settings);
   }
 
-  @Post()
-  async createUser(@Body() user: User): Promise<User> {
-    return await this.userService.createUser(user);
-  }
-
   @UseGuards(AuthGuard)
   @Post('me/settings')
   async changeSettings(

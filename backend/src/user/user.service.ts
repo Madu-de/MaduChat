@@ -29,6 +29,8 @@ export class UserService {
         friendRequetsReceived: friends,
       },
     });
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     return user;
   }
 
@@ -38,12 +40,17 @@ export class UserService {
     chats?: boolean,
     settings?: boolean,
   ): Promise<User[]> {
-    if (!name) return;
+    if (!name)
+      throw new HttpException(
+        "Parameter 'like' is required",
+        HttpStatus.BAD_REQUEST,
+      );
     const users = await this.userRepo.find({
       where: [{ name: Like(`%${name}%`) }, { username: Like(`%${name}%`) }],
       relations: { chats, friends, settings },
       take: 30,
     });
+    console.log(users);
     return users;
   }
 
@@ -90,6 +97,8 @@ export class UserService {
   }
 
   async addFriendRequest(user1Id: string, user2Id: string) {
+    if (user2Id === undefined)
+      throw new HttpException(`friendId is required`, HttpStatus.BAD_REQUEST);
     const user1 = await this.getUser(user1Id, true);
     const user2 = await this.getUser(user2Id, true);
     if (user1.friendRequestsSent.some(user => user.id === user2.id)) {
@@ -132,6 +141,8 @@ export class UserService {
   }
 
   async removeFriend(user1Id: string, user2Id: string) {
+    if (user2Id === undefined)
+      throw new HttpException(`friendId is required`, HttpStatus.BAD_REQUEST);
     const user1 = await this.getUser(user1Id, true);
     const user2 = await this.getUser(user2Id, true);
     user1.friendRequestsSent = user1.friendRequestsSent.filter(

@@ -17,7 +17,7 @@ import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 export class MessageController {
   constructor(private messageService: MessageService) {}
 
-  @UseGuards()
+  @UseGuards(AuthGuard)
   @Get(':id')
   async getMessage(
     id: string,
