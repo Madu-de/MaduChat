@@ -28,4 +28,6 @@ export const ES: Language = {
   searchForFriends: 'Buscar amigos',
   received: 'Recibido',
   sent: 'Enviado',
+  anErrorHasOccurred: '¡Ha ocurrido un error!',
+  chatDoesntExistErr: '¡Este chat no existe o no se tiene acceso!',
 };

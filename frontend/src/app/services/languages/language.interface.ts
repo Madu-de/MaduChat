@@ -26,4 +26,6 @@ export interface Language {
   searchForFriends: string;
   received: string;
   sent: string;
+  anErrorHasOccurred: string;
+  chatDoesntExistErr: string;
 }

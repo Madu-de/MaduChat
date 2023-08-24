@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Message } from 'src/app/classes/Message';
 import { Settings } from 'src/app/classes/Settings';
+import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
