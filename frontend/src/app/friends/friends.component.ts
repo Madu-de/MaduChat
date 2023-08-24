@@ -14,6 +14,10 @@ export class FriendsComponent implements OnInit {
   constructor(public languageService: LanguageService, private userService: UserService) {}
 
   ngOnInit() {
+    this.reloadUser();
+  }
+
+  reloadUser() {
     this.userService.getMe(false, true).subscribe(user => {
       this.user = user;
     });

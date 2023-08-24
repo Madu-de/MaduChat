@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="reloadUser()">
   <mat-tab [label]="languageService.getValue('findFriends')">
     <friends-find-friends [user]="user"></friends-find-friends>
   </mat-tab>
