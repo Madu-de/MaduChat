@@ -9,10 +9,11 @@ import { CookieService } from './cookie.service';
 export class AuthService {
   public baseURL: string = 'http://localhost:3000';
   get token(): string {
-    return this.cookie.getCookie('access_token') || '';
+    const token = this.cookie.getCookie('access_token');
+    return token || '';
   }
   set token(value: string) {
-    this.cookie.setCookie('access_token', value, 500, '/');
+    this.cookie.setCookie('access_token', value, 30 * 60, '/');
   }
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
@@ -27,27 +28,35 @@ export class AuthService {
       )
       .subscribe((res) => {
         this.token = res.access_token;
-        if (callback) callback(true);
+        if (callback) {
+          callback(true);
+          // Reload after login to get userdata
+          window.location.reload();
+        } 
       });
-  }
-
-  register(email: string, name: string, username: string, password: string, callback: LoggedInCallback) {
-    this.http.post<AuthResponse>(`${this.baseURL}/auth/register`, {
-      username,
-      password,
-      name,
-      email,
-    })
+    }
+    
+    register(email: string, name: string, username: string, password: string, callback: LoggedInCallback) {
+      this.http.post<AuthResponse>(`${this.baseURL}/auth/register`, {
+        username,
+        password,
+        name,
+        email,
+      })
       .pipe(
         catchError((err: HttpErrorResponse) => this.handleError(err, callback))
-      )
-      .subscribe(res => {
+        )
+        .subscribe(res => {
         this.token = res.access_token;
-        if (callback) callback(true);
+        if (callback) {
+          callback(true);
+          // Reload after register to get userdata
+          window.location.reload();
+        } 
       });
   }
 
-  public logout() {
+  logout() {
     this.token = '';
   }
 
