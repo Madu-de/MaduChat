@@ -22,5 +22,6 @@ jobs:
         with:
           node-version: 18.16.0
           cache: 'npm'
+          cache-dependency-path: ./backend/package-lock.json
       - run: npm ci
       - run: npm test
