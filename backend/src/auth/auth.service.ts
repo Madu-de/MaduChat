@@ -7,7 +7,7 @@ import {
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as sha256 from 'sha256';
-import { WebsocketService } from 'src/websocket/websocket.service';
+import { WebsocketService } from '../websocket/websocket.service';
 
 @Injectable()
 export class AuthService {

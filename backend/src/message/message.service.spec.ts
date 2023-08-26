@@ -14,15 +14,22 @@ describe('MessageService', () => {
         MessageService,
         {
           provide: getRepositoryToken(Chat),
-          useValue: {},
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
         {
           provide: getRepositoryToken(User),
-          useValue: {},
+          useValue: {
+            findOne: jest.fn(),
+          },
         },
         {
           provide: getRepositoryToken(Message),
-          useValue: {},
+          useValue: {
+            findOne: jest.fn(),
+            save: jest.fn(),
+          },
         },
       ],
     }).compile();

@@ -4,7 +4,7 @@ import { Like, Repository } from 'typeorm';
 import { User } from './user';
 import * as sha256 from 'sha256';
 import { Settings } from './settings';
-import { Chat } from 'src/chat/chat';
+import { Chat } from '../chat/chat';
 
 @Injectable()
 export class UserService {

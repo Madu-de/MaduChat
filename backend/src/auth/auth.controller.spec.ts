@@ -1,22 +1,32 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { JwtService } from '@nestjs/jwt';
+import { GuardMock } from '../../test/guardMock';
+import { UserService } from '../user/user.service';
 
 describe('AuthController', () => {
   let controller: AuthController;
 
-  const mockAuthService = {};
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService, JwtService],
+      providers: [
+        {
+          provide: AuthService,
+          useValue: {
+            signIn: jest.fn(),
+          },
+        },
+        {
+          provide: UserService,
+          useValue: {
+            createUser: jest.fn(),
+          },
+        },
+      ],
     })
       .overrideProvider(AuthService)
-      .useValue(mockAuthService)
-      .overrideProvider(JwtService)
-      .useValue({})
+      .useValue(GuardMock)
       .compile();
 
     controller = module.get<AuthController>(AuthController);

@@ -4,7 +4,7 @@ import { ChatService } from './chat.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { Message } from '../message/message';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
-import { ChatGuard } from 'src/websocket/chat/chat.guard';
+import { ChatGuard } from '../websocket/chat/chat.guard';
 
 @Controller('chat')
 export class ChatController {

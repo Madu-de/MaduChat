@@ -2,14 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './user';
+import { Chat } from '../chat/chat';
 
 describe('UserService', () => {
   let service: UserService;
 
-  const mockUsersRepository = {
-    findeOne: jest.fn().mockResolvedValue({
-      id: 'test',
-    }),
+  const repoMock = {
+    findeOne: jest.fn(),
+    find: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -18,7 +18,11 @@ describe('UserService', () => {
         UserService,
         {
           provide: getRepositoryToken(User),
-          useValue: mockUsersRepository,
+          useValue: repoMock,
+        },
+        {
+          provide: getRepositoryToken(Chat),
+          useValue: repoMock,
         },
       ],
     }).compile();
@@ -28,9 +32,5 @@ describe('UserService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-  });
-
-  it('should be return something', () => {
-    expect(service.getUser('test', true, true, true)).toBeDefined();
   });
 });

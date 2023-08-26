@@ -1,23 +1,27 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MessageController } from './message.controller';
-import { JwtService } from '@nestjs/jwt';
 import { MessageService } from './message.service';
+import { AuthGuard } from '../auth/auth.guard';
+import { GuardMock } from '../../test/guardMock';
 
 describe('MessageController', () => {
   let controller: MessageController;
 
-  const mockMessageService = {};
-  const mockJwtService = {};
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [MessageController],
-      providers: [MessageService, JwtService],
+      providers: [
+        {
+          provide: MessageService,
+          useValue: {
+            getMessage: jest.fn(),
+            createMessage: jest.fn(),
+          },
+        },
+      ],
     })
-      .overrideProvider(MessageService)
-      .useValue(mockMessageService)
-      .overrideProvider(JwtService)
-      .useValue(mockJwtService)
+      .overrideGuard(AuthGuard)
+      .useValue(GuardMock)
       .compile();
 
     controller = module.get<MessageController>(MessageController);
