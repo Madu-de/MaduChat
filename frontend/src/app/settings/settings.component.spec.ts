@@ -2,6 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsComponent } from './settings.component';
 import { LanguageService } from '../services/language.service';
+import { UserService } from '../services/user.service';
+
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MockOptionComponent } from './option/mockoption.component';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -9,8 +16,29 @@ describe('SettingsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SettingsComponent],
-      providers: [{ provide: LanguageService, useValue: {}}]
+      imports: [
+        MatListModule,
+        MatSlideToggleModule,
+        MatFormFieldModule,
+        MatSelectModule,
+      ],
+      declarations: [
+        SettingsComponent,
+        MockOptionComponent
+      ],
+      providers: [
+        { 
+          provide: LanguageService, 
+          useValue: {
+            getValue: () => '',
+            getLanguages: () => []
+          },
+        },
+        {
+          provide: UserService,
+          useValue: {},
+        },
+      ],
     });
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;

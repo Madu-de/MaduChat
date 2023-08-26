@@ -4,8 +4,7 @@ import { Message } from '../classes/Message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { Websocket } from '../services/socket.service';
-import { Subscription, catchError, throwError } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -14,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ChatComponent implements OnInit, OnDestroy {
   public messages: Message[] = [];
-  public routerSubscription: Subscription = new Subscription();
+  public routerSubscription: Subscription | undefined;
   public channelExists: boolean = true;
   
   constructor(
@@ -47,8 +46,8 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
     });
   }
-  ngOnDestroy(): void {
-    this.routerSubscription.unsubscribe();
+  ngOnDestroy() {
+    this.routerSubscription?.unsubscribe();
     this.websocket.removeAllListeners();
   }
 

@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FriendRequestsComponent } from './friend-requests.component';
+import { LanguageService } from 'src/app/services/language.service';
+import { MatListModule } from '@angular/material/list';
+import { MockUserListComponent } from '../user-list/mockuser-list.component';
 
 describe('FriendRequestsComponent', () => {
   let component: FriendRequestsComponent;
@@ -8,7 +11,21 @@ describe('FriendRequestsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FriendRequestsComponent]
+      imports: [
+        MatListModule,
+      ],
+      declarations: [
+        FriendRequestsComponent,
+        MockUserListComponent
+      ],
+      providers: [
+        {
+          provide: LanguageService,
+          useValue: {
+            getValue: () => ''
+          }
+        }
+      ]
     });
     fixture = TestBed.createComponent(FriendRequestsComponent);
     component = fixture.componentInstance;

@@ -13,6 +13,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UserService } from 'src/app/services/user.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { of } from 'rxjs';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -21,9 +25,27 @@ describe('ListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ListComponent],
-      providers: [{ provide: LanguageService, useValue: {}}],
+      providers: [
+        { 
+          provide: LanguageService, 
+          useValue: {
+            getValue: () => ''
+          }
+        },
+        {
+          provide: UserService,
+          useValue: {
+            getMe: () => of({
+              chats: []
+            })
+          }
+        },
+        {
+          provide: ChatService,
+          useValue: {}
+        }
+      ],
       imports: [
-        CommonModule,
         MatCommonModule,
         MatSidenavModule,
         MatButtonModule,
@@ -32,7 +54,7 @@ describe('ListComponent', () => {
         MatListModule,
         MatDividerModule,
         MatCardModule,
-        RouterModule
+        RouterTestingModule
       ],
     });
     fixture = TestBed.createComponent(ListComponent);
