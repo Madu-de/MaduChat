@@ -12,3 +12,7 @@ MaduChat is a chat application which has a global chat, friend system, settings 
   - id: global
   - name: Global
 - Go to "localhost:4200" in your browser and enjoy!
+
+## Docs
+[Frontend](https://github.com/Madu-de/MaduChat/blob/main/frontend/README.md)
+[Backend](https://github.com/Madu-de/MaduChat/blob/main/backend/README.md)
