@@ -7,15 +7,17 @@ import { User } from './user';
 describe('UserService', () => {
   let service: UserService;
 
-  const repoMock = {
-    findeOne: jest.fn(),
-    find: jest.fn(),
-  };
-
-  const exampleUser = {
+  const exampleUser = <User>{
     id: 'testid',
     name: 'testname',
+    username: 'testname',
     email: 'test@email',
+    password: 'testpassword',
+  };
+
+  const globalChat = <Chat>{
+    id: 'global',
+    name: 'Global',
   };
 
   beforeEach(async () => {
@@ -27,14 +29,22 @@ describe('UserService', () => {
           useValue: {
             findOne: jest.fn(() => {
               return new Promise<User>(resolve => {
-                resolve(<User>exampleUser);
+                resolve(exampleUser);
               });
             }),
+            save: jest.fn((user: User) => user),
           },
         },
         {
           provide: getRepositoryToken(Chat),
-          useValue: repoMock,
+          useValue: {
+            findOne: jest.fn(() => {
+              return new Promise<Chat>(resolve => {
+                resolve(globalChat);
+              });
+            }),
+            save: jest.fn(),
+          },
         },
       ],
     }).compile();
@@ -49,6 +59,15 @@ describe('UserService', () => {
   describe('GetUser', () => {
     it('should return a user', async () => {
       expect(await service.getUser(exampleUser.id)).toBe(exampleUser);
+    });
+  });
+
+  describe('CreateUser', () => {
+    it('should return the user', async () => {
+      service.isDataAlreadyUsed = jest.fn(
+        () => new Promise(resolve => resolve([false, ''])),
+      );
+      expect(await service.createUser(exampleUser)).toBe(exampleUser);
     });
   });
 });
