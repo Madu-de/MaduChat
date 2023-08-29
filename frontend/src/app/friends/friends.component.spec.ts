@@ -17,6 +17,7 @@ import { MockFriendRequestsComponent } from './friend-requests/mockfriend-reques
 import { MockUserListComponent } from './user-list/mockuser-list.component';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FriendsComponent', () => {
   let component: FriendsComponent;
@@ -32,7 +33,8 @@ describe('FriendsComponent', () => {
         MatListModule,
         MatDividerModule,
         MatButtonModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        RouterTestingModule,
       ],
       declarations: [
         FriendsComponent,
