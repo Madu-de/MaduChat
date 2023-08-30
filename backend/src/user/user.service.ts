@@ -50,7 +50,6 @@ export class UserService {
       relations: { chats, friends, settings },
       take: 30,
     });
-    console.log(users);
     return users;
   }
 
