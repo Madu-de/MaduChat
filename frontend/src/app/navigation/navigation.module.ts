@@ -13,11 +13,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { ProfilePopupComponent } from './header/profile-popup/profile-popup.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { OutsideClickHideDirective } from './directives/outside-click-hide.directive';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    ProfilePopupComponent
+    ProfilePopupComponent,
+    OutsideClickHideDirective
   ],
   exports: [
     HeaderComponent,
