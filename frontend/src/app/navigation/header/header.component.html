@@ -5,7 +5,7 @@
         </button>
         <span>MaduChat</span>
     </span>
-    <span id="right-side">
+    <span id="right-side" class="appOutsideClickHide-ignore">
         <button mat-icon-button (click)="togglePopup()" [matTooltip]="languageService.getValue('account')">
             <mat-icon>
                 account_circle
@@ -13,4 +13,4 @@
         </button>
     </span>
 </mat-toolbar>
-<header-profile-popup *ngIf="showPopUp"></header-profile-popup>
+<header-profile-popup *ngIf="showPopUp" (appOutsideClickHide)="togglePopup()"></header-profile-popup>
