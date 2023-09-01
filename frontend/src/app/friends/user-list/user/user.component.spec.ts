@@ -11,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -38,6 +39,10 @@ describe('UserComponent', () => {
           provide: SnackbarService,
           useValue: {},
         },
+        {
+          provide: LanguageService,
+          useValue: {},
+        }
       ],
     });
     fixture = TestBed.createComponent(UserComponent);
