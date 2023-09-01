@@ -57,3 +57,8 @@ a {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.snackbar {
+  --mdc-snackbar-container-color: #424242;
+  --mdc-snackbar-supporting-text-color: white;
+}

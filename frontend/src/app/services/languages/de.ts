@@ -30,4 +30,7 @@ export const DE: Language = {
   sent: 'Gesendet',
   anErrorHasOccurred: 'Ein Fehler ist aufgetreten!',
   chatDoesntExistErr: 'Dieser Chat existiert nicht oder es besteht kein Zugriff!',
+  addedFriendMessage: 'Du hast {username} zu deinen Freunden hinzugefügt!',
+  removedFriendMessage: 'Du hast {username} von deinen Freunden entfernt!',
+  undo: 'Zurücksetzen',
 };

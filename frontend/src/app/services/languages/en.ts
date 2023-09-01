@@ -30,4 +30,7 @@ export const EN: Language = {
   sent: 'Sent',
   anErrorHasOccurred: 'An error has occurred!',
   chatDoesntExistErr: 'This chat does not exist or access is not available!',
+  addedFriendMessage: 'You added {username} as your friend!',
+  removedFriendMessage: 'You removed {username} as your friend!',
+  undo: 'Undo',
 };

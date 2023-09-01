@@ -28,4 +28,7 @@ export interface Language {
   sent: string;
   anErrorHasOccurred: string;
   chatDoesntExistErr: string;
+  addedFriendMessage: string;
+  removedFriendMessage: string;
+  undo: string;
 }
