@@ -20,6 +20,14 @@ export class UserService {
     });
   }
 
+  getUser(id: string, chats?: boolean, friends?: boolean, settings?: boolean) {
+    return this.http.get<User>(`${this.auth.baseURL}/users/${id}?chats=${chats}&friends=${friends}&settings=${settings}`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      }
+    });
+  }
+
   getUsersLike(name: string, chats?: boolean, friends?: boolean, settings?: boolean) {
     return this.http.get<User[]>(`${this.auth.baseURL}/users?like=${name}&chats=${chats}&friends=${friends}&settings=${settings}`, {
       headers: {
