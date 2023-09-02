@@ -9,7 +9,7 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
-    <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()">
+    <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()" [disabled]="user?.id === clientUser?.id">
       <mat-icon>{{isAdded || isFriend ? 'remove' : 'add'}}</mat-icon> Friends
     </button>
     <button mat-fab extended color="primary" [disabled]="!isFriend">
