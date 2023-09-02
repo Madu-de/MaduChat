@@ -5,6 +5,8 @@ import { User } from '../classes/User';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarService } from '../services/snackbar.service';
 import { catchError, throwError } from 'rxjs';
+import { LanguageService } from '../services/language.service';
+import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +20,13 @@ export class UserComponent implements OnInit {
   isFriend: boolean = false;
   isAdded: boolean = false;
 
-  constructor(public userService: UserService, private route: ActivatedRoute, private snackbar: SnackbarService, private router: Router) {}
+  constructor(
+    public userService: UserService, 
+    private route: ActivatedRoute, 
+    private snackbar: SnackbarService, 
+    private router: Router, 
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     const userid = this.route.snapshot.paramMap.get('id') || '';
@@ -37,8 +45,30 @@ export class UserComponent implements OnInit {
         this.user = user;
         this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
         this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
-        console.log(this.isFriend);
       })
     });
+  }
+
+  toggleFriendStatus() {
+    if (this.user === undefined) return;
+    let snackRef: MatSnackBarRef<TextOnlySnackBar>;
+    if (this.isFriend || this.isAdded) {
+      snackRef = this.snackbar.open(this.languageService.getValue('removedFriendMessage').replace('{username}', `@${this.user.username}`), this.languageService.getValue('undo'));
+      this.userService.removeFriend(this.user.id).subscribe((friend) => {{
+        this.isFriend = false;
+        this.isAdded = false;
+        this.user = friend;
+      }});
+    } else {
+      snackRef = this.snackbar.open(this.languageService.getValue('addedFriendMessage').replace('{username}', `@${this.user.username}`), this.languageService.getValue('undo'));
+      this.userService.addFriend(this.user.id).subscribe((friend) => {
+        this.isAdded = true;
+        this.isFriend = false;
+        this.user = friend;
+      });
+    }
+    snackRef.onAction().subscribe(() => {
+      this.toggleFriendStatus();
+    })
   }
 }
