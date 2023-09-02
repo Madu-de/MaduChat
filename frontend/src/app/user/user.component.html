@@ -10,15 +10,15 @@
   </mat-card-header>
   <mat-card-actions>
     <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()" [disabled]="user?.id === clientUser?.id">
-      <mat-icon>{{isAdded || isFriend ? 'remove' : 'add'}}</mat-icon> Friends
+      <mat-icon>{{isAdded || isFriend ? 'remove' : 'add'}}</mat-icon> {{languageService.getValue('friends')}}
     </button>
     <button mat-fab extended color="primary" [disabled]="!isFriend">
-      <mat-icon>add</mat-icon> Chat
+      <mat-icon>add</mat-icon> {{languageService.getValue('chat')}}
     </button>
   </mat-card-actions>
 </mat-card>
 <mat-tab-group>
-  <mat-tab label="Stats"></mat-tab>
-  <mat-tab label="Feed"></mat-tab>
-  <mat-tab label="Reviews"></mat-tab>
+  <mat-tab [label]="languageService.getValue('stats')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('feed')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('reviews')"></mat-tab>
 </mat-tab-group>

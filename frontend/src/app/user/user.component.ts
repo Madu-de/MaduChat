@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute, 
     private snackbar: SnackbarService, 
     private router: Router, 
-    private languageService: LanguageService
+    public languageService: LanguageService
   ) {}
 
   ngOnInit() {
