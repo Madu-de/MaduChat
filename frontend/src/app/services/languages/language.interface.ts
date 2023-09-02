@@ -31,4 +31,8 @@ export interface Language {
   addedFriendMessage: string;
   removedFriendMessage: string;
   undo: string;
+  chat: string;
+  stats: string;
+  feed: string;
+  reviews: string;
 }

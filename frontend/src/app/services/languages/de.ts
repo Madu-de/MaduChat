@@ -33,4 +33,8 @@ export const DE: Language = {
   addedFriendMessage: 'Du hast {username} zu deinen Freunden hinzugefügt!',
   removedFriendMessage: 'Du hast {username} von deinen Freunden entfernt!',
   undo: 'Zurücksetzen',
+  chat: 'Chat',
+  feed: 'Feed',
+  reviews: 'Rezensionen',
+  stats: 'Statistiken'
 };

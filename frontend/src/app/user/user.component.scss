@@ -1,0 +1,25 @@
+mat-card {
+  padding: 20px;
+}
+
+mat-card img {
+  border-radius: 100%;
+}
+
+mat-card-title {
+  font-size: 40px;
+}
+
+#username {
+  font-size: 20px;
+}
+
+#description {
+  margin-top: 5px;
+  max-width: 436px;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 10px;
+}

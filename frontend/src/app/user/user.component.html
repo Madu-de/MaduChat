@@ -1,0 +1,24 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<mat-card>
+  <mat-card-header>
+    <img [src]="user?.image || './assets/defaultpb.png'" alt="Profile picture" mat-card-lg-image mat-card-avatar>
+    <mat-card-title>{{user?.name || 'Loading...'}}</mat-card-title>
+    <mat-card-subtitle id="username">@{{user?.username || 'loading...'}}</mat-card-subtitle>
+    <mat-card-subtitle id="description">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque ea quasi inventore odit cupiditate nihil modi laudantium, sapiente quaerat error perspiciatis reprehenderit, quidem labore tenetur commodi, iure aliquid impedit esse.
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-actions>
+    <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()" [disabled]="user?.id === clientUser?.id">
+      <mat-icon>{{isAdded || isFriend ? 'remove' : 'add'}}</mat-icon> {{languageService.getValue('friends')}}
+    </button>
+    <button mat-fab extended color="primary" [disabled]="!isFriend">
+      <mat-icon>add</mat-icon> {{languageService.getValue('chat')}}
+    </button>
+  </mat-card-actions>
+</mat-card>
+<mat-tab-group>
+  <mat-tab [label]="languageService.getValue('stats')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('feed')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('reviews')"></mat-tab>
+</mat-tab-group>

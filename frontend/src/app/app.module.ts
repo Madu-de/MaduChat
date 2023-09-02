@@ -21,6 +21,7 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { Websocket } from './services/socket.service';
 import { FriendsModule } from './friends/friends.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SettingsModule,
     FriendsModule,
     MatSnackBarModule,
+    UserModule,
   ],
   providers: [LanguageService, AuthService, ChatService, CookieService, Websocket],
   bootstrap: [AppComponent],

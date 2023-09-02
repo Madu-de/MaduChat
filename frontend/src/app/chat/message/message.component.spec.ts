@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MessageComponent', () => {
   let component: MessageComponent;
@@ -21,6 +22,7 @@ describe('MessageComponent', () => {
         MatIconModule,
         MatListModule,
         MatCardModule,
+        RouterTestingModule,
       ],
       declarations: [
         MessageComponent,
