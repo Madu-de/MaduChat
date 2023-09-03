@@ -2,8 +2,11 @@
 
 .container {
     width: 100%;
-    height: calc(100vh - $header-height);
+    height: calc(100vh - $header-height-desktop);
     border: 1px solid rgba(0, 0, 0, 0.5);
+    @media screen and (max-width: 600px) {
+        height: calc(100vh - $header-height-mobile);
+    }
 }
 
 .sidenav {
