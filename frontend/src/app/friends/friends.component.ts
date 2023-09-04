@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class FriendsComponent implements OnInit {
   user: User | undefined;
   activeIndex: number = 0;
+  loading: boolean = true;
 
   constructor(
     public languageService: LanguageService, 
@@ -32,7 +33,9 @@ export class FriendsComponent implements OnInit {
   }
 
   reloadUser() {
+    this.loading = true;
     this.userService.getMe(false, true, true).subscribe(user => {
+      this.loading = false;
       this.user = user;
     });
   }

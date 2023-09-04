@@ -1,3 +1,4 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <form [formGroup]="searchForm" (ngSubmit)="search()">
   <mat-form-field appearance="outline" id="searchbar">
     <mat-label>{{languageService.getValue('searchForFriends')}}</mat-label>

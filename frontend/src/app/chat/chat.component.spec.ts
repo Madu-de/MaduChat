@@ -12,6 +12,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -25,7 +26,8 @@ describe('ChatComponent', () => {
         MatIconModule,
         MatListModule,
         MatCardModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatProgressBarModule,
       ],
       declarations: [ChatComponent],
       providers: [

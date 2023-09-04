@@ -1,3 +1,4 @@
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FindFriendsComponent } from './find-friends.component';
@@ -29,7 +30,8 @@ describe('FindFriendsComponent', () => {
         MatDividerModule,
         MatButtonModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatProgressBarModule,
       ],
       declarations: [FindFriendsComponent, MockUserListComponent],
       providers: [
