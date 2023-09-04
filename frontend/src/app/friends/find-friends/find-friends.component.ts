@@ -17,6 +17,8 @@ export class FindFriendsComponent implements OnChanges {
 
   searchValue: string = '';
 
+  loading: boolean = false;
+
   searchForm: FormGroup = new FormGroup({
     searchbar: new FormControl(''),
   });
@@ -31,8 +33,10 @@ export class FindFriendsComponent implements OnChanges {
   constructor(private userService: UserService, public languageService: LanguageService) {}
 
   search(searchFor?: string) {
+    this.loading = true;
     this.searchValue = searchFor || this.searchForm.value['searchbar'];
     this.userService.getUsersLike(this.searchValue).subscribe(users => {
+      this.loading = false;
       this.users = users.filter(user => user.id !== this.user?.id);
     });
   }

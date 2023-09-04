@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MessageComponent } from './message/message.component';
 import { RouterModule } from '@angular/router';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatCardModule,
     RouterModule,
+    MatProgressBarModule,
   ]
 })
 export class ChatModule { }

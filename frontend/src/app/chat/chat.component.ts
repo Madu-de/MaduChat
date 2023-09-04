@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public messages: Message[] = [];
   public routerSubscription: Subscription | undefined;
   public channelExists: boolean = true;
+  public loading: boolean = true;
   
   constructor(
     public languageService: LanguageService, 
@@ -38,6 +39,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       });
       this.websocket.emit('joinChat', { chatid: chatId });
       this.chatService.getMessages(chatId).subscribe((messages) => {
+        this.loading = false;
         this.messages = messages;
         this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
       });
