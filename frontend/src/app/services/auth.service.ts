@@ -68,7 +68,6 @@ export class AuthService {
 
 interface AuthResponse {
   access_token: string;
-  statusCode: number;
 }
 
 type LoggedInCallback = (loggedIn: boolean, status?: number) => void
