@@ -29,13 +29,3 @@ mat-card-header {
   color: rgb(255, 57, 57);
   font-size: 15px;
 }
-
-mat-form-field .mat-form-field {
-  &-underline {
-    position: relative;
-    bottom: auto;
-  }
-  &-subscript-wrapper {
-    position: static;
-  }
-}
