@@ -36,5 +36,10 @@ export const ES: Language = {
   chat: 'Chat',
   feed: 'Feed',
   reviews: 'Reseñas',
-  stats: 'Estadísticas'
+  stats: 'Estadísticas',
+  isWrong: 'está mal',
+  isTooShort: 'es demasiado corto',
+  isTooLong: 'es demasiado largo',
+  passwordPatternErr: 'La contraseña debe contener una letra mayúscula, una letra minúscula y un carácter especial',
+  serverIsNotReachable: 'El servidor no está disponible'
 };

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -41,10 +41,14 @@ export class LoginComponent {
   login() {
     if (this.loginForm.value.username && this.loginForm.value.password) {
       this.loading = true;
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password, (result: boolean) => {
+      this.authService.login(this.loginForm.value.username, this.loginForm.value.password, (result: boolean, status?: number) => {
         this.loading = false;
         if (result) return;
-        this.error = this.languageService.getValue('passwordorusernamewrongErr');
+        if (status === 401) {
+          this.error = this.languageService.getValue('passwordorusernamewrongErr');
+        } else {
+          this.error = this.languageService.getValue('serverIsNotReachable');
+        }
       });
     }
   }
@@ -64,10 +68,14 @@ export class LoginComponent {
         this.authService.register(form.email,
           form.name, 
           form.username, 
-          form.password, (result) => {
+          form.password, (result, status) => {
             this.loading = false;
             if (result) return;
-            this.error = this.languageService.getValue('userAlreadyExistsErr');
+            if (status === 400) {
+              this.error = this.languageService.getValue('userAlreadyExistsErr');
+            } else {
+              this.error = this.languageService.getValue('serverIsNotReachable');
+            }
           });
     }
   }

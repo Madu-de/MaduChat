@@ -36,5 +36,10 @@ export const DE: Language = {
   chat: 'Chat',
   feed: 'Feed',
   reviews: 'Rezensionen',
-  stats: 'Statistiken'
+  stats: 'Statistiken',
+  isWrong: 'ist falsch',
+  isTooShort: 'ist zu kurz',
+  isTooLong: 'ist zu lang',
+  passwordPatternErr: 'Das Passwort muss einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen beinhalten',
+  serverIsNotReachable: 'Der Server is nicht erreichbar'
 };

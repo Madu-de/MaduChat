@@ -36,5 +36,10 @@ export const FR: Language = {
   chat: 'Chat',
   feed: 'Flux',
   reviews: 'Critiques',
-  stats: 'Statistiques'
+  stats: 'Statistiques',
+  isWrong: 'est faux',
+  isTooShort: 'est trop court',
+  isTooLong: 'est trop long',
+  passwordPatternErr: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule et un caractère spécial',
+  serverIsNotReachable: 'Le serveur n\'est pas accessible'
 };

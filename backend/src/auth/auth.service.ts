@@ -22,7 +22,11 @@ export class AuthService {
       username,
     );
     if (user?.password != sha256.x2(pass)) {
-      throw new UnauthorizedException('Password or Username wrong');
+      throw new UnauthorizedException({
+        message: 'Password or Username is wrong',
+        errCode: 'passwordOrUsernameIsWrong',
+        statusCode: 401,
+      });
     }
     const payload = { id: user.id, username: user.username };
     return {
@@ -40,7 +44,11 @@ export class AuthService {
         .in(websocketId.toString())
         .emit('error', 'Unauthorized');
     } else {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException({
+        message: 'You are not authorized',
+        errCode: 'unauthorized',
+        statusCode: 401,
+      });
     }
     return false;
   }

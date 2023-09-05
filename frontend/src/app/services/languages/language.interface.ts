@@ -35,4 +35,9 @@ export interface Language {
   stats: string;
   feed: string;
   reviews: string;
+  isWrong: string;
+  isTooShort: string;
+  isTooLong: string;
+  passwordPatternErr: string;
+  serverIsNotReachable: string;
 }
