@@ -36,5 +36,10 @@ export const EN: Language = {
   chat: 'Chat',
   feed: 'Feed',
   reviews: 'Reviews',
-  stats: 'Stats'
+  stats: 'Stats',
+  isWrong: 'is wrong',
+  isTooShort: 'is too short',
+  isTooLong: 'is too long',
+  passwordPatternErr: 'The password must contain an uppercase letter, a lowercase letter, and a special character',
+  serverIsNotReachable: 'Server is not reachable'
 };

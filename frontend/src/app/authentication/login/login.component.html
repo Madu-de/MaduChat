@@ -42,7 +42,8 @@
       <mat-form-field floatLabel="always">
         <mat-label>Email</mat-label>
         <input matInput type="email" #email formControlName="email" required placeholder="madu@example.com">
-        <mat-error>Email {{languageService.getValue('isRequiredErr')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.email.hasError('required')">Email {{languageService.getValue('isRequiredErr')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.email.hasError('email') && !registerForm.controls.email.hasError('required')">Email {{languageService.getValue('isWrong')}}</mat-error>
       </mat-form-field>
 
       <mat-form-field floatLabel="always">
@@ -57,17 +58,20 @@
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('name')}}</mat-label>
         <input matInput type="text" #name formControlName="name" required placeholder="Madu">
-        <mat-error>{{languageService.getValue('name')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.name.hasError('minlength')">{{languageService.getValue('name')}} {{languageService.getValue('isTooShort')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.name.hasError('maxlength')">{{languageService.getValue('name')}} {{languageService.getValue('isTooLong')}}</mat-error>
       </mat-form-field>
   
-      <mat-form-field floatLabel="always">
+      <mat-form-field floatLabel="always" subscriptSizing="dynamic">
         <mat-label>{{languageService.getValue('password')}}</mat-label>
         <input matInput [type]="hideRegister ? 'password' : 'text'" #password formControlName="password" required>
         <button mat-icon-button matSuffix (click)="hideRegister = !hideRegister" type="button">
           <mat-icon color="primary">{{hideRegister ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error>{{languageService.getValue('password')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">{{languageService.getValue('password')}} {{languageService.getValue('isTooShort')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.password.hasError('pattern')">{{languageService.getValue('passwordPatternErr')}}</mat-error>
       </mat-form-field>
+      <br>
 
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('confirmPassword')}}</mat-label>
