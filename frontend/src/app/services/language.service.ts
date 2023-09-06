@@ -10,15 +10,21 @@ import { UserService } from './user.service';
 export class LanguageService {
 
   lang: string = '';
+  languageMap: Map<string, string> = new Map<string, string>([
+    ['en', 'English'],
+    ['de', 'Deutsch'],
+    ['fr', 'Français'],
+    ['es', 'Español']
+  ]);
 
   constructor(private route: ActivatedRoute, private userService: UserService) { 
     this.userService.getMe(false, false, true).subscribe(user => {
-      this.lang = user.settings?.language || 'English';
+      this.lang = user.settings?.language || this.getNavigatorLanguage();
     });
     if (this.lang) return;
     this.route.queryParams
       .subscribe(params => {
-        this.lang = params['lang'] || this.lang || 'English';
+        this.lang = params['lang'] || this.lang || this.getNavigatorLanguage();
       }
     );
   }
@@ -34,5 +40,18 @@ export class LanguageService {
 
   getLanguages(): string[] {
     return Object.keys(LANGUAGES);
+  }
+
+  private getNavigatorLanguage(): string {
+    let returnLanguage = 'English';
+    navigator.languages.every(language => {
+      if ([...this.languageMap.keys()].some(languageKey => language === languageKey)) {
+        returnLanguage = <string>this.languageMap.get(language); 
+        return false;
+      }
+      return true;
+    });
+    
+    return returnLanguage;
   }
 }

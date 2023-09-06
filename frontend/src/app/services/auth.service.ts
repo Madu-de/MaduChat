@@ -32,27 +32,30 @@ export class AuthService {
           callback(true);
           // Reload after login to get userdata
           window.location.reload();
-        } 
+        }
       });
-    }
-    
-    register(email: string, name: string, username: string, password: string, callback: LoggedInCallback) {
-      this.http.post<AuthResponse>(`${this.baseURL}/auth/register`, {
-        username,
-        password,
-        name,
-        email,
-      })
+  }
+
+  register(email: string, name: string, username: string, password: string, language: string, callback: LoggedInCallback) {
+    this.http.post<AuthResponse>(`${this.baseURL}/auth/register`, {
+      username,
+      password,
+      name,
+      email,
+      settings: {
+        language
+      }
+    })
       .pipe(
         catchError((err: HttpErrorResponse) => this.handleError(err, callback))
-        )
-        .subscribe(res => {
+      )
+      .subscribe(res => {
         this.token = res.access_token;
         if (callback) {
           callback(true);
           // Reload after register to get userdata
           window.location.reload();
-        } 
+        }
       });
   }
 

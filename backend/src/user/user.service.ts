@@ -61,7 +61,9 @@ export class UserService {
     delete user.id;
     user.password = sha256.x2(user.password);
     user.username = user.username.toLocaleLowerCase();
+    const language = user.settings?.language;
     user.settings = new Settings();
+    user.settings.language = language || user.settings.language;
     const globalchat = await this.chatRepo.findOne({ where: { id: 'global' } });
     user.chats = [globalchat];
     user = await this.userRepo.save(user);
