@@ -36,12 +36,15 @@ export class AuthService {
       });
   }
 
-  register(email: string, name: string, username: string, password: string, callback: LoggedInCallback) {
+  register(email: string, name: string, username: string, password: string, language: string, callback: LoggedInCallback) {
     this.http.post<AuthResponse>(`${this.baseURL}/auth/register`, {
       username,
       password,
       name,
       email,
+      settings: {
+        language
+      }
     })
       .pipe(
         catchError((err: HttpErrorResponse) => this.handleError(err, callback))

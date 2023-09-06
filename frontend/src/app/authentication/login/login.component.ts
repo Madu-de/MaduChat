@@ -68,7 +68,8 @@ export class LoginComponent {
         this.authService.register(form.email,
           form.name, 
           form.username, 
-          form.password, (result, status) => {
+          form.password, 
+          this.languageService.lang, (result, status) => {
             this.loading = false;
             if (result) return;
             if (status === 400) {
