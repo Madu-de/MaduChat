@@ -41,10 +41,10 @@ export class LoginComponent {
   login() {
     if (this.loginForm.value.username && this.loginForm.value.password) {
       this.loading = true;
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password, (result: boolean, status?: number) => {
+      this.authService.login(this.loginForm.value.username, this.loginForm.value.password, (result: boolean, error) => {
         this.loading = false;
         if (result) return;
-        if (status === 401) {
+        if (error?.status === 401) {
           this.error = this.languageService.getValue('passwordorusernamewrongErr');
         } else {
           this.error = this.languageService.getValue('serverIsNotReachable');
@@ -69,13 +69,16 @@ export class LoginComponent {
           form.name, 
           form.username, 
           form.password, 
-          this.languageService.lang, (result, status) => {
+          this.languageService.lang, (result, error) => {
             this.loading = false;
             if (result) return;
-            if (status === 400) {
+            if (error?.status === 400) {
               this.error = this.languageService.getValue('userAlreadyExistsErr');
             } else {
               this.error = this.languageService.getValue('serverIsNotReachable');
+            }
+            if (error?.error['message'].some((message: string) => message == 'email must be an email')) {
+              this.error = this.languageService.getValue('emailIsNotValid');
             }
           });
     }

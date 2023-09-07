@@ -41,5 +41,6 @@ export const EN: Language = {
   isTooShort: 'is too short',
   isTooLong: 'is too long',
   passwordPatternErr: 'The password must contain an uppercase letter, a lowercase letter, and a special character',
-  serverIsNotReachable: 'Server is not reachable'
+  serverIsNotReachable: 'Server is not reachable',
+  emailIsNotValid: 'Email is not valid'
 };

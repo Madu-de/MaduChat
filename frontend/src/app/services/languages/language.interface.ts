@@ -40,4 +40,5 @@ export interface Language {
   isTooLong: string;
   passwordPatternErr: string;
   serverIsNotReachable: string;
+  emailIsNotValid: string;
 }

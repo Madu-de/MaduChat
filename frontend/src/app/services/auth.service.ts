@@ -64,7 +64,7 @@ export class AuthService {
   }
 
   handleError(error: HttpErrorResponse, callback?: LoggedInCallback) {
-    if (callback) callback(false, error.status);
+    if (callback) callback(false, error);
     return throwError(() => new Error(error.error.message));
   }
 }
@@ -73,4 +73,4 @@ interface AuthResponse {
   access_token: string;
 }
 
-type LoggedInCallback = (loggedIn: boolean, status?: number) => void
+type LoggedInCallback = (loggedIn: boolean, error?: HttpErrorResponse) => void
