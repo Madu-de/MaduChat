@@ -41,5 +41,6 @@ export const DE: Language = {
   isTooShort: 'ist zu kurz',
   isTooLong: 'ist zu lang',
   passwordPatternErr: 'Das Passwort muss einen Großbuchstaben, einen Kleinbuchstaben und ein Sonderzeichen beinhalten',
-  serverIsNotReachable: 'Der Server is nicht erreichbar'
+  serverIsNotReachable: 'Der Server is nicht erreichbar',
+  emailIsNotValid: 'Email ist ungültig'
 };
