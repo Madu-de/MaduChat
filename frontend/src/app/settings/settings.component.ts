@@ -9,9 +9,4 @@ import { UserService } from '../services/user.service';
 })
 export class SettingsComponent {
   constructor(public languageService: LanguageService, public userService: UserService) {}
-
-  event(event: any) {
-    console.log(event);
-    console.log('event');
-  }
 }
