@@ -1,3 +1,4 @@
+import { User } from 'src/app/classes/User';
 import { Settings } from './../../classes/Settings';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
@@ -6,6 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   template: 'MOCK COMPONENT',
 })
 export class MockOptionComponent {
+  @Input()
+  user: User | undefined;
+
   @Input()
   type: 'toggle' | 'select' = 'select';
 

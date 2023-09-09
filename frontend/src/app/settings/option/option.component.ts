@@ -8,7 +8,10 @@ import { User } from 'src/app/classes/User';
   templateUrl: './option.component.html',
   styleUrls: ['./option.component.scss']
 })
-export class OptionComponent implements OnInit{
+export class OptionComponent {
+  @Input()
+  user: User | undefined;
+  
   @Input()
   type: 'toggle' | 'select' = 'select';
 
@@ -27,15 +30,11 @@ export class OptionComponent implements OnInit{
     checked: boolean;
   }> = new EventEmitter();
 
-  user: User | undefined;
+  @Output()
+  onLoaded: EventEmitter<void> = new EventEmitter();
+
 
   constructor(private userService: UserService) {}
-
-  ngOnInit() {
-    this.userService.getMe(false, false, true).subscribe((user) => {
-      this.user = user;
-    });
-  }
 
   changeEvent(value: string | boolean) {
     this.userService.setSettings(this.settingsId, value).subscribe((settings) => {
