@@ -11,7 +11,7 @@ import { User } from 'src/app/classes/User';
 export class OptionComponent {
   @Input()
   user: User | undefined;
-  
+
   @Input()
   type: 'toggle' | 'select' = 'select';
 
@@ -29,10 +29,6 @@ export class OptionComponent {
     value: string;
     checked: boolean;
   }> = new EventEmitter();
-
-  @Output()
-  onLoaded: EventEmitter<void> = new EventEmitter();
-
 
   constructor(private userService: UserService) {}
 
