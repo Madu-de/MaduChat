@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSlideToggleModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatProgressBarModule
   ]
 })
 export class SettingsModule { }

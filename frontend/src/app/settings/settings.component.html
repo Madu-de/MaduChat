@@ -1,35 +1,24 @@
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <mat-list>
   <mat-list-item>
     <h2>{{languageService.getValue('general')}}</h2>
   </mat-list-item>
-  <settings-option
-    type="toggle"
-    settingsId="showAvatar"
-    [label]="languageService.getValue('showAvatar')">
-  </settings-option>
-  <!-- <mat-list-item>
-    <p class="item">
-      {{languageService.getValue('showAvatar')}}
-      <mat-slide-toggle></mat-slide-toggle>
-    </p>
-  </mat-list-item> -->
-  <settings-option 
-    type="select" 
-    settingsId="language" 
-    [label]="languageService.getValue('language')" 
-    [selectionList]="languageService.getLanguages()"
-    (onChange)="languageService.setLanguage($event.value)">
-  </settings-option>
-  <!-- <mat-list-item>
-    <p class="item">
-      <mat-label>{{languageService.getValue('language')}}</mat-label>
-      <mat-select [value]="languageService.lang" (selectionChange)="languageService.setLanguage($event.value)">
-        <mat-option *ngFor="let lang of languageService.getLanguages()" [value]="lang" #lang>
-          {{lang}}
-        </mat-option>
-      </mat-select>
-    </p>
-  </mat-list-item> -->
+  <ng-container *ngIf="!loading">
+    <settings-option
+      [user]="user"
+      type="toggle"
+      settingsId="showAvatar"
+      [label]="languageService.getValue('showAvatar')">
+    </settings-option>
+    <settings-option 
+      [user]="user"
+      type="select" 
+      settingsId="language" 
+      [label]="languageService.getValue('language')" 
+      [selectionList]="languageService.getLanguages()"
+      (onChange)="languageService.setLanguage($event.value)">
+    </settings-option>
+  </ng-container>
 
   <mat-divider></mat-divider>
 </mat-list>

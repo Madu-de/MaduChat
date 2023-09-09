@@ -9,6 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MockOptionComponent } from './option/mockoption.component';
+import { of } from 'rxjs';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -36,7 +37,9 @@ describe('SettingsComponent', () => {
         },
         {
           provide: UserService,
-          useValue: {},
+          useValue: {
+            getMe: () => of({}),
+          },
         },
       ],
     });
