@@ -7,6 +7,7 @@ import { SnackbarService } from '../services/snackbar.service';
 import { catchError, throwError } from 'rxjs';
 import { LanguageService } from '../services/language.service';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import { ChatService } from '../services/chat.service';
 
 @Component({
   selector: 'app-user',
@@ -25,7 +26,8 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute, 
     private snackbar: SnackbarService, 
     private router: Router, 
-    public languageService: LanguageService
+    public languageService: LanguageService,
+    public chatService: ChatService
   ) {}
 
   ngOnInit() {
@@ -70,5 +72,11 @@ export class UserComponent implements OnInit {
     snackRef.onAction().subscribe(() => {
       this.toggleFriendStatus();
     })
+  }
+
+  addChat(memberid: string) {
+    this.chatService.addChat([memberid]).subscribe((chat) => {
+      this.router.navigate(['chat', chat.id]);
+    });
   }
 }

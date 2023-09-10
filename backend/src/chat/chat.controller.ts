@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Chat } from './chat';
 import { ChatService } from './chat.service';
 import { AuthGuard } from '../auth/auth.guard';
@@ -23,5 +32,15 @@ export class ChatController {
   @Get(':id/messages')
   async getChatMessages(@Param('id') id: string): Promise<Message[]> {
     return await this.chatService.getChatMessages(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post()
+  async createChat(
+    @Req() request: Request,
+    @Body('memberids') memberids: string[],
+  ): Promise<Chat> {
+    memberids.push(request['user'].id);
+    return await this.chatService.createChat(memberids);
   }
 }

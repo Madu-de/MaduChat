@@ -23,4 +23,12 @@ export class ChatService {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
   }
+
+  addChat(memberids: string[]): Observable<Chat> {
+    return this.http.post<Chat>(`${this.auth.baseURL}/chat`, {
+      memberids
+    }, {
+      headers: { Authorization: 'Bearer ' + this.auth.token }
+    })
+  }
 }
