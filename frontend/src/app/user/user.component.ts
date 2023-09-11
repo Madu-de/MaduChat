@@ -77,6 +77,7 @@ export class UserComponent implements OnInit {
   addChat(memberid: string) {
     this.chatService.addChat([memberid]).subscribe((chat) => {
       this.router.navigate(['chat', chat.id]);
+      this.userService.emitMeChanged();
     });
   }
 }

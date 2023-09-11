@@ -36,11 +36,29 @@ export class ChatService {
     return messages;
   }
 
-  async createChat(memberIds: string[]): Promise<Chat> {
+  async createChat(ownerId: string, memberIds: string[]): Promise<Chat> {
+    const owner = await this.userRepo.findOne({
+      where: { id: ownerId },
+      relations: { friends: true },
+    });
     const members = await this.userRepo.find({ where: { id: In(memberIds) } });
+    members.forEach(member => {
+      if (!owner.friends.some(friend => friend.id === member.id)) {
+        throw new HttpException(
+          `${member.id} is not a friend of the owner`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    });
+    if (memberIds.length !== members.length) {
+      throw new HttpException(
+        `Some members were not found`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const chat = new Chat();
-    chat.members = members;
-    chat.name = 'Change me';
+    chat.members = [...members, owner];
+    chat.name = 'Chat';
     return await this.chatRepo.save(chat);
   }
 }

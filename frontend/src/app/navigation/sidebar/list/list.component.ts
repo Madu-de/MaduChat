@@ -15,6 +15,13 @@ export class ListComponent implements OnInit {
   constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService) {}
 
   ngOnInit() {
+    this.updateSidebar();
+    this.userService.getMeChangedEmitter().subscribe(() => {
+      this.updateSidebar();
+    })
+  }
+
+  updateSidebar() {
     this.userService.getMe(true).subscribe(user => {
       this.chats = (<Chat[]>user.chats).filter(chat => chat.id !== 'global');
       this.chats.forEach((chat, i) => {

@@ -40,7 +40,6 @@ export class ChatController {
     @Req() request: Request,
     @Body('memberids') memberids: string[],
   ): Promise<Chat> {
-    memberids.push(request['user'].id);
-    return await this.chatService.createChat(memberids);
+    return await this.chatService.createChat(request['user'].id, memberids);
   }
 }
