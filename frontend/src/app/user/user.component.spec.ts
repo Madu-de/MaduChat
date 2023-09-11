@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { User } from '../classes/User';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChatService } from '../services/chat.service';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -37,6 +38,9 @@ describe('UserComponent', () => {
           useValue: {
             getMe: (): Observable<User> => {
               return of(<User>{});
+            },
+            emitMeChanged: (): Observable<void> => {
+              return of();
             }
           },
         },
@@ -60,6 +64,10 @@ describe('UserComponent', () => {
             }
           },
         },
+        {
+          provide: ChatService,
+          useValue: {}
+        }
       ]
     });
     fixture = TestBed.createComponent(UserComponent);
