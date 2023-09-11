@@ -1,6 +1,6 @@
 import { Settings } from './../classes/Settings';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../classes/User';
 import { AuthService } from './auth.service';
 import { catchError, throwError } from 'rxjs';
@@ -9,6 +9,7 @@ import { catchError, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  private meChanged: EventEmitter<void> = new EventEmitter();
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
@@ -65,6 +66,14 @@ export class UserService {
         ['Authorization']: 'Bearer ' + this.auth.token,
       },
     });
+  }
+
+  emitMeChanged() {
+    this.meChanged.emit();
+  }
+
+  getMeChangedEmitter() {
+    return this.meChanged;
   }
 
   handleError(error: HttpErrorResponse, callback?: UserCallback) {

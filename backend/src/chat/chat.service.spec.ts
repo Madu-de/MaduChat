@@ -3,6 +3,7 @@ import { ChatService } from './chat.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Chat } from './chat';
 import { Message } from '../message/message';
+import { User } from '../user/user';
 
 describe('ChatService', () => {
   let service: ChatService;
@@ -21,6 +22,13 @@ describe('ChatService', () => {
           provide: getRepositoryToken(Message),
           useValue: {
             find: jest.fn(),
+          },
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: {
+            find: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],

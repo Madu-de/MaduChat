@@ -384,6 +384,41 @@ None
 >  curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:3000/chat/global/messages
 > ```
 
+</details></summary>
+
+<details>
+<summary><code>POST</code> <code><b>/chat</b></code> <code>(Adds a chat with sender as owner)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Body
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | memberIds      |  required | string[]   | N/A  |
+
+##### Parameters
+None
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `201`         | `application/json`        | `{"members": [{"id": "dde16db4-20db-4ecc-9d04-dd720b4067fe","email": "damian@gmail.com","name": "Damian","username": "damian"},{"id": "a0f22b2e-a038-4f11-a8f1-6f5f3474fa7d","email": "madu@gmail.com","name": "Madu","username": "madu","friends": [{"id": "dde16db4-20db-4ecc-9d04-dd720b4067fe","email": "damian@gmail.com","name": "Damian","username": "damian"}]}],"name": "Chat","id": "d0eec1fb-2276-4b4a-9c48-3b51e0ae362c"}`                                |
+> | `400`         | `application/json`                | `{"statusCode": 400,"message": "Some members were not found"}`   
+> | `400`         | `application/json`                | `{"statusCode": 400,"message": "1419ac4e-18a6-4252-8d61-b0a8f07d2ab8 is not a friend of the owner"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -d '{"memberids": ["f8bac12b-2772-42ed-8dee-a490067be7e4"]}' -H "Content-Type: application/json" -X POST http://localhost:3000/chat
+> ```
+
 </details>
 
 ### Message

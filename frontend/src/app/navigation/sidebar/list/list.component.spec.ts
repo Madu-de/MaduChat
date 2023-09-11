@@ -37,6 +37,9 @@ describe('ListComponent', () => {
           useValue: {
             getMe: () => of({
               chats: []
+            }),
+            getMeChangedEmitter: () => of({
+              
             })
           }
         },
