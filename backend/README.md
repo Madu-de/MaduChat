@@ -397,7 +397,7 @@ None
 ##### Body
 > | name      |  type     | data type               | description                                                           |
 > |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | memberIds      |  required | string[]   | N/A  |
+> | memberids      |  required | string[]   | N/A  |
 
 ##### Parameters
 None
