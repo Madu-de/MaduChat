@@ -4,7 +4,7 @@ import { Message } from '../classes/Message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { Websocket } from '../services/socket.service';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -38,16 +38,24 @@ export class ChatComponent implements OnInit, OnDestroy {
         console.log(err);
       });
       this.websocket.emit('joinChat', { chatid: chatId });
-      this.chatService.getMessages(chatId).subscribe((messages) => {
-        this.loading = false;
-        this.messages = messages;
-        this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
-      });
+      this.chatService.getMessages(chatId)
+        .pipe(
+          catchError((err) => {
+            this.loading = false;
+            return throwError(() => new Error(err.error.message));
+          })
+        )
+        .subscribe(messages => {
+          this.loading = false;
+          this.messages = messages;
+          this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
+        });
       this.websocket.on('message', (message: Message) => {
         this.messages.unshift(message);
       });
     });
   }
+
   ngOnDestroy() {
     this.routerSubscription?.unsubscribe();
     this.websocket.removeAllListeners();
