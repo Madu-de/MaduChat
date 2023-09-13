@@ -13,7 +13,6 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ListComponent implements OnInit {
   chats: Chat[] = [];
-  routerSubscription: Subscription = new Subscription();
   urlPosition: string = '';
 
   constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router) {}
@@ -23,7 +22,7 @@ export class ListComponent implements OnInit {
     this.userService.getMeChangedEmitter().subscribe(() => {
       this.updateSidebar();
     });
-    this.routerSubscription = this.router.events.subscribe(event => {
+    this.router.events.subscribe(event => {
       if (event.type !== 1) return;
       this.urlPosition = event.url;
     });
