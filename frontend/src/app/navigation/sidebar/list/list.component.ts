@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Chat } from 'src/app/classes/Chat';
 import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
@@ -11,14 +13,20 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ListComponent implements OnInit {
   chats: Chat[] = [];
+  routerSubscription: Subscription = new Subscription();
+  urlPosition: string = '';
 
-  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService) {}
+  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router) {}
 
   ngOnInit() {
     this.updateSidebar();
     this.userService.getMeChangedEmitter().subscribe(() => {
       this.updateSidebar();
-    })
+    });
+    this.routerSubscription = this.router.events.subscribe(event => {
+      if (event.type !== 1) return;
+      this.urlPosition = event.url;
+    });
   }
 
   updateSidebar() {
