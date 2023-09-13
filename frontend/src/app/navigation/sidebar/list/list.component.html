@@ -1,5 +1,5 @@
 <mat-list>
-    <mat-list-item>
+    <mat-list-item [ngClass]="{'marked': urlPosition == '/chat/global'}">
         <mat-card>
             <mat-card-content>
                 <a routerLink="/chat/global">
@@ -8,7 +8,7 @@
             </mat-card-content>
         </mat-card>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item [ngClass]="{'marked': urlPosition == '/friends'}">
         <mat-card>
             <mat-card-content>
                 <a routerLink="/friends">
@@ -17,7 +17,7 @@
             </mat-card-content>
         </mat-card>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item [ngClass]="{'marked': urlPosition == '/settings'}">
         <mat-card>
             <mat-card-content>
                 <a routerLink="/settings">
@@ -29,7 +29,7 @@
 
     <mat-divider></mat-divider>
 
-    <mat-list-item *ngFor="let chat of chats">
+    <mat-list-item *ngFor="let chat of chats" [ngClass]="{'marked': urlPosition == '/chat/' + chat.id}">
         <mat-card>
             <mat-card-content>
                 <a [routerLink]=" '/chat/' + chat.id ">
