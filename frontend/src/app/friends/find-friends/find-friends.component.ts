@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { User } from 'src/app/classes/User';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
@@ -35,9 +36,16 @@ export class FindFriendsComponent implements OnChanges {
   search(searchFor?: string) {
     this.loading = true;
     this.searchValue = searchFor || this.searchForm.value['searchbar'];
-    this.userService.getUsersLike(this.searchValue).subscribe(users => {
-      this.loading = false;
-      this.users = users.filter(user => user.id !== this.user?.id);
-    });
+    this.userService.getUsersLike(this.searchValue)
+      .pipe(
+        catchError((err) => {
+          this.loading = false;
+          return throwError(() => new Error(err.error.message));
+        })
+      )
+      .subscribe(users => {
+        this.loading = false;
+        this.users = users.filter(user => user.id !== this.user?.id);
+      });
   }
 }
