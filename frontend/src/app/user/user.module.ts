@@ -7,12 +7,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
+import { BatchListComponent } from './batch-list/batch-list.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
 @NgModule({
   declarations: [
-    UserComponent
+    UserComponent,
+    BatchListComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +25,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatProgressBarModule,
     MatIconModule,
+    MatTooltipModule,
+  ],
+  exports: [
+    BatchListComponent
   ]
 })
 export class UserModule { }

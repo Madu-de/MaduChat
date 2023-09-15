@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserModule } from '../user/user.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     ReactiveFormsModule,
     RouterModule,
     MatProgressBarModule,
+    UserModule
   ],
   exports: [
     FriendsComponent, 

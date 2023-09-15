@@ -10,3 +10,8 @@ mat-card-subtitle:hover {
   cursor: pointer;
   text-decoration: underline;
 }
+
+mat-card-title {
+  display: flex;
+  gap: 5px;
+}
