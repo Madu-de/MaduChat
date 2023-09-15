@@ -11,7 +11,6 @@ import { BatchListComponent } from './batch-list/batch-list.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 
-
 @NgModule({
   declarations: [
     UserComponent,
