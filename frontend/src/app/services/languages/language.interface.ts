@@ -41,4 +41,6 @@ export interface Language {
   passwordPatternErr: string;
   serverIsNotReachable: string;
   emailIsNotValid: string;
+  admin: string;
+  verified: string;
 }

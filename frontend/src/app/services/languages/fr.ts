@@ -43,4 +43,6 @@ export const FR: Language = {
   passwordPatternErr: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule et un caractère spécial',
   serverIsNotReachable: 'Le serveur n\'est pas accessible',
   emailIsNotValid: 'L\'adresse e-mail n\'est pas valide',
+  admin: 'Administrateur',
+  verified: 'Vérifié'
 };

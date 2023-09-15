@@ -42,5 +42,7 @@ export const ES: Language = {
   isTooLong: 'es demasiado largo',
   passwordPatternErr: 'La contraseña debe contener una letra mayúscula, una letra minúscula y un carácter especial',
   serverIsNotReachable: 'El servidor no está disponible',
-  emailIsNotValid: 'El correo electrónico no es válido'
+  emailIsNotValid: 'El correo electrónico no es válido',
+  admin: 'Administrador',
+  verified: 'Verificado',
 };
