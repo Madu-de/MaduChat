@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockModule } from 'ng-mocks';
+import { UserModule } from 'src/app/user/user.module';
 
 describe('MessageComponent', () => {
   let component: MessageComponent;
@@ -23,6 +25,7 @@ describe('MessageComponent', () => {
         MatListModule,
         MatCardModule,
         RouterTestingModule,
+        MockModule(UserModule)
       ],
       declarations: [
         MessageComponent,

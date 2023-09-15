@@ -9,12 +9,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MessageComponent } from './message/message.component';
 import { RouterModule } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserModule } from '../user/user.module';
 
 
 @NgModule({
   declarations: [
     ChatComponent,
-    MessageComponent
+    MessageComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +26,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatCardModule,
     RouterModule,
     MatProgressBarModule,
-  ]
+    UserModule
+  ],
 })
 export class ChatModule { }
