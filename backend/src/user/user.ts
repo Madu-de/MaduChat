@@ -47,6 +47,16 @@ export class User {
   @MaxLength(20)
   username: string;
 
+  @Column({
+    default: false,
+  })
+  isAdmin: boolean;
+
+  @Column({
+    default: false,
+  })
+  isVerified: boolean;
+
   @ManyToMany(() => User, user => user.friendRequetsReceived)
   @JoinTable({
     name: 'friendrequests',

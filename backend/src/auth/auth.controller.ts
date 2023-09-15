@@ -24,7 +24,13 @@ export class AuthController {
   @Post('register')
   async register(@Body() user: User) {
     const oldUser = { ...user };
-    await this.userService.createUser(user);
+    await this.userService.createUser(<User>{
+      username: user.username,
+      password: user.password,
+      settings: user.settings,
+      email: user.email,
+      name: user.name,
+    });
     const token = await this.authService.signIn(
       oldUser.username,
       oldUser.password,
