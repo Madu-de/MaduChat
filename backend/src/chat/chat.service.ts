@@ -36,12 +36,18 @@ export class ChatService {
     return messages;
   }
 
-  async createChat(ownerId: string, memberIds: string[]): Promise<Chat> {
+  async createChat(ownerId: string, memberids: string[]): Promise<Chat> {
+    if (typeof memberids === 'string') {
+      throw new HttpException(
+        `memberids must be an array of strings`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const owner = await this.userRepo.findOne({
       where: { id: ownerId },
       relations: { friends: true },
     });
-    const members = await this.userRepo.find({ where: { id: In(memberIds) } });
+    const members = await this.userRepo.find({ where: { id: In(memberids) } });
     members.forEach(member => {
       if (!owner.friends.some(friend => friend.id === member.id)) {
         throw new HttpException(
@@ -50,7 +56,7 @@ export class ChatService {
         );
       }
     });
-    if (memberIds.length !== members.length) {
+    if (memberids.length !== members.length) {
       throw new HttpException(
         `Some members were not found`,
         HttpStatus.BAD_REQUEST,
