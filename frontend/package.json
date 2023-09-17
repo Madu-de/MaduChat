@@ -1,6 +1,10 @@
 {
   "name": "maduchat-frontend",
   "version": "v1.0.1",
+  "description": "This is the frontend of MaduChat. More information here: https://github.com/Madu-de/MaduChat/tree/main/frontend",
+  "author": "Madu",
+  "private": true,
+  "license": "GNU Affero General Public License v3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,8 +13,6 @@
     "test": "ng test",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage"
   },
-  "license": "GNU Affero General Public License v3.0",
-  "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
     "@angular/cdk": "^16.1.3",

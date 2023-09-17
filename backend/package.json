@@ -1,10 +1,10 @@
 {
   "name": "maduchat-backend",
   "version": "v1.0.1",
-  "description": "",
+  "description": "This is the backend of MaduChat. More information here: https://github.com/Madu-de/MaduChat/tree/main/backend",
   "author": "Madu",
   "private": true,
-  "license": "GNU Affero General Public License v3.0 ",
+  "license": "GNU Affero General Public License v3.0",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
