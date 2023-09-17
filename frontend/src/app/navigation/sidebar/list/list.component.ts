@@ -24,6 +24,7 @@ export class ListComponent implements OnInit {
     });
     this.router.events.subscribe(event => {
       if (event.type !== 1) return;
+      event.url = event.url.split('?')[0];
       this.urlPosition = event.url;
     });
   }
