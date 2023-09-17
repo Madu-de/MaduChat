@@ -9,10 +9,10 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-actions>
-    <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()" [disabled]="user?.id === clientUser?.id">
+    <button mat-fab extended [color]="isAdded || isFriend ? 'warn' : 'primary'" (click)="toggleFriendStatus()" [disabled]="user?.id === clientUser?.id" #friends [ngClass]="{'white-icon': !friends.disabled}">
       <mat-icon>{{isAdded || isFriend ? 'remove' : 'add'}}</mat-icon> {{languageService.getValue('friends')}}
     </button>
-    <button mat-fab extended color="primary" [disabled]="!isFriend" (click)="addChat(user?.id || '')">
+    <button mat-fab extended color="primary" [disabled]="!isFriend" #chat (click)="addChat(user?.id || '')" [ngClass]="{'white-icon': !friends.disabled}">
       <mat-icon>add</mat-icon> {{languageService.getValue('chat')}}
     </button>
   </mat-card-actions>
