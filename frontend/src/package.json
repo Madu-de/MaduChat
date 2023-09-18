@@ -1,0 +1,9 @@
+{
+  "name": "maduchat-electron-frontend",
+  "version": "1.1.0-pre",
+  "description": "This is the frontend of MaduChat. More information here: https://github.com/Madu-de/MaduChat/tree/main/frontend",
+  "author": "Madu",
+  "private": true,
+  "license": "GNU Affero General Public License v3.0",
+  "main": "electron.prod.js"
+}
