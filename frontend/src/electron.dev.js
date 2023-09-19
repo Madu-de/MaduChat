@@ -8,7 +8,8 @@ const createWindow = () => {
     win = new BrowserWindow({
       width: 800,
       height: 600,
-      icon: './src/favicon.ico'
+      icon: './src/favicon.ico',
+      autoHideMenuBar: true,
     });
 
     win.loadURL(url.format({

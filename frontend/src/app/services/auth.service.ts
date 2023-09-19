@@ -30,8 +30,6 @@ export class AuthService {
         this.token = res.access_token;
         if (callback) {
           callback(true);
-          // Reload after login to get userdata
-          window.location.reload();
         }
       });
   }
@@ -53,8 +51,6 @@ export class AuthService {
         this.token = res.access_token;
         if (callback) {
           callback(true);
-          // Reload after register to get userdata
-          window.location.reload();
         }
       });
   }

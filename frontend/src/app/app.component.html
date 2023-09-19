@@ -1,5 +1,5 @@
-<navigation-header></navigation-header>
-<navigation-sidebar>
+<navigation-header *ngIf="isLoggedIn()"></navigation-header>
+<navigation-sidebar *ngIf="isLoggedIn()">
   <router-outlet></router-outlet>
 </navigation-sidebar>
 <app-login *ngIf="!isLoggedIn()"></app-login>
