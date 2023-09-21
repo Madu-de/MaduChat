@@ -13,11 +13,11 @@
     "test": "ng test",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "electron": "electron ./src/electron.dev",
-    "package:win": "npm run build && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32 --arch=all --overwrite",
-    "package:linux": "npm run build && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=linux --arch=all --overwrite",
-    "package:win-lux": "npm run build && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32,linux --arch=all --overwrite",
-    "package:osx": "npm run build && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=darwin --arch=all --overwrite",
-    "package:all": "npm run build && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --all --arch=all --overwrite --symlinks"
+    "package:win": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32 --arch=all --overwrite",
+    "package:linux": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=linux --arch=all --overwrite",
+    "package:win-lux": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32,linux --arch=all --overwrite",
+    "package:osx": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=darwin --arch=all --overwrite",
+    "package:all": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --all --arch=all --overwrite --symlinks"
   },
   "dependencies": {
     "@angular/animations": "^16.1.0",

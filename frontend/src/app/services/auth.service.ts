@@ -2,12 +2,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { CookieService } from './cookie.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public baseURL: string = 'http://localhost:3000';
+  public baseURL: string = environment.apiURL;
   get token(): string {
     const token = this.cookie.getCookie('access_token');
     return token || '';

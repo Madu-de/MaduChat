@@ -51,7 +51,22 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }]
+            },
+            "electron": {
+              "outputHashing": "all",
+              "fileReplacements": [{
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.electron.ts"
+              }],
+              "index": {
+                "input": "src/index.electron.html",
+                "output": "index.html"
+              }
             },
             "development": {
               "buildOptimizer": false,

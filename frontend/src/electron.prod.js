@@ -19,8 +19,6 @@ const createWindow = () => {
     slashes: true
   }));
 
-  win.webContents.openDevTools();
-
   win.on('closed', () => {
     win = null;
   });
@@ -42,10 +40,10 @@ app.on('activate', () => {
 
 app.on('browser-window-focus', function () {
   globalShortcut.register("CommandOrControl+R", () => {
-      console.log("CommandOrControl+R is pressed: Shortcut Disabled");
+    console.log("CommandOrControl+R is pressed: Shortcut Disabled");
   });
   globalShortcut.register("F5", () => {
-      console.log("F5 is pressed: Shortcut Disabled");
+    console.log("F5 is pressed: Shortcut Disabled");
   });
 });
 
