@@ -13,11 +13,16 @@ export class CookieService {
     if (expires && typeof expires == 'number') cookie += `;max-age=${expires}`;
     if (path) cookie += `;path=${path}`;
     document.cookie = cookie;
-    return this.getCookie(cookie);
+
+    let savedCookie = this.getCookie(name);
+    if (savedCookie !== value) {
+      localStorage.setItem(name, value);
+    }
   }
 
-  public getCookie(name: string) {
-    return this.getCookieMap().get(name);
+  public getCookie(name: string): string {
+    let value = this.getCookieMap().get(name) || localStorage.getItem(name) || '';
+    return value;
   }
 
   private getCookieMap() {

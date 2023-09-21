@@ -1,5 +1,6 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
 
@@ -8,7 +9,7 @@ import { LanguageService } from 'src/app/services/language.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   public hideLogin: boolean = true;
   public hideRegister: boolean = true;
   public hideRegisterConfirm: boolean = true;
@@ -36,7 +37,11 @@ export class LoginComponent {
 
   public loading: boolean = false;
 
-  constructor(private authService: AuthService, public languageService: LanguageService) {}
+  constructor(private authService: AuthService, public languageService: LanguageService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.navigate(['/']);
+  }
 
   login() {
     if (this.loginForm.value.username && this.loginForm.value.password) {
