@@ -27,9 +27,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/package.json",
-              "src/electron.prod.js"
+              "src/assets"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/purple-green.css",
@@ -63,6 +61,12 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.electron.ts"
               }],
+              "assets": [
+                "src/favicon.ico",
+                "src/assets",
+                "src/package.json",
+                "src/electron.prod.js"
+              ],
               "index": {
                 "input": "src/index.electron.html",
                 "output": "index.html"
