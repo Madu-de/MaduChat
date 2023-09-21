@@ -13,11 +13,20 @@
     "test": "ng test",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "electron": "electron ./src/electron.dev",
-    "package:win": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32 --arch=all --overwrite",
-    "package:linux": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=linux --arch=all --overwrite",
-    "package:win-lux": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32,linux --arch=all --overwrite",
-    "package:osx": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=darwin --arch=all --overwrite",
-    "package:all": "ng build --configuration=electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --all --arch=all --overwrite --symlinks"
+
+    "build-electron": "ng build --configuration=electron",
+    "delete-dist-frontend": "del-cli dist/frontend",
+    "package:win": "npm run build-electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32 --arch=all --overwrite && npm run delete-dist-frontend",
+    "package:linux": "npm run build-electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=linux --arch=all --overwrite && npm run delete-dist-frontend",
+    "package:win-lux": "npm run build-electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=win32,linux --arch=all --overwrite && npm run delete-dist-frontend",
+    "package:osx": "npm run build-electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --platform=darwin --arch=all --overwrite && npm run delete-dist-frontend",
+    "package:all": "npm run build-electron && cross-var electron-packager dist/frontend $npm_package_name-$npm_package_version --out=dist/packages --all --arch=all --overwrite --symlinks && npm run delete-dist-frontend",
+
+    "build+win": "npm run package:win && npm run build",
+    "build+linux": "npm run package:linux && npm run build",
+    "build+win-lux": "npm run package:win-lux && npm run build",
+    "build+osx": "npm run package:osx && npm run build",
+    "build+all": "npm run package:all && npm run build"
   },
   "dependencies": {
     "@angular/animations": "^16.1.0",
@@ -43,6 +52,7 @@
     "@types/jasmine": "~4.3.0",
     "concurrently": "^8.2.1",
     "cross-var": "^1.1.0",
+    "del-cli": "^5.1.0",
     "electron": "^26.2.1",
     "electron-packager": "^17.1.2",
     "jasmine-core": "~4.6.0",
