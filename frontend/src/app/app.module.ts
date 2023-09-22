@@ -47,7 +47,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatSnackBarModule,
     UserModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
+      enabled: false,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
