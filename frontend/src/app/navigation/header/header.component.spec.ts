@@ -6,6 +6,8 @@ import { LanguageService } from 'src/app/services/language.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatBadgeModule } from '@angular/material/badge';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -16,7 +18,9 @@ describe('HeaderComponent', () => {
       imports: [
         MatToolbarModule,
         MatIconModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatSnackBarModule,
+        MatBadgeModule
       ],
       declarations: [HeaderComponent],
       providers: [
