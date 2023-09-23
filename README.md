@@ -1,5 +1,4 @@
-# MaduChat
-MaduChat is a chat application which has a global chat, friend system, settings and lots of other features
+![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/141bc809-3068-4027-abaf-575f2c596238)
 
 ## Getting started
 - Clone this repo
