@@ -23,6 +23,7 @@ import { FriendsModule } from './friends/friends.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserModule } from './user/user.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { OnlineService } from './services/online.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AuthService, 
     ChatService, 
     CookieService, 
-    Websocket
+    Websocket,
+    OnlineService
   ],
   bootstrap: [AppComponent],
 })
