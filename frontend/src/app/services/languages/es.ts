@@ -45,4 +45,6 @@ export const ES: Language = {
   emailIsNotValid: 'El correo electrónico no es válido',
   admin: 'Administrador',
   verified: 'Verificado',
+  youAreoffline: 'Estás fuera de línea!',
+  youAreOnline: 'Estás en línea de nuevo!',
 };

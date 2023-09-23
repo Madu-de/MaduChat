@@ -45,4 +45,6 @@ export const EN: Language = {
   emailIsNotValid: 'Email is not valid',
   admin: 'Admin',
   verified: 'Verified',
+  youAreoffline: 'You are offline!',
+  youAreOnline: 'You are back online!',
 };

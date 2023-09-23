@@ -8,7 +8,7 @@ export class SnackbarService {
 
   constructor(private snackBar: MatSnackBar) { }
 
-  open(message: string, action: string): MatSnackBarRef<TextOnlySnackBar> {
+  open(message: string, action: string = ''): MatSnackBarRef<TextOnlySnackBar> {
     const snackRef = this.snackBar.open(message, action, {
       duration: 5000,
       panelClass: ['snackbar']

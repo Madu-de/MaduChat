@@ -43,4 +43,6 @@ export interface Language {
   emailIsNotValid: string;
   admin: string;
   verified: string;
+  youAreoffline: string;
+  youAreOnline: string;
 }

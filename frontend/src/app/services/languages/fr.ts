@@ -44,5 +44,7 @@ export const FR: Language = {
   serverIsNotReachable: 'Le serveur n\'est pas accessible',
   emailIsNotValid: 'L\'adresse e-mail n\'est pas valide',
   admin: 'Administrateur',
-  verified: 'Vérifié'
+  verified: 'Vérifié',
+  youAreoffline: 'Tu es de nouveau en ligne!',
+  youAreOnline: 'Tu es hors ligne!',
 };

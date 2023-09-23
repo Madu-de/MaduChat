@@ -14,6 +14,8 @@ import { ProfilePopupComponent } from './header/profile-popup/profile-popup.comp
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { OutsideClickHideDirective } from './directives/outside-click-hide.directive';
+import { MatBadgeModule } from '@angular/material/badge';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { OutsideClickHideDirective } from './directives/outside-click-hide.direc
     MatFormFieldModule,
     MatSelectModule,
     MatCardModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatBadgeModule
   ],
   providers: [
     NavigationService
