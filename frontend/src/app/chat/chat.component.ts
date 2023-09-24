@@ -17,7 +17,6 @@ export class ChatComponent implements OnInit, OnDestroy {
   public routerSubscription: Subscription | undefined;
   public channelExists: boolean = true;
   public loading: boolean = true;
-  private websocket: WebsocketConnection | undefined;
   
   constructor(
     public languageService: LanguageService, 
@@ -31,15 +30,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
       this.channelExists = true;
-      this.websocket?.disconnect();
-      this.websocket = new WebsocketConnection(this.auth.token);
       const chatId = this.route.snapshot.paramMap.get('id');
       if (!chatId) return;
-      this.websocket.on('error', (err:string) => {
+      this.auth.websocket?.on('error', (err:string) => {
         this.channelExists = false;
         console.log(err);
       });
-      this.websocket.emit('joinChat', { chatid: chatId });
+      this.auth.websocket?.emit('joinChat', { chatid: chatId });
       this.chatService.getMessages(chatId)
         .pipe(
           catchError((err) => {
@@ -52,7 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.messages = messages;
           this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
         });
-      this.websocket.on('message', (message: Message) => {
+        this.auth.websocket?.on('message', (message: Message) => {
         this.messages.unshift(message);
       });
     });
@@ -60,12 +57,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerSubscription?.unsubscribe();
-    this.websocket?.removeAllListeners();
-    this.websocket?.disconnect();
+    this.auth.websocket?.removeAllListeners();
   }
 
   submitMessageInput(messageElement: HTMLInputElement) {
-    this.websocket?.emit('sendMessage', { message: messageElement.value });
+    this.auth.websocket?.emit('sendMessage', { message: messageElement.value });
     messageElement.value = '';
   }
 }
