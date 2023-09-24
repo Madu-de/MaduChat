@@ -18,7 +18,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { CookieService } from './services/cookie.service';
 import { SettingsModule } from './settings/settings.module';
 import { SocketIoModule } from 'ngx-socket-io';
-import { Websocket } from './services/socket.service';
 import { FriendsModule } from './friends/friends.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserModule } from './user/user.module';
@@ -59,7 +58,6 @@ import { OnlineService } from './services/online.service';
     AuthService, 
     ChatService, 
     CookieService, 
-    Websocket,
     OnlineService
   ],
   bootstrap: [AppComponent],
