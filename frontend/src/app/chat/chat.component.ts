@@ -3,8 +3,9 @@ import { LanguageService } from '../services/language.service';
 import { Message } from '../classes/Message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
-import { Websocket } from '../services/socket.service';
 import { Subscription, catchError, throwError } from 'rxjs';
+import { WebsocketConnection } from '../classes/WebsocketConnection';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -21,23 +22,21 @@ export class ChatComponent implements OnInit, OnDestroy {
     public languageService: LanguageService, 
     private route: ActivatedRoute, 
     private router: Router, 
-    private chatService: ChatService, 
-    private websocket: Websocket
+    private chatService: ChatService,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
-    this.languageService.getValue('general');
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
       this.channelExists = true;
-      this.websocket.removeAllListeners();
       const chatId = this.route.snapshot.paramMap.get('id');
       if (!chatId) return;
-      this.websocket.on('error', (err:string) => {
+      this.auth.websocket?.on('error', (err:string) => {
         this.channelExists = false;
         console.log(err);
       });
-      this.websocket.emit('joinChat', { chatid: chatId });
+      this.auth.websocket?.emit('joinChat', { chatid: chatId });
       this.chatService.getMessages(chatId)
         .pipe(
           catchError((err) => {
@@ -50,7 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy {
           this.messages = messages;
           this.messages.sort((a, b) => new Date(a.createdAt) > new Date(b.createdAt) ? -1 : 1);
         });
-      this.websocket.on('message', (message: Message) => {
+        this.auth.websocket?.on('message', (message: Message) => {
         this.messages.unshift(message);
       });
     });
@@ -58,11 +57,11 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerSubscription?.unsubscribe();
-    this.websocket.removeAllListeners();
+    this.auth.websocket?.removeAllListeners();
   }
 
   submitMessageInput(messageElement: HTMLInputElement) {
-    this.websocket.emit('sendMessage', { message: messageElement.value });
+    this.auth.websocket?.emit('sendMessage', { message: messageElement.value });
     messageElement.value = '';
   }
 }

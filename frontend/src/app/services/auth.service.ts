@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { CookieService } from './cookie.service';
 import { environment } from 'src/environments/environment';
+import { WebsocketConnection } from '../classes/WebsocketConnection';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,15 @@ export class AuthService {
   public baseURL: string = environment.apiURL;
   get token(): string {
     const token = this.cookie.getCookie('access_token');
+    if (!this.websocket) this.websocket = new WebsocketConnection(token);
     return token || '';
   }
   set token(value: string) {
+    this.websocket?.disconnect();
+    if (value != '') this.websocket = new WebsocketConnection(value);
     this.cookie.setCookie('access_token', value, 30 * 60, '/');
   }
+  public websocket: WebsocketConnection | undefined;
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 

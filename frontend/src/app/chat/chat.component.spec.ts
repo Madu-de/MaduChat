@@ -4,7 +4,6 @@ import { ChatComponent } from './chat.component';
 import { LanguageService } from '../services/language.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../services/chat.service';
-import { Websocket } from '../services/socket.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +12,7 @@ import { MatCardModule } from '@angular/material/card';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { AuthService } from '../services/auth.service';
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -47,11 +47,11 @@ describe('ChatComponent', () => {
           useValue: {}
         },
         {
-          provide: Websocket,
+          provide: AuthService,
           useValue: {
-            removeAllListeners: () => {}
+            token: '',
           }
-        },
+        }
       ]
     });
     fixture = TestBed.createComponent(ChatComponent);
