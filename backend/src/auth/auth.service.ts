@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as sha256 from 'sha256';
 import { WebsocketService } from '../websocket/websocket.service';
 import { jwtConstants } from './constants';
+import { User } from '../user/user';
 
 @Injectable()
 export class AuthService {
@@ -52,10 +53,11 @@ export class AuthService {
     }
   }
 
-  async getUserFromHeaderToken(header: string) {
+  async getUserFromHeaderToken(header: string): Promise<User> | undefined {
     const token = this.extractTokenFromHeader(header);
     const payload = await this.getPayloadFromToken(token);
-    return this.usersService.getUser(payload.id);
+    if (!payload) return;
+    return await this.usersService.getUser(payload.id);
   }
 
   private errorIsFromWebsocket(websocketId: number): boolean {

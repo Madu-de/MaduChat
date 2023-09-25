@@ -55,6 +55,7 @@ export class WebsocketGateway
     const user = await this.auth.getUserFromHeaderToken(
       client.handshake.headers['authorization'],
     );
+    if (!user) return;
     user.isOnline = isOnline;
     this.userRepo.save(user);
   }
