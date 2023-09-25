@@ -4,6 +4,7 @@ import { BatchListComponent } from './batch-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LanguageService } from 'src/app/services/language.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('BatchListComponent', () => {
   let component: BatchListComponent;
@@ -14,12 +15,15 @@ describe('BatchListComponent', () => {
       declarations: [BatchListComponent],
       imports: [
         MatIconModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatTooltipModule
       ],
       providers: [
         {
           provide: LanguageService,
-          useValue: {}
+          useValue: {
+            getValue: () => ''
+          }
         }
       ]
     });

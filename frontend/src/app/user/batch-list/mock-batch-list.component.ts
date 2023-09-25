@@ -7,5 +7,5 @@ import { User } from '../../classes/User';
 })
 export class MockBatchListComponent {
   @Input()
-  user: User | undefined;
+  user: User | undefined = new User('test', 'test', 'test', '', false, false, true);
 }
