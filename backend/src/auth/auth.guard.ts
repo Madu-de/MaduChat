@@ -1,7 +1,6 @@
 import { AuthService } from './auth.service';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -16,23 +15,18 @@ export class AuthGuard implements CanActivate {
       context.switchToHttp().getRequest();
     const isWebsocket = request.url.startsWith('/socket.io');
     const websocketId = isWebsocket ? context.switchToWs().getClient().id : 0;
-    const token = this.extractTokenFromHeader(request);
+    const token = this.authService.extractTokenFromHeader(
+      request.headers['authorization'],
+    );
     if (!token) {
       return this.authService.unauthorized(websocketId);
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
-      });
+      const payload = await this.authService.getPayloadFromToken(token);
       request['user'] = payload;
     } catch {
       return this.authService.unauthorized(websocketId);
     }
     return true;
-  }
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers['authorization']?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
   }
 }

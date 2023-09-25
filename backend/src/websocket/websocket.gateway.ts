@@ -13,6 +13,10 @@ import { Logger, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/auth.guard';
 import { WebsocketService } from './websocket.service';
 import { ChatGuard } from './chat/chat.guard';
+import { AuthService } from '../auth/auth.service';
+import { Repository } from 'typeorm';
+import { User } from '../user/user';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @WebSocketGateway(3001, {
   transports: ['polling', 'websocket'],
@@ -26,19 +30,34 @@ export class WebsocketGateway
 
   private readonly logger = new Logger(WebsocketGateway.name);
 
-  constructor(private socketService: WebsocketService) {}
+  constructor(
+    private socketService: WebsocketService,
+    private auth: AuthService,
+    @InjectRepository(User) private userRepo: Repository<User>,
+  ) {}
 
   afterInit(server: Server) {
     this.socketService.socket = server;
     this.logger.log(`Websocket initialized`);
   }
 
-  handleConnection(client: Socket) {
+  async handleConnection(client: Socket) {
+    this.setClientUserIsOnlineTo(client, true);
     this.logger.log(`${client.id} connected to websocket`);
   }
 
   handleDisconnect(client: Socket) {
+    this.setClientUserIsOnlineTo(client, false);
     this.logger.log(`${client.id} disconnected to websocket`);
+  }
+
+  private async setClientUserIsOnlineTo(client: Socket, isOnline: boolean) {
+    const user = await this.auth.getUserFromHeaderToken(
+      client.handshake.headers['authorization'],
+    );
+    if (!user) return;
+    user.isOnline = isOnline;
+    this.userRepo.save(user);
   }
 
   @UseGuards(AuthGuard, ChatGuard)

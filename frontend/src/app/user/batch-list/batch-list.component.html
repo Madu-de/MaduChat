@@ -1,3 +1,4 @@
+<mat-icon [matTooltip]="user?.isOnline ? 'Online' : 'Offline'" inline [color]="user?.isOnline ? 'accent' : 'warn'">circle</mat-icon>
 <mat-icon [matTooltip]="languageService.getValue('admin')" inline *ngIf="user?.isAdmin">shield</mat-icon>
 <mat-icon [matTooltip]="languageService.getValue('verified')" inline *ngIf="user?.isVerified">done_outline</mat-icon>
 <mat-icon matTooltip="Madu" inline *ngIf="user?.username == 'madu'">data_object</mat-icon>
