@@ -8,18 +8,20 @@ export class User {
   image: string;
   isVerified: boolean;
   isAdmin: boolean;
+  isOnline: boolean;
   chats?: Chat[];
   friendRequestsSent?: User[];
   friendRequetsReceived?: User[];
   friends?: User[];
   settings?: Settings;
 
-  constructor(id: string, username: string, name: string, image: string, isVerified: boolean, isAdmin: boolean) {
+  constructor(id: string, username: string, name: string, image: string, isVerified: boolean, isAdmin: boolean, isOnline: boolean) {
     this.id = id;
     this.username = username;
     this.name = name;
     this.image = image;
     this.isVerified = isVerified;
     this.isAdmin = isAdmin;
+    this.isOnline = isOnline;
   }
 }
