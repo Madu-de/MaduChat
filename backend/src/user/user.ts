@@ -57,6 +57,11 @@ export class User {
   })
   isVerified: boolean;
 
+  @Column({
+    default: false,
+  })
+  isOnline: boolean;
+
   @ManyToMany(() => User, user => user.friendRequetsReceived)
   @JoinTable({
     name: 'friendrequests',

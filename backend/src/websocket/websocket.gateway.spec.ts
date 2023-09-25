@@ -4,6 +4,9 @@ import { WebsocketService } from './websocket.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { GuardMock } from '../../test/guardMock';
 import { ChatGuard } from './chat/chat.guard';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { User } from '../user/user';
+import { AuthService } from '../auth/auth.service';
 
 describe('WebsocketGateway', () => {
   let gateway: WebsocketGateway;
@@ -18,6 +21,14 @@ describe('WebsocketGateway', () => {
             joinChat: jest.fn(),
             sendMessage: jest.fn(),
           },
+        },
+        {
+          provide: AuthService,
+          useValue: {},
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: {},
         },
       ],
     })
