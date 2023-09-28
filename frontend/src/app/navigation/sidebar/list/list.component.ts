@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { Chat } from 'src/app/classes/Chat';
+import { User } from 'src/app/classes/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ListComponent implements OnInit {
   chats: Chat[] = [];
   urlPosition: string = '';
+  user: User | undefined;
 
   constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router) {}
 
@@ -21,6 +22,9 @@ export class ListComponent implements OnInit {
     this.updateSidebar();
     this.userService.getMeChangedEmitter().subscribe(() => {
       this.updateSidebar();
+    });
+    this.userService.getMe().subscribe((me) => {
+      this.user = me;
     });
     this.router.events.subscribe(event => {
       if (event.type !== 1) return;
@@ -38,5 +42,9 @@ export class ListComponent implements OnInit {
         });
       });
     });
+  }
+
+  openEditMenu(chat: Chat) {
+
   }
 }

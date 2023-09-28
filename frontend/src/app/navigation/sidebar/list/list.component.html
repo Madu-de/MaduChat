@@ -39,6 +39,9 @@
                     </ng-template>
                     {{ chat.name }}
                 </a>
+                <div class="actions">
+                    <mat-icon (click)="openEditMenu(chat)">edit</mat-icon>
+                </div>
             </mat-card-content>
         </mat-card>
     </mat-list-item>

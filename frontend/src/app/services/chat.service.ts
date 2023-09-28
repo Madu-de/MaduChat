@@ -28,6 +28,14 @@ export class ChatService {
       memberids
     }, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
-    })
+    });
+  }
+
+  editChat(id: string, name: string): Observable<Chat> {
+    return this.http.put<Chat>(`${this.auth.baseURL}/chat/${id}`, {
+      name
+    }, {
+      headers: { Authorization: 'Bearer ' + this.auth.token }
+    });
   }
 }

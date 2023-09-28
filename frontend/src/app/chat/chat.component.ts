@@ -4,7 +4,6 @@ import { Message } from '../classes/Message';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { Subscription, catchError, throwError } from 'rxjs';
-import { WebsocketConnection } from '../classes/WebsocketConnection';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -26,7 +25,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     private auth: AuthService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
       this.channelExists = true;
