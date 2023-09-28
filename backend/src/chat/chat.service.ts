@@ -64,7 +64,23 @@ export class ChatService {
     }
     const chat = new Chat();
     chat.members = [...members, owner];
+    chat.admins = [owner];
     chat.name = 'Chat';
     return await this.chatRepo.save(chat);
+  }
+
+  async updateChat(id: string, newChat: Chat, editor: User): Promise<Chat> {
+    if (newChat.id)
+      throw new HttpException('Cannot change chat id', HttpStatus.BAD_REQUEST);
+    let chat = await this.chatRepo.findOne({
+      where: { id },
+      relations: { admins: true },
+    });
+    if (!chat)
+      throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
+    if (!chat.admins.find(user => user.id === editor.id))
+      throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
+    chat = { ...chat, ...newChat };
+    return this.chatRepo.save(chat);
   }
 }

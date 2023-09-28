@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -41,5 +42,15 @@ export class ChatController {
     @Body('memberids') memberids: string[],
   ): Promise<Chat> {
     return await this.chatService.createChat(request['user'].id, memberids);
+  }
+
+  @UseGuards(AuthGuard, ChatGuard)
+  @Put(':id')
+  async updateChat(
+    @Param('id') id: string,
+    @Body() chat: Chat,
+    @Req() request: Request,
+  ): Promise<Chat> {
+    return await this.chatService.updateChat(id, chat, request['user']);
   }
 }
