@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserModule } from './user/user.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { OnlineService } from './services/online.service';
+import { MaduChatCommonModule } from './common/common.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { OnlineService } from './services/online.service';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    MaduChatCommonModule
   ],
   providers: [
     LanguageService, 

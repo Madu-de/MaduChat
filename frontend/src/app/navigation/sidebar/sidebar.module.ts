@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { ListComponent } from './list/list.component';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { MaduChatCommonModule } from 'src/app/common/common.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RouterModule } from '@angular/router';
     MatListModule,
     MatDividerModule,
     MatCardModule,
-    RouterModule
+    RouterModule,
+    MaduChatCommonModule
   ],
   exports: [
     SidebarComponent
