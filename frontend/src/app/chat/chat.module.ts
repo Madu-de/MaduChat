@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserModule } from '../user/user.module';
 
-
 @NgModule({
   declarations: [
     ChatComponent,
@@ -26,7 +25,7 @@ import { UserModule } from '../user/user.module';
     MatCardModule,
     RouterModule,
     MatProgressBarModule,
-    UserModule
+    UserModule,
   ],
 })
 export class ChatModule { }

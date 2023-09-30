@@ -39,12 +39,10 @@
                     </ng-template>
                     {{ chat.name }}
                 </a>
-                <div class="actions">
+                <div class="actions" *ngIf="clientIsAdminOfChat(chat)">
                     <mat-icon (click)="openEditMenu(chat)">edit</mat-icon>
                 </div>
             </mat-card-content>
         </mat-card>
     </mat-list-item>
 </mat-list>
-
-<app-popup></app-popup>

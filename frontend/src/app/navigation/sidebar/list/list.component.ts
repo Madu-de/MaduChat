@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Chat } from 'src/app/classes/Chat';
 import { User } from 'src/app/classes/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
+import { EditChatPopupComponent } from '../edit-chat-popup/edit-chat-popup.component';
 
 @Component({
   selector: 'sidebar-list',
@@ -16,7 +18,7 @@ export class ListComponent implements OnInit {
   urlPosition: string = '';
   user: User | undefined;
 
-  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router) {}
+  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.updateSidebar();
@@ -45,6 +47,16 @@ export class ListComponent implements OnInit {
   }
 
   openEditMenu(chat: Chat) {
+    this.dialog.open(EditChatPopupComponent, {
+      data: { chat }
+    }).afterClosed().subscribe((chat?: Chat) => {
+      if (!chat) return;
+      const indexOfChat = this.chats.findIndex(searchChat => chat.id === searchChat.id);
+      this.chats[indexOfChat] = chat;
+    });
+  }
 
+  clientIsAdminOfChat(chat: Chat): boolean {
+    return chat.admins?.find(admin => admin.id === this.user?.id) !== undefined;
   }
 }

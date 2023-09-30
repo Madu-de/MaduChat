@@ -16,7 +16,7 @@ export class ChatService {
   async getChat(id: string, members?: boolean): Promise<Chat> {
     return await this.chatRepo.findOne({
       where: { id },
-      relations: { members },
+      relations: { members, admins: members },
     });
   }
 

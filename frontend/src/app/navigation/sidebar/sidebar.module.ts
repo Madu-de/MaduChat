@@ -1,3 +1,4 @@
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar.component';
@@ -11,13 +12,17 @@ import { MatListModule } from '@angular/material/list';
 import { ListComponent } from './list/list.component';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import { MaduChatCommonModule } from 'src/app/common/common.module';
+import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     SidebarComponent,
-    ListComponent
+    ListComponent,
+    EditChatPopupComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +34,11 @@ import { MaduChatCommonModule } from 'src/app/common/common.module';
     MatListModule,
     MatDividerModule,
     MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     RouterModule,
-    MaduChatCommonModule
   ],
   exports: [
     SidebarComponent
