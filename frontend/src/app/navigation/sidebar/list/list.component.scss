@@ -4,6 +4,15 @@ mat-list {
     gap: 2px;
 }
 
+mat-card-content {
+    display: flex;
+    gap: 8px;
+}
+
+.actions * {
+    cursor: pointer;
+}
+
 mat-card-content a {
     display: flex;
     gap: 8px;

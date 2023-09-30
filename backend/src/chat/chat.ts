@@ -1,4 +1,3 @@
-import { IsString } from 'class-validator';
 import { User } from '../user/user';
 import {
   Column,
@@ -14,8 +13,15 @@ export class Chat {
   id: string;
 
   @Column()
-  @IsString()
   name: string;
+
+  @ManyToMany(() => User, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'chatadmins',
+  })
+  admins: User[];
 
   @ManyToMany(() => User, {
     cascade: true,

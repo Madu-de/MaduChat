@@ -421,6 +421,43 @@ None
 
 </details>
 
+
+<details>
+<summary><code>PUT</code> <code><b>/chat/{id}</b></code> <code>(Edit chat attributes as admin)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Body
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | name      |  optional | string   | N/A  |
+
+##### Parameters
+None
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `201`         | `application/json`        | `{ "id": "d178827c-1b1c-41af-b144-ab3d1588323d", "name": "Example chat", "admins": [ { "id": "d41e2822-26a2-441d-8848-08848f82544a", "email": "madu@gmail.com", "name": "Madu", "username": "madu", "isAdmin": false, "isVerified": false, "isOnline": true } ] }`                                |
+> | `400`         | `application/json`                | `{ "statusCode": 400, "message": "Cannot change chat id" }`   
+> | `400`         | `application/json`                | `{ "statusCode": 400, "message": "You are not an admin" }`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`     
+> | `405`         | `application/json`                | `{ "statusCode": 405, "message": "Not Allowed" }`     
+
+
+##### Example cURL
+
+> ```js
+>  curl -d '{ "name": "New Name" }' -H "Content-Type: application/json" -X POST http://localhost:3000/chat/c5e13bcb-9f5d-483f-ae91-d22728693225
+> ```
+
+</details>
+
 ### Message
 
 <details>

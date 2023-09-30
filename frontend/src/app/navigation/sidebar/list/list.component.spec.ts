@@ -17,6 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from 'src/app/services/user.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { of } from 'rxjs';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -57,7 +58,8 @@ describe('ListComponent', () => {
         MatListModule,
         MatDividerModule,
         MatCardModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatDialogModule,
       ],
     });
     fixture = TestBed.createComponent(ListComponent);
