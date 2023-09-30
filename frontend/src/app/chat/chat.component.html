@@ -1,6 +1,6 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <div id="chat">
-  <chat-message *ngFor="let message of messages" [message]="message"></chat-message>
+  <chat-message *ngFor="let message of messages" [message]="message" [settings]="settings"></chat-message>
   <mat-card *ngIf="!channelExists" color="warn">
     <mat-card-header style="display: flex; align-items: center;">
       <mat-icon color="warn">error</mat-icon>

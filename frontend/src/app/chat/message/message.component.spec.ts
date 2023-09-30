@@ -30,14 +30,7 @@ describe('MessageComponent', () => {
       declarations: [
         MessageComponent,
       ],
-      providers: [
-        {
-          provide: UserService,
-          useValue: {
-            getMe: () => of({ settings: {}  })
-          }
-        }
-      ]
+      providers: []
     });
     fixture = TestBed.createComponent(MessageComponent);
     component = fixture.componentInstance;

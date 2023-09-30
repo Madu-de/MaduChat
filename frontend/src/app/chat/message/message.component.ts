@@ -8,17 +8,10 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent {
   @Input()
   message: Message | undefined;
-
-  constructor(public userService: UserService) {}
-
+  
+  @Input()
   settings: Settings | undefined;
-
-  ngOnInit() {
-    this.userService.getMe(false, false, true).subscribe(user => {
-      this.settings = user.settings;
-    }); 
-  }
 }

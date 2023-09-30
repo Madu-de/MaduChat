@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
+import { Settings } from '../classes/Settings';
 
 @Component({
   selector: 'app-chat',
@@ -16,16 +18,21 @@ export class ChatComponent implements OnInit, OnDestroy {
   public routerSubscription: Subscription | undefined;
   public channelExists: boolean = true;
   public loading: boolean = true;
+  public settings: Settings | undefined;
   
   constructor(
     public languageService: LanguageService, 
     private route: ActivatedRoute, 
     private router: Router, 
     private chatService: ChatService,
-    private auth: AuthService
+    private auth: AuthService,
+    private userService: UserService
   ) {}
 
   async ngOnInit() {
+    this.userService.getMe(false, false, true).subscribe(user => {
+      this.settings = user.settings;
+    }); 
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
       this.channelExists = true;

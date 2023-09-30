@@ -13,6 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../services/user.service';
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -50,6 +51,12 @@ describe('ChatComponent', () => {
           provide: AuthService,
           useValue: {
             token: '',
+          }
+        },
+        {
+          provide: UserService,
+          useValue: {
+            
           }
         }
       ]
