@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Chat } from 'src/app/classes/Chat';
