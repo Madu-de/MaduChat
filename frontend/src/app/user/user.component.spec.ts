@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChatService } from '../services/chat.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockBatchListComponent } from './batch-list/mock-batch-list.component';
+import { MockBadgeListComponent } from './badge-list/mock-badge-list.component';
 
 describe('UserComponent /user', () => {
   let component: UserComponent;
@@ -36,7 +36,7 @@ describe('UserComponent /user', () => {
       ],
       declarations: [
         UserComponent, 
-        MockBatchListComponent
+        MockBadgeListComponent
       ],
       providers: [
         {

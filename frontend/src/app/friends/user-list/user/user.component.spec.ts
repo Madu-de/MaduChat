@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { LanguageService } from 'src/app/services/language.service';
-import { MockBatchListComponent } from 'src/app/user/batch-list/mock-batch-list.component';
+import { MockBadgeListComponent } from 'src/app/user/badge-list/mock-badge-list.component';
 
 describe('UserComponent /friends (user-list)', () => {
   let component: UserComponent;
@@ -30,7 +30,7 @@ describe('UserComponent /friends (user-list)', () => {
         MatButtonModule,
         RouterTestingModule
       ],
-      declarations: [UserComponent, MockBatchListComponent],
+      declarations: [UserComponent, MockBadgeListComponent],
       providers: [
         {
           provide: UserService,

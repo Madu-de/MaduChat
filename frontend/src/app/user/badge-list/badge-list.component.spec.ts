@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BatchListComponent } from './batch-list.component';
+import { BadgeListComponent } from './badge-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { LanguageService } from 'src/app/services/language.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-describe('BatchListComponent', () => {
-  let component: BatchListComponent;
-  let fixture: ComponentFixture<BatchListComponent>;
+describe('BadgeListComponent', () => {
+  let component: BadgeListComponent;
+  let fixture: ComponentFixture<BadgeListComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BatchListComponent],
+      declarations: [BadgeListComponent],
       imports: [
         MatIconModule,
         MatToolbarModule,
@@ -27,7 +27,7 @@ describe('BatchListComponent', () => {
         }
       ]
     });
-    fixture = TestBed.createComponent(BatchListComponent);
+    fixture = TestBed.createComponent(BadgeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
