@@ -15,6 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ChatService } from 'src/app/services/chat.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LanguageService } from 'src/app/services/language.service';
 
 describe('EditChatPopupComponent', () => {
   let component: EditChatPopupComponent;
@@ -47,6 +48,12 @@ describe('EditChatPopupComponent', () => {
         {
           provide: ChatService,
           useValue: {}
+        },
+        {
+          provide: LanguageService,
+          useValue: {
+            getValue: () => ''
+          }
         }
       ]
     });
