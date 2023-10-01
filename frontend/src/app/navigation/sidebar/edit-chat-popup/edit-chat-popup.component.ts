@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Chat } from 'src/app/classes/Chat';
 import { ChatService } from 'src/app/services/chat.service';
+import { LanguageService } from 'src/app/services/language.service';
 
 @Component({
   selector: 'app-edit-chat-popup',
@@ -17,7 +18,8 @@ export class EditChatPopupComponent {
   constructor(
     public dialogRef: MatDialogRef<EditChatPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { chat: Chat },
-    private chatService: ChatService
+    private chatService: ChatService,
+    public languageService: LanguageService
   ) {}
 
   saveChat() {

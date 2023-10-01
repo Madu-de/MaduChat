@@ -45,4 +45,7 @@ export interface Language {
   verified: string;
   youAreoffline: string;
   youAreOnline: string;
+  editChat: string;
+  close: string;
+  save: string;
 }

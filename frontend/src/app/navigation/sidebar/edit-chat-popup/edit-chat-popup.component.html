@@ -1,13 +1,13 @@
-<h1 mat-dialog-title>Edit Chat</h1>
+<h1 mat-dialog-title>{{languageService.getValue('editChat')}}</h1>
 <mat-dialog-content>
   <form [formGroup]="chat" (ngSubmit)="saveChat()">
     <mat-form-field>
-      <mat-label>Name</mat-label>
+      <mat-label>{{languageService.getValue('name')}}</mat-label>
       <input formControlName="name" matInput type="text">
     </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-button mat-flat-button color="primary" (click)="saveChat()">Save</button>
+  <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
+  <button mat-button mat-flat-button color="primary" (click)="saveChat()">{{languageService.getValue('save')}}</button>
 </mat-dialog-actions>
