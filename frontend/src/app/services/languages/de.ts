@@ -47,4 +47,7 @@ export const DE: Language = {
   verified: 'Verifiziert',
   youAreoffline: 'Du bist Offline!',
   youAreOnline: 'Du bist wieder Online!',
+  editChat: 'Chat editieren',
+  close: 'Schließen',
+  save: 'Speichern',
 };
