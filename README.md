@@ -1,4 +1,4 @@
-![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/141bc809-3068-4027-abaf-575f2c596238)
+![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/9a2aaf87-f1e7-4435-b4b3-cbbba86889ec)
 
 ## Getting started
 - Clone this repo
