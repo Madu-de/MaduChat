@@ -3,11 +3,14 @@
   <form [formGroup]="chat" (ngSubmit)="saveChat()">
     <mat-form-field>
       <mat-label>{{languageService.getValue('name')}}</mat-label>
-      <input formControlName="name" matInput type="text">
+      <input formControlName="name" matInput type="text" maxlength="20">
+      <mat-error *ngIf="chat.controls['name'].hasError('required')">{{languageService.getValue('name')}} {{languageService.getValue('isTooShort')}}</mat-error>
+      <mat-error *ngIf="chat.controls['name'].hasError('minlength')">{{languageService.getValue('name')}} {{languageService.getValue('isTooShort')}}</mat-error>
+      <mat-error *ngIf="chat.controls['name'].hasError('maxlength')">{{languageService.getValue('name')}} {{languageService.getValue('isTooLong')}}</mat-error>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
-  <button mat-button mat-flat-button color="primary" (click)="saveChat()">{{languageService.getValue('save')}}</button>
+  <button mat-button mat-flat-button color="primary" (click)="saveChat()" [disabled]="!chat.valid">{{languageService.getValue('save')}}</button>
 </mat-dialog-actions>
