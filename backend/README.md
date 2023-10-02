@@ -446,6 +446,8 @@ None
 > | `201`         | `application/json`        | `{ "id": "d178827c-1b1c-41af-b144-ab3d1588323d", "name": "Example chat", "admins": [ { "id": "d41e2822-26a2-441d-8848-08848f82544a", "email": "madu@gmail.com", "name": "Madu", "username": "madu", "isAdmin": false, "isVerified": false, "isOnline": true } ] }`                                |
 > | `400`         | `application/json`                | `{ "statusCode": 400, "message": "Cannot change chat id" }`   
 > | `400`         | `application/json`                | `{ "statusCode": 400, "message": "You are not an admin" }`   
+> | `400`         | `application/json`                | `{    "message": [        "name must be shorter than or equal to 20 characters"    ],    "error": "Bad Request",    "statusCode": 400}`   
+> | `400`         | `application/json`                | `{    "message": [        "name must be longer than or equal to 1 characters"    ],    "error": "Bad Request",    "statusCode": 400}`   
 > | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`     
 > | `405`         | `application/json`                | `{ "statusCode": 405, "message": "Not Allowed" }`     
 
