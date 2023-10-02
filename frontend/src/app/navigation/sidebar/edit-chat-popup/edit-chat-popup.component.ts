@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Chat } from 'src/app/classes/Chat';
 import { ChatService } from 'src/app/services/chat.service';
@@ -12,7 +12,11 @@ import { LanguageService } from 'src/app/services/language.service';
 })
 export class EditChatPopupComponent {
   chat: FormGroup = new FormGroup({
-    name: new FormControl(this.data.chat.name)
+    name: new FormControl(this.data.chat.name, [
+      Validators.minLength(1), 
+      Validators.maxLength(20),
+      Validators.required
+    ])
   });
 
   constructor(

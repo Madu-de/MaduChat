@@ -1,3 +1,4 @@
+import { MaxLength, MinLength } from 'class-validator';
 import { User } from '../user/user';
 import {
   Column,
@@ -13,6 +14,8 @@ export class Chat {
   id: string;
 
   @Column()
+  @MinLength(1)
+  @MaxLength(20)
   name: string;
 
   @ManyToMany(() => User, {
