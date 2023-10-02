@@ -74,7 +74,7 @@ export class ChatService {
       throw new HttpException('Cannot change chat id', HttpStatus.BAD_REQUEST);
     let chat = await this.chatRepo.findOne({
       where: { id },
-      relations: { admins: true },
+      relations: { admins: true, members: true },
     });
     if (!chat)
       throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
