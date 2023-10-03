@@ -7,7 +7,7 @@
     </span>
     <span id="right-side" class="appOutsideClickHide-ignore">
         <button mat-icon-button (click)="togglePopup()" [matTooltip]="languageService.getValue('account')">
-            <mat-icon matBadge="&#8288;" matBadgePosition="below after" matBadgeSize="small" [matBadgeColor]="isOnline ? 'accent' : 'warn'">
+            <mat-icon matBadge="&#8288;" matBadgePosition="below after" matBadgeSize="small" [matBadgeColor]="isOnline ? 'accent' : 'warn'" aria-hidden="false">
                 account_circle
             </mat-icon>
         </button>
