@@ -3,7 +3,7 @@
         <button mat-icon-button (click)="navigation.toggleSidebar()">
             <mat-icon>menu</mat-icon>
         </button>
-        <span>MaduChat</span>
+        <span>MaduChat {{environment.production ? '' : '(Dev)'}}</span>
     </span>
     <span id="right-side" class="appOutsideClickHide-ignore">
         <button mat-icon-button (click)="togglePopup()" [matTooltip]="languageService.getValue('account')">
