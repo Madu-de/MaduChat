@@ -47,6 +47,10 @@ export class User {
   @MaxLength(20)
   username: string;
 
+  @Column()
+  @IsString()
+  image: string;
+
   @Column({
     default: false,
   })

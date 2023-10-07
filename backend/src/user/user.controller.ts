@@ -1,18 +1,28 @@
 import {
   Body,
   Controller,
+  FileTypeValidator,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
+  ParseFilePipe,
   Post,
   Query,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { User } from './user';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { Settings } from './settings';
+import { Express } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('users')
 export class UserController {
@@ -62,5 +72,48 @@ export class UserController {
     return (
       await this.userService.changeSetting(request['user'].id, key, value)
     ).settings;
+  }
+
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './profilepictures/',
+        filename: (req, file, cb) => {
+          const fileExtName = extname(file.originalname);
+          const randomName = Array(20)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          const date = new Date();
+          const time = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+          cb(null, `${randomName}-${time}${fileExtName}`);
+        },
+      }),
+      // fileFilter: (req, file, cb) => {
+      //   if (!file.mimetype.startsWith('image/')) {
+      //     cb(
+      //       new HttpException('File is not an image', HttpStatus.BAD_REQUEST),
+      //       true,
+      //     );
+      //   }
+      //   cb(null, true);
+      // },
+    }),
+  )
+  @UseGuards(AuthGuard)
+  @Post('me/profilepicture')
+  async changeProfilePicture(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/*' })],
+      }),
+    )
+    file: Express.Multer.File,
+    @Req() request: Request,
+  ) {
+    return await this.userService.changeProfilePicture(
+      request['user'].id,
+      file,
+    );
   }
 }
