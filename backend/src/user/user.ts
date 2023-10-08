@@ -47,7 +47,7 @@ export class User {
   @MaxLength(20)
   username: string;
 
-  @Column()
+  @Column({ select: false })
   @IsString()
   image: string;
 

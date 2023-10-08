@@ -207,6 +207,7 @@ export class UserService {
   async changeProfilePicture(userId: string, file: Express.Multer.File) {
     const user = await this.userRepo.findOne({
       where: { id: userId },
+      select: { image: true, id: true },
     });
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     user.image = file.path;
@@ -214,7 +215,10 @@ export class UserService {
   }
 
   async getProfilePicture(id: string, response: Response) {
-    const user = await this.userRepo.findOne({ where: { id } });
+    const user = await this.userRepo.findOne({
+      where: { id },
+      select: { image: true },
+    });
     const file = createReadStream(join(process.cwd(), user.image));
     file.pipe(response);
   }
