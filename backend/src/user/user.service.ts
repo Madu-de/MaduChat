@@ -5,6 +5,9 @@ import { User } from './user';
 import * as sha256 from 'sha256';
 import { Settings } from './settings';
 import { Chat } from '../chat/chat';
+import { createReadStream } from 'fs';
+import { join } from 'path';
+import type { Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -208,5 +211,11 @@ export class UserService {
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     user.image = file.path;
     return await this.userRepo.save(user);
+  }
+
+  async getProfilePicture(id: string, response: Response) {
+    const user = await this.userRepo.findOne({ where: { id } });
+    const file = createReadStream(join(process.cwd(), user.image));
+    file.pipe(response);
   }
 }

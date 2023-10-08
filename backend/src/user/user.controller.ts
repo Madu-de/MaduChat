@@ -3,13 +3,12 @@ import {
   Controller,
   FileTypeValidator,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   ParseFilePipe,
   Post,
   Query,
   Req,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -23,6 +22,7 @@ import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import type { Response } from 'express';
 
 @Controller('users')
 export class UserController {
@@ -89,15 +89,6 @@ export class UserController {
           cb(null, `${randomName}-${time}${fileExtName}`);
         },
       }),
-      // fileFilter: (req, file, cb) => {
-      //   if (!file.mimetype.startsWith('image/')) {
-      //     cb(
-      //       new HttpException('File is not an image', HttpStatus.BAD_REQUEST),
-      //       true,
-      //     );
-      //   }
-      //   cb(null, true);
-      // },
     }),
   )
   @UseGuards(AuthGuard)
@@ -115,5 +106,11 @@ export class UserController {
       request['user'].id,
       file,
     );
+  }
+
+  @UseGuards(AuthGuard)
+  @Get(':id/profilepicture')
+  async getProfilePicture(@Param('id') id: string, @Res() response: Response) {
+    return await this.userService.getProfilePicture(id, response);
   }
 }
