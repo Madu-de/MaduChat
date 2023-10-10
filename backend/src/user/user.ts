@@ -47,9 +47,8 @@ export class User {
   @MaxLength(20)
   username: string;
 
-  @Column({ select: false })
-  @IsString()
-  image: string;
+  @Column({ select: false, default: '' })
+  image?: string;
 
   @Column({
     default: false,

@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../classes/User';
 import { AuthService } from './auth.service';
-import { catchError, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,31 @@ export class UserService {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
+    });
+  }
+
+  private getUserProfilePictureAsBlob(id: string) {
+    return this.http.get(`${this.auth.baseURL}/users/${id}/profilepicture`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+      responseType: 'blob',
+    });
+  }
+
+  private convertBlopToImage(blob: Blob, callback: (image: string | ArrayBuffer | null) => void) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      callback(reader.result);
+    });
+    reader.readAsDataURL(blob);
+  }
+
+  getUserProfilePicture(id: string, callback: (image: string | ArrayBuffer | null) => void) {
+    this.getUserProfilePictureAsBlob(id).subscribe((blob) => {
+      this.convertBlopToImage(blob, (image) => {
+        callback(image);
+      });
     });
   }
 
