@@ -3,7 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../classes/User';
 import { AuthService } from './auth.service';
-import { throwError } from 'rxjs';
+import { from, switchMap, throwError } from 'rxjs';
+import { ImageService } from './image.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { throwError } from 'rxjs';
 export class UserService {
   private meChanged: EventEmitter<void> = new EventEmitter();
 
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient, private auth: AuthService, private imageService: ImageService) { }
 
   getMe(chats?: boolean, friends?: boolean, settings?: boolean) {
     return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}`, {
@@ -46,20 +47,10 @@ export class UserService {
     });
   }
 
-  private convertBlopToImage(blob: Blob, callback: (image: string | ArrayBuffer | null) => void) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      callback(reader.result);
-    });
-    reader.readAsDataURL(blob);
-  }
-
-  getUserProfilePicture(id: string, callback: (image: string | ArrayBuffer | null) => void) {
-    this.getUserProfilePictureAsBlob(id).subscribe((blob) => {
-      this.convertBlopToImage(blob, (image) => {
-        callback(image);
-      });
-    });
+  getUserProfilePicture(id: string) {
+    return from(this.getUserProfilePictureAsBlob(id).pipe(
+      switchMap((blob) => this.imageService.convertBlopToImage(blob)))
+    );
   }
 
   addFriend(friendId: string) {

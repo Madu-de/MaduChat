@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserModule } from './user/user.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { OnlineService } from './services/online.service';
+import { ImageService } from './services/image.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { OnlineService } from './services/online.service';
     AuthService, 
     ChatService, 
     CookieService, 
-    OnlineService
+    OnlineService,
+    ImageService
   ],
   bootstrap: [AppComponent],
 })

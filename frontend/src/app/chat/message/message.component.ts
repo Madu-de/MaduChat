@@ -18,10 +18,9 @@ export class MessageComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.userService.getUserProfilePicture(this.message?.author?.id || '', (image => {
+    this.userService.getUserProfilePicture(this.message?.author?.id || '').subscribe(image => {
       if (!this.message) return;
-      if (!this.message.author) return;
-      this.message.author.image = <string>image;
-    }));
+      this.message.author.image = image;
+    });
   }
 }
