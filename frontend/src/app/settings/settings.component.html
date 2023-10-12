@@ -19,6 +19,20 @@
       (onChange)="languageService.setLanguage($event.value)">
     </settings-option>
   </ng-container>
+  <mat-list-item>
+    <h2>Profilepicture</h2>
+  </mat-list-item>
+  <ng-container>
+    <mat-list-item>
+      <p class="item">
+        <mat-label>Upload</mat-label>
+        <input type="file" (change)="foo(file.files?.[0])" #file>  
+      </p>
+    </mat-list-item>
+    <p class="item">
+      <img [src]="profilepicture" alt="">
+    </p>
+  </ng-container>
 
   <mat-divider></mat-divider>
 </mat-list>

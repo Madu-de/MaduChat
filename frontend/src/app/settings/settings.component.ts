@@ -11,6 +11,7 @@ import { User } from '../classes/User';
 export class SettingsComponent implements OnInit {
   loading: boolean = true;
   user: User | undefined;
+  profilepicture: string = '';
 
   constructor(public languageService: LanguageService, public userService: UserService) {}
 
@@ -18,6 +19,15 @@ export class SettingsComponent implements OnInit {
     this.userService.getMe(false, false, true).subscribe((user) => {
       this.user = user;
       this.loading = false;
+      this.userService.getUserProfilePicture(user.id).subscribe((image) => {
+        this.profilepicture = image;
+      })
     });
+  }
+
+  foo(file: File | undefined) {
+    if (!file) return;
+    console.log(file);
+    this.userService.setUserProfilePicture(file).subscribe();
   }
 }

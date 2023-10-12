@@ -53,6 +53,16 @@ export class UserService {
     );
   }
 
+  setUserProfilePicture(file: File) {
+    const formdata = new FormData();
+    formdata.append('file', file);
+    return this.http.post(`${this.auth.baseURL}/users/me/profilepicture`, formdata, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      }
+    });
+  }
+
   addFriend(friendId: string) {
     return this.http.post<User>(`${this.auth.baseURL}/friends`, {
       friendId

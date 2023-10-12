@@ -13,7 +13,7 @@ export class OptionComponent {
   user: User | undefined;
 
   @Input()
-  type: 'toggle' | 'select' = 'select';
+  type: 'toggle' | 'select' | 'file' = 'select';
 
   @Input()
   settingsId: keyof Settings = 'id';
