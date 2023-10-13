@@ -47,6 +47,10 @@ export class UserComponent implements OnInit {
         this.user = user;
         this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
         this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
+        this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
+          if (!this.user) return;
+          this.user.image = image;
+        });
       })
     });
   }
