@@ -6,6 +6,7 @@ import {
   Param,
   ParseFilePipe,
   Post,
+  Put,
   Query,
   Req,
   Res,
@@ -18,11 +19,9 @@ import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { Settings } from './settings';
-import { Express } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import type { Response } from 'express';
+import { SharpPipe } from './sharp.pipe';
 
 @Controller('users')
 export class UserController {
@@ -74,37 +73,22 @@ export class UserController {
     ).settings;
   }
 
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './profilepictures/',
-        filename: (req, file, cb) => {
-          const fileExtName = extname(file.originalname);
-          const randomName = Array(20)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-          const date = new Date();
-          const time = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
-          cb(null, `${randomName}-${time}${fileExtName}`);
-        },
-      }),
-    }),
-  )
   @UseGuards(AuthGuard)
-  @Post('me/profilepicture')
+  @Put('me/profilepicture')
+  @UseInterceptors(FileInterceptor('file'))
   async changeProfilePicture(
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'image/*' })],
       }),
+      SharpPipe,
     )
-    file: Express.Multer.File,
+    filePath: string,
     @Req() request: Request,
   ) {
     return await this.userService.changeProfilePicture(
       request['user'].id,
-      file,
+      filePath,
     );
   }
 

@@ -204,13 +204,13 @@ export class UserService {
     return await this.userRepo.save(user);
   }
 
-  async changeProfilePicture(userId: string, file: Express.Multer.File) {
+  async changeProfilePicture(userId: string, filePath: string) {
     const user = await this.userRepo.findOne({
       where: { id: userId },
       select: { image: true, id: true },
     });
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    user.image = file.path;
+    user.image = filePath;
     return await this.userRepo.save(user);
   }
 
