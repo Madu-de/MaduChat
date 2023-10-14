@@ -17,6 +17,10 @@ export class ProfilePopupComponent implements OnInit {
   ngOnInit() {
     this.userService.getMe().subscribe((user) => {
       this.user = user;
+      this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
+        if (!this.user) return;
+        this.user.image = image;
+      })
     });
   }
 }
