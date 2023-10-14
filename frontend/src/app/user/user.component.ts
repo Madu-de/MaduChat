@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   loading: boolean = true;
   isFriend: boolean = false;
   isAdded: boolean = false;
+  profilePicture: string = '';
 
   constructor(
     public userService: UserService, 
@@ -43,13 +44,12 @@ export class UserComponent implements OnInit {
         })
       )
       .subscribe((user) => {
-        this.loading = false;
         this.user = user;
         this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
         this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
         this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
-          if (!this.user) return;
-          this.user.image = image;
+          this.profilePicture = image;
+          this.loading = false;
         });
       })
     });
