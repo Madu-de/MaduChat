@@ -38,7 +38,6 @@ import { PictureComponent } from './tab/profile/picture/picture.component';
     MatProgressBarModule,
     MatTabsModule,
     MatCardModule,
-    MatGridListModule,
     MatButtonModule,
     MatIconModule
   ]

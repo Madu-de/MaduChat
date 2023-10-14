@@ -10,6 +10,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MockOptionComponent } from './option/mockoption.component';
 import { of } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -22,6 +27,12 @@ describe('SettingsComponent', () => {
         MatSlideToggleModule,
         MatFormFieldModule,
         MatSelectModule,
+        MatSelectModule,
+        MatProgressBarModule,
+        MatTabsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule
       ],
       declarations: [
         SettingsComponent,

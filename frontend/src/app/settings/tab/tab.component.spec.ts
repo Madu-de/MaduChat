@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabComponent } from './tab.component';
+import { MatListModule } from '@angular/material/list';
 
 describe('TabComponent', () => {
   let component: TabComponent;
@@ -8,6 +9,9 @@ describe('TabComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatListModule
+      ],
       declarations: [TabComponent]
     });
     fixture = TestBed.createComponent(TabComponent);
