@@ -1,0 +1,43 @@
+<settings-tab [label]="languageService.getValue('general')">
+  <settings-tab-category [label]="languageService.getValue('general')">
+    <ng-container *ngIf="!loading">
+      <settings-option
+        [user]="user"
+        type="toggle"
+        settingsId="showAvatar"
+        [label]="languageService.getValue('showAvatar')">
+      </settings-option>
+      <settings-option 
+        [user]="user"
+        type="select" 
+        settingsId="language" 
+        [label]="languageService.getValue('language')" 
+        [selectionList]="languageService.getLanguages()"
+        (onChange)="languageService.setLanguage($event.value)">
+      </settings-option>
+    </ng-container>
+  </settings-tab-category>
+</settings-tab>
+
+<!-- <mat-list>
+  <mat-list-item>
+    <h2>{{languageService.getValue('general')}}</h2>
+  </mat-list-item>
+  <ng-container *ngIf="!loading">
+    <settings-option
+      [user]="user"
+      type="toggle"
+      settingsId="showAvatar"
+      [label]="languageService.getValue('showAvatar')">
+    </settings-option>
+    <settings-option 
+      [user]="user"
+      type="select" 
+      settingsId="language" 
+      [label]="languageService.getValue('language')" 
+      [selectionList]="languageService.getLanguages()"
+      (onChange)="languageService.setLanguage($event.value)">
+    </settings-option>
+  </ng-container>
+  <mat-divider></mat-divider>
+</mat-list> -->

@@ -85,10 +85,12 @@ export class UserController {
     )
     filePath: string,
     @Req() request: Request,
+    @Res() response: Response,
   ) {
     return await this.userService.changeProfilePicture(
       request['user'].id,
       filePath,
+      response,
     );
   }
 

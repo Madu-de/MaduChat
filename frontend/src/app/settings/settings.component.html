@@ -1,38 +1,9 @@
 <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-<mat-list>
-  <mat-list-item>
-    <h2>{{languageService.getValue('general')}}</h2>
-  </mat-list-item>
-  <ng-container *ngIf="!loading">
-    <settings-option
-      [user]="user"
-      type="toggle"
-      settingsId="showAvatar"
-      [label]="languageService.getValue('showAvatar')">
-    </settings-option>
-    <settings-option 
-      [user]="user"
-      type="select" 
-      settingsId="language" 
-      [label]="languageService.getValue('language')" 
-      [selectionList]="languageService.getLanguages()"
-      (onChange)="languageService.setLanguage($event.value)">
-    </settings-option>
-  </ng-container>
-  <mat-list-item>
-    <h2>Profilepicture</h2>
-  </mat-list-item>
-  <ng-container>
-    <mat-list-item>
-      <p class="item">
-        <mat-label>Upload</mat-label>
-        <input type="file" (change)="foo(file.files?.[0])" #file>  
-      </p>
-    </mat-list-item>
-    <p class="item">
-      <img [src]="profilepicture" alt="">
-    </p>
-  </ng-container>
-
-  <mat-divider></mat-divider>
-</mat-list>
+<mat-tab-group *ngIf="!loading">
+  <mat-tab [label]="languageService.getValue('general')">
+    <settings-general [user]="user" [loading]="loading"></settings-general>
+  </mat-tab>
+  <mat-tab [label]="languageService.getValue('profile')">
+    <settings-profile [user]="user"></settings-profile>
+  </mat-tab>
+</mat-tab-group>

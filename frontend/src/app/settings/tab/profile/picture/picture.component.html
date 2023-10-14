@@ -1,0 +1,15 @@
+  <img [src]="user?.image" alt="" id="image" matCardImageMedium>
+  <span id="right-side">
+    <span id="actions">
+      <button mat-stroked-button (click)="file.click()">
+        {{languageService.getValue('changeProfilepicture')}}
+        <input type="file" (change)="changeProfilePictureTo(file.files?.[0])" #file accept="image/*" hidden>
+      </button>
+      <button mat-icon-button color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </span>
+    <p>
+      {{languageService.getValue('onlyStaticImagesAreAllowed')}}
+    </p>
+  </span>

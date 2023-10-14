@@ -48,4 +48,8 @@ export interface Language {
   editChat: string;
   close: string;
   save: string;
+  profile: string;
+  profilepicture: string;
+  changeProfilepicture: string;
+  onlyStaticImagesAreAllowed: string;
 }

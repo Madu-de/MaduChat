@@ -56,11 +56,14 @@ export class UserService {
   setUserProfilePicture(file: File) {
     const formdata = new FormData();
     formdata.append('file', file);
-    return this.http.put(`${this.auth.baseURL}/users/me/profilepicture`, formdata, {
+    return from(this.http.put(`${this.auth.baseURL}/users/me/profilepicture`, formdata, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
-      }
-    });
+      },
+      responseType: 'blob',
+    }).pipe(
+      switchMap((blob) => this.imageService.convertBlopToImage(blob))
+    ));
   }
 
   addFriend(friendId: string) {

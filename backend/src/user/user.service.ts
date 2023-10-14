@@ -204,14 +204,19 @@ export class UserService {
     return await this.userRepo.save(user);
   }
 
-  async changeProfilePicture(userId: string, filePath: string) {
+  async changeProfilePicture(
+    userId: string,
+    filePath: string,
+    response: Response,
+  ) {
     const user = await this.userRepo.findOne({
       where: { id: userId },
       select: { image: true, id: true },
     });
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     user.image = filePath;
-    return await this.userRepo.save(user);
+    await this.userRepo.save(user);
+    return await this.getProfilePicture(userId, response);
   }
 
   async getProfilePicture(id: string, response: Response) {
