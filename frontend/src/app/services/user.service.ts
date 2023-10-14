@@ -66,6 +66,17 @@ export class UserService {
     ));
   }
 
+  deleteUserProfilePicture() {
+    return from(this.http.delete(`${this.auth.baseURL}/users/me/profilepicture`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+      responseType: 'blob',
+    }).pipe(
+      switchMap((blob) => this.imageService.convertBlopToImage(blob))
+    ));
+  }
+
   addFriend(friendId: string) {
     return this.http.post<User>(`${this.auth.baseURL}/friends`, {
       friendId

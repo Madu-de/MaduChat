@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   Param,
@@ -98,5 +99,11 @@ export class UserController {
   @Get(':id/profilepicture')
   async getProfilePicture(@Param('id') id: string, @Res() response: Response) {
     return await this.userService.getProfilePicture(id, response);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('/me/profilepicture')
+  async deleteProfilePicture(@Req() request: Request) {
+    return await this.userService.deleteProfilePicture(request['user'].id);
   }
 }

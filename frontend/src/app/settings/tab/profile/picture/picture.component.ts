@@ -21,4 +21,11 @@ export class PictureComponent {
       this.user.image = image;
     });
   }
+
+  deleteProfilePicture() {
+    this.userService.deleteUserProfilePicture().subscribe(() => {
+      if (!this.user) return;
+      this.user.image = '';
+    });
+  }
 }

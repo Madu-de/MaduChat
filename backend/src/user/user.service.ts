@@ -5,7 +5,7 @@ import { User } from './user';
 import * as sha256 from 'sha256';
 import { Settings } from './settings';
 import { Chat } from '../chat/chat';
-import { createReadStream } from 'fs';
+import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import type { Response } from 'express';
 
@@ -224,7 +224,22 @@ export class UserService {
       where: { id },
       select: { image: true },
     });
+    if (!existsSync(join(process.cwd(), user.image)) || !user.image) {
+      throw new HttpException(
+        'User has no profile picture',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const file = createReadStream(join(process.cwd(), user.image));
     file.pipe(response);
+  }
+
+  async deleteProfilePicture(id: string) {
+    const user = await this.userRepo.findOne({
+      where: { id },
+      select: { image: true, id: true },
+    });
+    user.image = '';
+    await this.userRepo.save(user);
   }
 }
