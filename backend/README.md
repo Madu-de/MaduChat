@@ -187,6 +187,90 @@ None
 
 </details>
 
+#### Users profile picture
+
+<details>
+<summary><code>GET</code> <code><b>/users/{id}/profilepicture</b></code> <code>(Returns the profilepicture of the user)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `blob`        | N/A                                |
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User not found"}`   
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User has no profile picture"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:3000/users/7221c74-ec28-4291-aa19-cfde08ddd6ea/profilepicture
+> ```
+
+</details>
+
+<details>
+<summary><code>PUT</code> <code><b>/users/me/profilepicture</b></code> <code>(Changes the profilepicture of 'me')</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Body
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | Formdata          |  required | multipart/form-data   | It has to contain 'file' in it. This will be the profile picture  |
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `blob`        | N/A                                |
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User not found"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -X PUT http://localhost:3000/users/me/profilepicture -H "Authorization: Bearer <ACCESS_TOKEN>" -H "Content-Type: multipart/form-data;" -d {FORM DATA HERE}
+> ```
+
+</details>
+
+<details>
+<summary><code>DELETE</code> <code><b>/users/me/profilepicture</b></code> <code>(Deletes profilepicture of 'me')</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | N/A        |      N/A                        |
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User not found"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -X DELETE http://localhost:3000/users/me/profilepicture -H "Authorization: Bearer <ACCESS_TOKEN>"
+> ```
+
+</details>
+
+
 #### User Settings (2 options available)
 <details>
 <summary><code>POST</code> <code><b>/users/me/settings</b></code> <code>(Returns new settings)</code></summary>

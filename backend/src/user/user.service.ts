@@ -5,6 +5,9 @@ import { User } from './user';
 import * as sha256 from 'sha256';
 import { Settings } from './settings';
 import { Chat } from '../chat/chat';
+import { createReadStream, existsSync } from 'fs';
+import { join } from 'path';
+import type { Response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -199,5 +202,45 @@ export class UserService {
     }
     user.settings[key] = value;
     return await this.userRepo.save(user);
+  }
+
+  async changeProfilePicture(
+    userId: string,
+    filePath: string,
+    response: Response,
+  ) {
+    const user = await this.userRepo.findOne({
+      where: { id: userId },
+      select: { image: true, id: true },
+    });
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    user.image = filePath;
+    await this.userRepo.save(user);
+    return await this.getProfilePicture(userId, response);
+  }
+
+  async getProfilePicture(id: string, response: Response) {
+    const user = await this.userRepo.findOne({
+      where: { id },
+      select: { image: true },
+    });
+    if (!existsSync(join(process.cwd(), user.image)) || !user.image) {
+      throw new HttpException(
+        'User has no profile picture',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const file = createReadStream(join(process.cwd(), user.image));
+    file.pipe(response);
+  }
+
+  async deleteProfilePicture(id: string) {
+    const user = await this.userRepo.findOne({
+      where: { id },
+      select: { image: true, id: true },
+    });
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    user.image = '';
+    await this.userRepo.save(user);
   }
 }

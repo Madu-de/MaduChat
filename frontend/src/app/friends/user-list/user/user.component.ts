@@ -20,12 +20,18 @@ export class UserComponent implements OnInit {
 
   isFriend: boolean = false;
 
+  userImage: string = '';
+
   constructor(private userService: UserService, private snackbar: SnackbarService, private languageService: LanguageService) { }
 
   ngOnInit() {
     const friendRequestSent = this.clientUser?.friendRequestsSent?.some(user => user.id === this.user?.id);
     const isFriend = this.clientUser?.friends?.some(user => user.id === this.user?.id);
     this.isFriend = friendRequestSent || isFriend || false;
+    if (!this.user) return;
+    this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
+      this.userImage = image;
+    });
   }
 
   toggleFriendStatus() {

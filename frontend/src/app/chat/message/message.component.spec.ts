@@ -30,7 +30,14 @@ describe('MessageComponent', () => {
       declarations: [
         MessageComponent,
       ],
-      providers: []
+      providers: [
+        {
+          provide: UserService,
+          useValue: {
+            getUserProfilePicture: () => of()
+          }
+        }
+      ]
     });
     fixture = TestBed.createComponent(MessageComponent);
     component = fixture.componentInstance;

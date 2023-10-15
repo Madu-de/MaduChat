@@ -50,4 +50,8 @@ export const FR: Language = {
   editChat: 'Modifier la chat',
   close: 'Fermer',
   save: 'Enregistrer',
+  profile: 'Profil',
+  profilepicture: 'Photo de profil',
+  changeProfilepicture: 'Changer la photo de profil',
+  onlyStaticImagesAreAllowed: 'Seules les images statiques sont autorisées.'
 };

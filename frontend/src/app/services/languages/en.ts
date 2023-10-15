@@ -50,4 +50,8 @@ export const EN: Language = {
   editChat: 'Edit chat',
   close: 'Close',
   save: 'Save',
+  profile: 'Profile',
+  profilepicture: 'Profile picture',
+  changeProfilepicture: 'Change profile picture',
+  onlyStaticImagesAreAllowed: 'Only static images are allowed.'
 };

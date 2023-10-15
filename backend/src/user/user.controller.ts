@@ -1,18 +1,28 @@
 import {
   Body,
   Controller,
+  Delete,
+  FileTypeValidator,
   Get,
   Param,
+  ParseFilePipe,
   Post,
+  Put,
   Query,
   Req,
+  Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { User } from './user';
 import { UserService } from './user.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { Settings } from './settings';
+import { FileInterceptor } from '@nestjs/platform-express';
+import type { Response } from 'express';
+import { SharpPipe } from './sharp.pipe';
 
 @Controller('users')
 export class UserController {
@@ -62,5 +72,38 @@ export class UserController {
     return (
       await this.userService.changeSetting(request['user'].id, key, value)
     ).settings;
+  }
+
+  @UseGuards(AuthGuard)
+  @Put('me/profilepicture')
+  @UseInterceptors(FileInterceptor('file'))
+  async changeProfilePicture(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/*' })],
+      }),
+      SharpPipe,
+    )
+    filePath: string,
+    @Req() request: Request,
+    @Res() response: Response,
+  ) {
+    return await this.userService.changeProfilePicture(
+      request['user'].id,
+      filePath,
+      response,
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @Get(':id/profilepicture')
+  async getProfilePicture(@Param('id') id: string, @Res() response: Response) {
+    return await this.userService.getProfilePicture(id, response);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('/me/profilepicture')
+  async deleteProfilePicture(@Req() request: Request) {
+    return await this.userService.deleteProfilePicture(request['user'].id);
   }
 }

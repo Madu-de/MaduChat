@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../classes/User';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarService } from '../services/snackbar.service';
-import { catchError, throwError } from 'rxjs';
+import { catchError, of, throwError } from 'rxjs';
 import { LanguageService } from '../services/language.service';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ChatService } from '../services/chat.service';
@@ -20,6 +20,7 @@ export class UserComponent implements OnInit {
   loading: boolean = true;
   isFriend: boolean = false;
   isAdded: boolean = false;
+  profilePicture: string = '';
 
   constructor(
     public userService: UserService, 
@@ -43,10 +44,20 @@ export class UserComponent implements OnInit {
         })
       )
       .subscribe((user) => {
-        this.loading = false;
         this.user = user;
         this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
         this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
+        this.userService.getUserProfilePicture(this.user.id)
+        .pipe(
+          catchError(() => {
+            return of('');
+          })
+        )
+        .subscribe((image) => {
+          this.profilePicture = image;
+          this.loading = false;
+        })
+
       })
     });
   }

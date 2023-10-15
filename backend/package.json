@@ -1,6 +1,6 @@
 {
   "name": "maduchat-backend",
-  "version": "1.1.1",
+  "version": "1.2.0-SNAPSHOT",
   "description": "This is the backend of MaduChat. More information here: https://github.com/Madu-de/MaduChat/tree/main/backend",
   "author": "Madu",
   "private": true,
@@ -37,6 +37,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
     "sha256": "^0.2.0",
+    "sharp": "^0.32.6",
     "typeorm": "^0.3.17"
   },
   "devDependencies": {
@@ -47,9 +48,11 @@
     "@types/cookie-parser": "^1.4.3",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
+    "@types/multer": "^1.4.8",
     "@types/node": "^20.3.1",
     "@types/nodemailer": "^6.4.8",
     "@types/sha256": "^0.2.0",
+    "@types/sharp": "^0.32.0",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
