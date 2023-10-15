@@ -213,7 +213,8 @@ export class UserService {
       where: { id: userId },
       select: { image: true, id: true },
     });
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     user.image = filePath;
     await this.userRepo.save(user);
     return await this.getProfilePicture(userId, response);
@@ -224,6 +225,8 @@ export class UserService {
       where: { id },
       select: { image: true },
     });
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     if (!existsSync(join(process.cwd(), user.image)) || !user.image) {
       throw new HttpException(
         'User has no profile picture',
@@ -239,7 +242,8 @@ export class UserService {
       where: { id },
       select: { image: true, id: true },
     });
-    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    if (!user)
+      throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     user.image = '';
     await this.userRepo.save(user);
   }

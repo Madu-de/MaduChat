@@ -23,6 +23,7 @@ export class AuthGuard implements CanActivate {
     }
     try {
       const payload = await this.authService.getPayloadFromToken(token);
+      if (!payload) throw new Error('Token is invalid');
       request['user'] = payload;
     } catch {
       return this.authService.unauthorized(websocketId);
