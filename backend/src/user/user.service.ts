@@ -239,6 +239,7 @@ export class UserService {
       where: { id },
       select: { image: true, id: true },
     });
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     user.image = '';
     await this.userRepo.save(user);
   }
