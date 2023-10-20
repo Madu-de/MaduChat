@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { User } from './user';
 import * as sha256 from 'sha256';
-import { Settings } from './settings';
+import { OnlinePrivacy, Settings } from './settings';
 import { Chat } from '../chat/chat';
 import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';

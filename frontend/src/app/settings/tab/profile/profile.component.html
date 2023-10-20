@@ -2,4 +2,13 @@
   <settings-tab-category [label]="languageService.getValue('profilepicture')">
     <settings-profile-picture [user]="user"></settings-profile-picture>
   </settings-tab-category>
+  <settings-tab-category label="Privatsphäre">
+    <settings-option 
+        [user]="user"
+        type="select" 
+        settingsId="onlinePrivacy" 
+        [label]="'Online status anzeigen'" 
+        [selectionList]="['Jeder', 'Freunde', 'Niemand']">
+      </settings-option>
+  </settings-tab-category>
 </settings-tab>
