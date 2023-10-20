@@ -65,8 +65,8 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Post('me/settings/:key')
   async changeSetting(
-    @Param('key') key: string,
-    @Body('value') value: any,
+    @Param('key') key: keyof Settings,
+    @Body('value') value: typeof key,
     @Req() request: Request,
   ): Promise<Settings> {
     return (
