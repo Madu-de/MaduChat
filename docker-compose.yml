@@ -1,0 +1,53 @@
+version: "1.0"
+services:
+  frontend:
+    container_name: maduchat_frontend
+    build: frontend
+    ports:
+      - 4200:4200
+    volumes:
+      - frontend:/frontend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /frontend
+        - action: rebuild
+          path: ./frontend/package.json
+  backend:
+    container_name: maduchat_backend
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=maduchat_database
+      - DATABASE_PASSWORD=maduchat
+    build: backend
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - backend:/backend
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /backend
+        - action: rebuild
+          path: ./backend/package.json
+  db:
+    container_name: maduchat_database
+    image: mysql
+    working_dir: /db
+    volumes:
+      - database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: maduchat
+      MYSQL_DATABASE: maduchat
+    ports:
+      - 3306:3306
+
+
+volumes:
+  frontend:
+  backend:
+  database:
