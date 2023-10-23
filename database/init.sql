@@ -5,17 +5,3 @@ CALL CreateUser('Erik', 'erik', 'd849317a2415e2544a2d875e7200bf74dbb480d93b2ca9f
 CALL CreateUser('Madu', 'madu', 'd849317a2415e2544a2d875e7200bf74dbb480d93b2ca9f27cf46139ae88250d', 'madu@gmail.com');
 CALL CreateUser('Max', 'max', 'd849317a2415e2544a2d875e7200bf74dbb480d93b2ca9f27cf46139ae88250d', 'max@gmail.com');
 CALL CreateUser('Bella', 'bella', 'd849317a2415e2544a2d875e7200bf74dbb480d93b2ca9f27cf46139ae88250d', 'bella@gmail.com');
-
-INSERT INTO maduchat.chatmembers
-(chatId,
- userId
-)
-VALUES
-((SELECT id
-  FROM chat
-  WHERE id = 'global'
-  ),
-  (SELECT id
-    FROM user
-    WHERE username = 'bella')
-);
