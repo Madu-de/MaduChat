@@ -1,8 +1,8 @@
 ![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/e80d3e3c-53cc-44ff-91c8-4966f5bd2464)
 
-## Getting started
+## Getting started without docker
 - Clone this repo
-- Create the .env file in /backend and add "JWT_SECRET={your_jwt_secret_here}"
+- Create a .env file in /backend and add "JWT_SECRET={your_jwt_secret_here}"
 - If you want to, you can add the following .env variables. 
   - DATABASE => Default is "maduchat"
   - DATABASE_HOST => Default is "localhost"
@@ -16,6 +16,14 @@
 - Go back to the "chat" table and add the global chat.
   - id: global
   - name: Global
+- Go to "localhost:4200" in your browser and enjoy!
+
+## Getting started with docker
+- Clone this repo
+- Create a .env file in /backend and add "JWT_SECRET={your_jwt_secret_here}" (You can also add this in the [docker-compose](./docker-compose.yml) at services>backend>environment)
+- Execute "docker compose up -d" on this directory
+- Execute "docker compose watch" if you want to instruct Docker to monitor changes and save them in the containers
+- Call the CreateGlobalchat procedure
 - Go to "localhost:4200" in your browser and enjoy!
 
 ## Docs
