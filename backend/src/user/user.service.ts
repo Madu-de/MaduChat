@@ -164,8 +164,8 @@ export class UserService {
   async changeSettings(id: string, settings: Settings): Promise<User> {
     let user = await this.getUser(id, false, false, true);
     const keys = Object.keys(settings);
-    const datas = keys.map(async key => {
-      user = await this.changeSetting(user, key, settings[key]);
+    const datas = keys.map(async (key: keyof Settings) => {
+      user = await this.changeSetting(user, key, <typeof key>settings[key]);
     });
     const allPromise = Promise.allSettled(datas);
     const statuses = await allPromise;
@@ -178,10 +178,10 @@ export class UserService {
   /**
    * @param user User or UserID
    */
-  async changeSetting(
+  private async changeSetting(
     user: string | User,
-    key: string,
-    value: any,
+    key: keyof Settings,
+    value: typeof key,
   ): Promise<User> {
     user =
       typeof user === 'string'
@@ -200,7 +200,7 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    user.settings[key] = value;
+    user.settings[<string>key] = value;
     return await this.userRepo.save(user);
   }
 

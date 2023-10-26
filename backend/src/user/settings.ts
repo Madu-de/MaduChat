@@ -1,7 +1,5 @@
-import { Transform } from 'class-transformer';
-import { IsEnum, IsOptional, ValidateIf, ValidationOptions } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
 
 export enum OnlinePrivacy {
   EVERYONE = 'everyone',
@@ -28,7 +26,6 @@ export class Settings {
   })
   @IsEnum(Language)
   @IsOptional()
-  @Transform(({ value }) => value || Language.ENGLISH)
   language: Language;
 
   @Column('bool', {
@@ -43,6 +40,5 @@ export class Settings {
   })
   @IsEnum(OnlinePrivacy)
   @IsOptional()
-  @Transform(({ value }) => value || OnlinePrivacy.EVERYONE)
   onlinePrivacy: OnlinePrivacy;
 }

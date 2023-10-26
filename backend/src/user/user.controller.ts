@@ -53,25 +53,13 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
-  @Post('me/settings')
+  @Put('me/settings')
   async changeSettings(
     @Body() settings: Settings,
     @Req() request: Request,
   ): Promise<Settings> {
     return (await this.userService.changeSettings(request['user'].id, settings))
       .settings;
-  }
-
-  @UseGuards(AuthGuard)
-  @Post('me/settings/:key')
-  async changeSetting(
-    @Param('key') key: keyof Settings,
-    @Body('value') value: typeof key,
-    @Req() request: Request,
-  ): Promise<Settings> {
-    return (
-      await this.userService.changeSetting(request['user'].id, key, value)
-    ).settings;
   }
 
   @UseGuards(AuthGuard)
