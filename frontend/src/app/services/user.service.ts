@@ -99,8 +99,8 @@ export class UserService {
   }
 
   setSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
-    return this.http.post<Settings>(`${this.auth.baseURL}/users/me/settings/${key}`, {
-      value,
+    return this.http.put<Settings>(`${this.auth.baseURL}/users/me/settings`, {
+      [key]: value,
     }, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,

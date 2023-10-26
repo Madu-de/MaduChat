@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export enum OnlinePrivacy {
   EVERYONE = 'everyone',
   FRIENDS = 'friends',
-  NOONE = 'no one',
+  NOONE = 'noone',
 }
 
 export enum Language {

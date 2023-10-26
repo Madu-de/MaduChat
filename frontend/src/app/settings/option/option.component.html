@@ -1,16 +1,16 @@
 <mat-list-item *ngIf="type == 'toggle'">
   <p class="item" [id]="settingsId">
     {{label}}
-    <mat-slide-toggle [checked]="user?.settings?.[settingsId]" (change)="changeEvent($event)"></mat-slide-toggle>
+    <mat-slide-toggle [checked]="user?.settings?.[settingsId]" (change)="changeEvent($event.checked)"></mat-slide-toggle>
   </p>
 </mat-list-item>
 
 <mat-list-item *ngIf="type === 'select'">
   <p class="item" [id]="settingsId">
     <mat-label>{{label}}</mat-label>
-    <mat-select [value]="user?.settings?.[settingsId]" (selectionChange)="changeEvent($event)">
+    <mat-select [value]="user?.settings?.[settingsId]" (selectionChange)="changeEvent($event.value)">
       <mat-option *ngFor="let selection of selectionList" [value]="selection">
-        {{selection}}
+        {{getTranslationIfExists(selection)}}
       </mat-option>
     </mat-select>
   </p>
