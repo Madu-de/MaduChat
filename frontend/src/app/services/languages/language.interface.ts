@@ -54,4 +54,6 @@ export interface Language {
   onlyStaticImagesAreAllowed: string;
   everyone: string;
   noone: string;
+  privacy: string;
+  showOnlineStatus: string;
 }

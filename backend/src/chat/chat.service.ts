@@ -24,7 +24,11 @@ export class ChatService {
     const chat = await this.chatRepo.findOne({ where: { id } });
     if (!chat) throw new HttpException('No chat found', HttpStatus.BAD_REQUEST);
     const messages = await this.messageRepo.find({
-      where: { chat },
+      where: {
+        chat: {
+          id: chat.id,
+        },
+      },
       relations: { author: true, chat: true },
       order: {
         createdAt: {

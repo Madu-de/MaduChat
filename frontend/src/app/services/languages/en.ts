@@ -55,5 +55,7 @@ export const EN: Language = {
   changeProfilepicture: 'Change profile picture',
   onlyStaticImagesAreAllowed: 'Only static images are allowed.',
   everyone: 'Everyone',
-  noone: 'No one'
+  noone: 'No one',
+  privacy: 'Privacy',
+  showOnlineStatus: 'Show online status'
 };

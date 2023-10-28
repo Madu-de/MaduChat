@@ -2,12 +2,12 @@
   <settings-tab-category [label]="languageService.getValue('profilepicture')">
     <settings-profile-picture [user]="user"></settings-profile-picture>
   </settings-tab-category>
-  <settings-tab-category label="Privatsphäre">
+  <settings-tab-category [label]="languageService.getValue('privacy')">
     <settings-option 
         [user]="user"
         type="select" 
         settingsId="onlinePrivacy" 
-        [label]="'Online status anzeigen'" 
+        [label]="languageService.getValue('showOnlineStatus')" 
         [selectionList]="['everyone', 'friends', 'noone']">
       </settings-option>
   </settings-tab-category>
