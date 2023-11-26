@@ -53,5 +53,9 @@ export const ES: Language = {
   profile: 'Perfil',
   profilepicture: 'Foto de perfil',
   changeProfilepicture: 'Cambiar foto de perfil',
-  onlyStaticImagesAreAllowed: 'Solo se permiten imágenes estáticas.'
+  onlyStaticImagesAreAllowed: 'Solo se permiten imágenes estáticas.',
+  everyone: 'Todos',
+  noone: 'Nadie',
+  privacy: 'Privacidad',
+  showOnlineStatus: 'Mostrar estado en línea'
 };

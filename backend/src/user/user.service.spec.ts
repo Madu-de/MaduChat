@@ -58,7 +58,9 @@ describe('UserService', () => {
 
   describe('GetUser', () => {
     it('should return a user', async () => {
-      expect(await service.getUser(exampleUser.id)).toBe(exampleUser);
+      expect(await service.getUser(exampleUser.id, exampleUser)).toBe(
+        exampleUser,
+      );
     });
   });
 

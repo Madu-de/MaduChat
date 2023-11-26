@@ -52,4 +52,8 @@ export interface Language {
   profilepicture: string;
   changeProfilepicture: string;
   onlyStaticImagesAreAllowed: string;
+  everyone: string;
+  noone: string;
+  privacy: string;
+  showOnlineStatus: string;
 }

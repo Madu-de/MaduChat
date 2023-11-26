@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { LanguageService } from 'src/app/services/language.service';
 
 describe('OptionComponent', () => {
   let component: OptionComponent;
@@ -23,6 +24,10 @@ describe('OptionComponent', () => {
       ],
       declarations: [OptionComponent],
       providers: [
+        {
+          provide: LanguageService,
+          useValue: {}
+        },
         {
           provide: UserService,
           useValue: {

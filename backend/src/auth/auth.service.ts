@@ -57,7 +57,10 @@ export class AuthService {
     const token = this.extractTokenFromHeader(header);
     const payload = await this.getPayloadFromToken(token);
     if (!payload) return;
-    return await this.usersService.getUser(payload.id);
+    return await this.usersService.getUser(
+      payload.id,
+      <User>(<unknown>payload),
+    );
   }
 
   private errorIsFromWebsocket(websocketId: number): boolean {

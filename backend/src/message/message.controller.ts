@@ -23,8 +23,14 @@ export class MessageController {
     id: string,
     @Query('author', BooleanPipe) author: boolean,
     @Query('chat', BooleanPipe) chat: boolean,
+    @Req() request: Request,
   ): Promise<Message> {
-    return await this.messageService.getMessage(id, author, chat);
+    return await this.messageService.getMessage(
+      id,
+      request['user'],
+      author,
+      chat,
+    );
   }
 
   @UseGuards(AuthGuard)

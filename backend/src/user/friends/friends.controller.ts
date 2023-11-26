@@ -12,12 +12,12 @@ export class FriendsController {
     @Body('friendId') id: string,
     @Req() request: Request,
   ) {
-    return this.userService.addFriendRequest(request['user'].id, id);
+    return this.userService.addFriendRequest(request['user'].id, id, request);
   }
 
   @UseGuards(AuthGuard)
   @Delete()
   async removeFriend(@Body('friendId') id: string, @Req() request: Request) {
-    return this.userService.removeFriend(request['user'].id, id);
+    return this.userService.removeFriend(request['user'].id, id, request);
   }
 }

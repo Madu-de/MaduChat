@@ -10,7 +10,7 @@
     <mat-label>{{label}}</mat-label>
     <mat-select [value]="user?.settings?.[settingsId]" (selectionChange)="changeEvent($event.value)">
       <mat-option *ngFor="let selection of selectionList" [value]="selection">
-        {{selection}}
+        {{getTranslationIfExists(selection)}}
       </mat-option>
     </mat-select>
   </p>
