@@ -4,6 +4,7 @@ import { Chat } from './chat';
 import { Repository, In } from 'typeorm';
 import { Message } from '../message/message';
 import { User } from '../user/user';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class ChatService {
@@ -11,6 +12,7 @@ export class ChatService {
     @InjectRepository(Chat) private chatRepo: Repository<Chat>,
     @InjectRepository(Message) private messageRepo: Repository<Message>,
     @InjectRepository(User) private userRepo: Repository<User>,
+    private userService: UserService,
   ) {}
 
   async getChat(id: string, members?: boolean): Promise<Chat> {
@@ -20,7 +22,7 @@ export class ChatService {
     });
   }
 
-  async getChatMessages(id: string): Promise<Message[]> {
+  async getChatMessages(id: string, requester: User): Promise<Message[]> {
     const chat = await this.chatRepo.findOne({ where: { id } });
     if (!chat) throw new HttpException('No chat found', HttpStatus.BAD_REQUEST);
     const messages = await this.messageRepo.find({
@@ -37,6 +39,14 @@ export class ChatService {
       },
       take: 30,
     });
+    await Promise.all(
+      messages.map(async (message, i) => {
+        messages[i].author = await this.userService.getPrivacyUser(
+          message.author,
+          requester,
+        );
+      }),
+    );
     return messages;
   }
 

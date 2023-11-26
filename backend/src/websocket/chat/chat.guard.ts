@@ -23,7 +23,7 @@ export class ChatGuard implements CanActivate {
     const userid =
       wsContext?.getClient().handshake.user.id || request['user'].id;
     if (!userid) return this.authService.notAllowed(websocketId);
-    const user = await this.userService.getUser(userid, false, true);
+    const user = await this.userService.getUser(userid, request, false, true);
     const isAbleToJoin = user.chats.some(chat => chat.id === chatid);
     if (!isAbleToJoin) return this.authService.notAllowed(websocketId);
     return true;

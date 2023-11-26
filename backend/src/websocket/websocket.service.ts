@@ -29,6 +29,8 @@ export class WebsocketService {
       chatid,
       userid,
     );
+    // We cannot check every user in the chat individually. Therefore, we delete it for every member the first time
+    delete message.author.isOnline;
     this.socket.to(chatid).emit('message', message);
   }
 }

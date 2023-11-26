@@ -73,7 +73,7 @@ export class WebsocketGateway
 
   @UseGuards(AuthGuard)
   @SubscribeMessage('sendMessage')
-  sendMessage(
+  async sendMessage(
     @MessageBody() data: { message: string },
     @ConnectedSocket() client: Socket,
   ) {

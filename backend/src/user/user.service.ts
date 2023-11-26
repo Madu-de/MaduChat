@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { User } from './user';
 import * as sha256 from 'sha256';
-import { Settings } from './settings';
+import { OnlinePrivacy, Settings } from './settings';
 import { Chat } from '../chat/chat';
 import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
@@ -16,29 +16,80 @@ export class UserService {
     @InjectRepository(Chat) private chatRepo: Repository<Chat>,
   ) {}
 
+  async getPrivacyUser(user: User, requester: User): Promise<User> {
+    const dbuser: User = await this.userRepo.findOne({
+      where: { id: user.id },
+      relations: { friends: true, settings: true },
+    });
+    if (!user.settings) {
+      user.settings = dbuser.settings;
+    }
+    if (!user.friends) {
+      user.friends = dbuser.friends;
+    }
+    if (user.id === requester.id) {
+      return user;
+    }
+    if (user.settings.onlinePrivacy === OnlinePrivacy.NOONE) {
+      delete user.isOnline;
+    }
+    if (
+      user.settings.onlinePrivacy === OnlinePrivacy.FRIENDS &&
+      !user.friends.some(friend => friend.id === requester.id)
+    ) {
+      delete user.isOnline;
+    }
+    return user;
+  }
+
   async getUser(
     id: string,
+    requester: User,
     friends?: boolean,
     chats?: boolean,
     settings?: boolean,
   ): Promise<User> {
-    const user = await this.userRepo.findOne({
+    let user = await this.userRepo.findOne({
       where: { id },
       relations: {
         chats,
-        friends,
-        settings,
+        friends: true,
+        settings: true,
         friendRequestsSent: friends,
         friendRequetsReceived: friends,
       },
     });
     if (!user)
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
+    user = await this.getPrivacyUser(user, requester);
+    if (friends) {
+      await Promise.all(
+        user.friends.map?.(async (u, i) => {
+          user.friends[i] = await this.getPrivacyUser(u, requester);
+        }),
+      );
+      await Promise.all(
+        user.friendRequestsSent.map?.(async (u, i) => {
+          user.friendRequestsSent[i] = await this.getPrivacyUser(u, requester);
+        }),
+      );
+      await Promise.all(
+        user.friendRequetsReceived.map?.(async (u, i) => {
+          user.friendRequetsReceived[i] = await this.getPrivacyUser(
+            u,
+            requester,
+          );
+        }),
+      );
+    }
+    if (!friends) delete user.friends;
+    if (!settings) delete user.settings;
     return user;
   }
 
   async getUserLike(
     name: string,
+    request: Request,
     friends?: boolean,
     chats?: boolean,
     settings?: boolean,
@@ -50,9 +101,16 @@ export class UserService {
       );
     const users = await this.userRepo.find({
       where: [{ name: Like(`%${name}%`) }, { username: Like(`%${name}%`) }],
-      relations: { chats, friends, settings },
+      relations: { chats, friends: true, settings: true },
       take: 30,
     });
+    await Promise.all(
+      users.map(async (user, i) => {
+        users[i] = await this.getPrivacyUser(user, request['user']);
+        if (!friends) delete users[i].friends;
+        if (!settings) delete users[i].settings;
+      }),
+    );
     return users;
   }
 
@@ -72,10 +130,6 @@ export class UserService {
     user = await this.userRepo.save(user);
     delete user.password;
     return user;
-  }
-
-  async findOne(id: string): Promise<User | undefined> {
-    return this.userRepo.findOne({ where: { id } });
   }
 
   async findOneByUsernameWithPassword(
@@ -100,11 +154,11 @@ export class UserService {
     return [false, ''];
   }
 
-  async addFriendRequest(user1Id: string, user2Id: string) {
+  async addFriendRequest(user1Id: string, user2Id: string, request: Request) {
     if (user2Id === undefined)
       throw new HttpException(`friendId is required`, HttpStatus.BAD_REQUEST);
-    const user1 = await this.getUser(user1Id, true);
-    const user2 = await this.getUser(user2Id, true);
+    const user1 = await this.getUser(user1Id, request['user'], true);
+    const user2 = await this.getUser(user2Id, request['user'], true);
     if (user1.friendRequestsSent.some(user => user.id === user2.id)) {
       throw new HttpException('Request already sent', HttpStatus.BAD_REQUEST);
     }
@@ -125,10 +179,10 @@ export class UserService {
     }
     user1.friendRequestsSent.push(user2);
     await this.userRepo.save(user1);
-    return user2;
+    return await this.getPrivacyUser(user2, request['user']);
   }
 
-  async addFriend(user1: User, user2: User) {
+  private async addFriend(user1: User, user2: User) {
     user1.friendRequetsReceived = user1.friendRequetsReceived.filter(
       user => user.id !== user2.id,
     );
@@ -144,11 +198,11 @@ export class UserService {
     return await this.userRepo.save(user2);
   }
 
-  async removeFriend(user1Id: string, user2Id: string) {
+  async removeFriend(user1Id: string, user2Id: string, request: Request) {
     if (user2Id === undefined)
       throw new HttpException(`friendId is required`, HttpStatus.BAD_REQUEST);
-    const user1 = await this.getUser(user1Id, true);
-    const user2 = await this.getUser(user2Id, true);
+    const user1 = await this.getUser(user1Id, request['user'], true);
+    let user2 = await this.getUser(user2Id, request['user'], true);
     user1.friendRequestsSent = user1.friendRequestsSent.filter(
       user => user.id !== user2Id,
     );
@@ -158,14 +212,24 @@ export class UserService {
     user1.friends = user1.friends.filter(user => user.id !== user2Id);
     user2.friends = user2.friends.filter(user => user.id !== user1Id);
     await this.userRepo.save(user1);
-    return await this.userRepo.save(user2);
+    user2 = await this.userRepo.save(user2);
+    return await this.getPrivacyUser(user2, request['user']);
   }
 
-  async changeSettings(id: string, settings: Settings): Promise<User> {
-    let user = await this.getUser(id, false, false, true);
+  async changeSettings(
+    id: string,
+    settings: Settings,
+    request: Request,
+  ): Promise<User> {
+    let user = await this.getUser(id, request['user'], false, false, true);
     const keys = Object.keys(settings);
     const datas = keys.map(async (key: keyof Settings) => {
-      user = await this.changeSetting(user, key, <typeof key>settings[key]);
+      user = await this.changeSetting(
+        user,
+        key,
+        <typeof key>settings[key],
+        request,
+      );
     });
     const allPromise = Promise.allSettled(datas);
     const statuses = await allPromise;
@@ -182,10 +246,11 @@ export class UserService {
     user: string | User,
     key: keyof Settings,
     value: typeof key,
+    request: Request,
   ): Promise<User> {
     user =
       typeof user === 'string'
-        ? await this.getUser(user, false, false, true)
+        ? await this.getUser(user, request['user'], false, false, true)
         : user;
     if (key === 'id') {
       throw new HttpException(

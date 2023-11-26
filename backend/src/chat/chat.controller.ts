@@ -31,8 +31,11 @@ export class ChatController {
 
   @UseGuards(AuthGuard, ChatGuard)
   @Get(':id/messages')
-  async getChatMessages(@Param('id') id: string): Promise<Message[]> {
-    return await this.chatService.getChatMessages(id);
+  async getChatMessages(
+    @Param('id') id: string,
+    @Req() request: Request,
+  ): Promise<Message[]> {
+    return await this.chatService.getChatMessages(id, request['user']);
   }
 
   @UseGuards(AuthGuard)

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Message } from './message';
 import { Chat } from '../chat/chat';
 import { User } from '../user/user';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class MessageService {
@@ -11,10 +12,12 @@ export class MessageService {
     @InjectRepository(Message) private messageRepo: Repository<Message>,
     @InjectRepository(Chat) private chatRepo: Repository<Chat>,
     @InjectRepository(User) private userRepo: Repository<User>,
+    private userService: UserService,
   ) {}
 
   async getMessage(
     id: string,
+    requester: User,
     author?: boolean,
     chat?: boolean,
   ): Promise<Message> {
@@ -22,6 +25,10 @@ export class MessageService {
       where: { id },
       relations: { author, chat },
     });
+    message.author = await this.userService.getPrivacyUser(
+      message.author,
+      requester,
+    );
     return message;
   }
 
