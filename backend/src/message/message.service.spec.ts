@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Chat } from '../chat/chat';
 import { User } from '../user/user';
 import { Message } from './message';
+import { UserService } from '../user/user.service';
 
 describe('MessageService', () => {
   let service: MessageService;
@@ -30,6 +31,10 @@ describe('MessageService', () => {
             findOne: jest.fn(),
             save: jest.fn(),
           },
+        },
+        {
+          provide: UserService,
+          useValue: {},
         },
       ],
     }).compile();

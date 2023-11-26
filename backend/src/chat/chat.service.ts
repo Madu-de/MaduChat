@@ -4,7 +4,7 @@ import { Chat } from './chat';
 import { Repository, In } from 'typeorm';
 import { Message } from '../message/message';
 import { User } from '../user/user';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class ChatService {
