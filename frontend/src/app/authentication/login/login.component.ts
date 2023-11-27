@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { LanguageService } from 'src/app/services/language.service';
 
@@ -44,18 +45,24 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.value.username && this.loginForm.value.password) {
-      this.loading = true;
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password, (result: boolean, error) => {
+    if (!this.loginForm.value.username || !this.loginForm.value.password) return;
+    this.loading = true;
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+    .pipe(
+      catchError((error) => {
         this.loading = false;
-        if (result) return;
-        if (error?.status === 401) {
+        if (error.status === 401) {
           this.error = this.languageService.getValue('passwordorusernamewrongErr');
         } else {
           this.error = this.languageService.getValue('serverIsNotReachable');
         }
-      });
-    }
+        return throwError(() => new Error(error.message));
+      })
+    )
+    .subscribe((token) => {
+      this.loading = false;
+      this.authService.token = token;
+    });
   }
 
   register() {
@@ -70,22 +77,29 @@ export class LoginComponent implements OnInit {
           return;
         } 
         this.loading = true;
-        this.authService.register(form.email,
+        this.authService.register(
+          form.email,
           form.name, 
           form.username, 
           form.password, 
-          this.languageService.lang, (result, error) => {
+          this.languageService.lang
+        ).pipe(
+          catchError((error) => {
             this.loading = false;
-            if (result) return;
-            if (error?.status === 400) {
+            if (error.status === 400) {
               this.error = this.languageService.getValue('userAlreadyExistsErr');
             } else {
               this.error = this.languageService.getValue('serverIsNotReachable');
             }
-            if (error?.error['message'].some((message: string) => message == 'email must be an email')) {
+            if (error['message'].some((message: string) => message == 'email must be an email')) {
               this.error = this.languageService.getValue('emailIsNotValid');
             }
-          });
+            return throwError(() => new Error(error.message));
+          })
+        ).subscribe((token) => {
+          this.loading = false;
+          this.authService.token = token;
+        });
     }
   }
 }
