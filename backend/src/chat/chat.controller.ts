@@ -25,8 +25,9 @@ export class ChatController {
   async getChat(
     @Param('id') id: string,
     @Query('members', BooleanPipe) members: boolean,
+    @Req() request: Request,
   ): Promise<Chat> {
-    return await this.chatService.getChat(id, members);
+    return await this.chatService.getChat(id, request['user'], members);
   }
 
   @UseGuards(AuthGuard, ChatGuard)

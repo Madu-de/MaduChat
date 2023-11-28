@@ -15,11 +15,30 @@ export class ChatService {
     private userService: UserService,
   ) {}
 
-  async getChat(id: string, members?: boolean): Promise<Chat> {
-    return await this.chatRepo.findOne({
+  async getChat(id: string, requester: User, members?: boolean): Promise<Chat> {
+    const chat = await this.chatRepo.findOne({
       where: { id },
       relations: { members, admins: members },
     });
+    if (members) {
+      await Promise.all(
+        chat.members.map(async (member, i) => {
+          chat.members[i] = await this.userService.getPrivacyUser(
+            member,
+            requester,
+          );
+        }),
+      );
+      await Promise.all(
+        chat.admins.map(async (admin, i) => {
+          chat.admins[i] = await this.userService.getPrivacyUser(
+            admin,
+            requester,
+          );
+        }),
+      );
+    }
+    return chat;
   }
 
   async getChatMessages(id: string, requester: User): Promise<Message[]> {

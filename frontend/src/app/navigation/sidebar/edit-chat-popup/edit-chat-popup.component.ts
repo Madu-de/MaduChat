@@ -24,13 +24,7 @@ export class EditChatPopupComponent implements OnInit {
 
   clientUser: User | undefined;
 
-  members: User[] = [
-    new User("1", "test12", "srgeh", "", true, true, true),
-    new User("1", "test12", "srgeh", "", true, true, true),
-    new User("1", "test12", "srgeh", "", true, true, true),
-    new User("1", "test12", "srgeh", "", true, true, true),
-    new User("1", "test12", "srgeh", "", true, true, true),
-  ];
+  members: User[] | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<EditChatPopupComponent>,
@@ -41,8 +35,11 @@ export class EditChatPopupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userService.getMe().subscribe((user) => {
+    this.userService.getMe(false, false, true).subscribe((user) => {
       this.clientUser = user;
+    });
+    this.chatService.get(this.data.chat.id, true).subscribe((chat) => {
+      this.members = chat.members;
     });
   }
 
@@ -53,6 +50,5 @@ export class EditChatPopupComponent implements OnInit {
   }
 
   removeUserFromChat(user: User) {
-    this.chatService
   }
 }

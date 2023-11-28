@@ -12,6 +12,9 @@
   <h2>Members</h2>
   <mat-list>
     <user-list-user *ngFor="let user of members" [user]="user" [clientUser]="clientUser" [isAdded]="true" (onToggle)="removeUserFromChat(user)"></user-list-user>
+    <button mat-icon-button style="position: relative; left: 50%; translate: -50%; margin-top: 5%;">
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
