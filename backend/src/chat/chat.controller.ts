@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -56,5 +57,15 @@ export class ChatController {
     @Req() request: Request,
   ): Promise<Chat> {
     return await this.chatService.updateChat(id, chat, request['user']);
+  }
+
+  @UseGuards(AuthGuard, ChatGuard)
+  @Delete(':id/member/:memberid')
+  async removeMember(
+    @Param('id') id: string,
+    @Param('memberid') memberid: string,
+    @Req() request: Request,
+  ) {
+    return await this.chatService.removeMember(id, memberid, request['user']);
   }
 }

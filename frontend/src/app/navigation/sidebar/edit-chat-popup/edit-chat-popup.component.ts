@@ -50,5 +50,8 @@ export class EditChatPopupComponent implements OnInit {
   }
 
   removeUserFromChat(user: User) {
+    this.chatService.removeMember(this.data.chat.id, user.id).subscribe((chat) => {
+      this.members = chat.members;
+    });
   }
 }

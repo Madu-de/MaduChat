@@ -16,27 +16,12 @@ export class ChatService {
   ) {}
 
   async getChat(id: string, requester: User, members?: boolean): Promise<Chat> {
-    const chat = await this.chatRepo.findOne({
+    let chat = await this.chatRepo.findOne({
       where: { id },
       relations: { members, admins: members },
     });
     if (members) {
-      await Promise.all(
-        chat.members.map(async (member, i) => {
-          chat.members[i] = await this.userService.getPrivacyUser(
-            member,
-            requester,
-          );
-        }),
-      );
-      await Promise.all(
-        chat.admins.map(async (admin, i) => {
-          chat.admins[i] = await this.userService.getPrivacyUser(
-            admin,
-            requester,
-          );
-        }),
-      );
+      chat = await this.getChatWithPrivacyUser(chat, requester);
     }
     return chat;
   }
@@ -115,5 +100,43 @@ export class ChatService {
       throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
     chat = { ...chat, ...newChat };
     return this.chatRepo.save(chat);
+  }
+
+  async removeMember(id: string, memberid: string, requester: User) {
+    const chat = await this.chatRepo.findOne({
+      where: { id },
+      relations: { admins: true, members: true },
+    });
+    if (!chat)
+      throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
+    if (!chat.admins.find(user => user.id == requester.id))
+      throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
+    if (chat.admins.some(user => user.id === memberid))
+      throw new HttpException('You cannot kick admins', HttpStatus.BAD_REQUEST);
+    chat.members = chat.members.filter(member => member.id !== memberid);
+    return await this.getChatWithPrivacyUser(
+      await this.chatRepo.save(chat),
+      requester,
+    );
+  }
+
+  private async getChatWithPrivacyUser(chat: Chat, requester: User) {
+    await Promise.all(
+      chat.members.map(async (member, i) => {
+        chat.members[i] = await this.userService.getPrivacyUser(
+          member,
+          requester,
+        );
+      }),
+    );
+    await Promise.all(
+      chat.admins.map(async (admin, i) => {
+        chat.admins[i] = await this.userService.getPrivacyUser(
+          admin,
+          requester,
+        );
+      }),
+    );
+    return chat;
   }
 }

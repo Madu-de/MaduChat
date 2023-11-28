@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Chat } from '../classes/Chat';
 import { Observable } from 'rxjs';
@@ -37,5 +37,11 @@ export class ChatService {
     }, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
+  }
+
+  removeMember(id: string, memberid: string) {
+    return this.http.delete<Chat>(`${this.auth.baseURL}/chat/${id}/member/${memberid}`, {
+      headers: { Authorization: 'Bearer ' + this.auth.token }
+    })
   }
 }
