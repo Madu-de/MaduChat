@@ -16,6 +16,8 @@ import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.compon
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { UserListComponent } from 'src/app/friends/user-list/user-list.component';
+import { FriendsModule } from 'src/app/friends/friends.module';
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     ReactiveFormsModule,
     RouterModule,
+    FriendsModule
   ],
   exports: [
     SidebarComponent

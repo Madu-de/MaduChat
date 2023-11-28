@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserModule } from '../user/user.module';
+import { FriendUserComponent } from './user-list/friend-user/friend-user.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { UserModule } from '../user/user.module';
     FriendRequestsComponent,
     UserListComponent,
     UserComponent,
+    FriendUserComponent,
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,7 @@ import { UserModule } from '../user/user.module';
   ],
   exports: [
     FriendsComponent, 
-    UserListComponent
+    UserComponent
   ]
 })
 export class FriendsModule { }

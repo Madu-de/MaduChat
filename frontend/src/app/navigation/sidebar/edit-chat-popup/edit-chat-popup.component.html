@@ -9,6 +9,10 @@
       <mat-error *ngIf="chat.controls['name'].hasError('maxlength')">{{languageService.getValue('name')}} {{languageService.getValue('isTooLong')}}</mat-error>
     </mat-form-field>
   </form>
+  <h2>Members</h2>
+  <mat-list>
+    <user-list-user *ngFor="let user of members" [user]="user" [clientUser]="clientUser" [isAdded]="true" (onToggle)="removeUserFromChat(user)"></user-list-user>
+  </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
