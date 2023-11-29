@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ChooseUsersPopupComponent } from 'src/app/basic-needs/choose-users-popup/choose-users-popup.component';
 import { Chat } from 'src/app/classes/Chat';
 import { User } from 'src/app/classes/User';
 import { ChatService } from 'src/app/services/chat.service';
@@ -31,7 +32,8 @@ export class EditChatPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { chat: Chat },
     private chatService: ChatService,
     public languageService: LanguageService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -46,6 +48,20 @@ export class EditChatPopupComponent implements OnInit {
   saveChat() {
     this.chatService.editChat(this.data.chat.id, this.chat.value.name).subscribe((chat: Chat) => {
       this.dialogRef.close(chat);
+    });
+  }
+
+  openMembersAddMenu() {
+    this.userService.getMe(false, true).subscribe((user) => {
+      user.friends = user.friends?.filter((friend) => !this.members?.some((member) => member.id === friend.id));
+      this.dialog.open(ChooseUsersPopupComponent, {
+        data: {
+          users: user.friends
+        }
+      }).afterClosed().subscribe((choosedUsers: User[] | undefined) => {
+        if (!choosedUsers) return;
+
+      });
     });
   }
 

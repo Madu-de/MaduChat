@@ -1,17 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User } from 'src/app/classes/User';
 import { UserService } from 'src/app/services/user.service';
-import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
-import { SnackbarService } from 'src/app/services/snackbar.service';
-import { LanguageService } from 'src/app/services/language.service';
 
 
 @Component({
-  selector: 'user-list-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'list-user-item',
+  templateUrl: './list-user-item.component.html',
+  styleUrls: ['./list-user-item.component.scss']
 })
-export class UserComponent implements OnInit {
+export class ListUserItem implements OnInit {
   @Input()
   user: User | undefined;
 
@@ -20,6 +17,9 @@ export class UserComponent implements OnInit {
 
   @Input()
   isAdded: boolean = false;
+
+  @Input()
+  autoIconToggle: boolean = false;
 
   @Output()
   onToggle: EventEmitter<boolean> = new EventEmitter();
@@ -33,5 +33,10 @@ export class UserComponent implements OnInit {
     this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
       this.userImage = image;
     });
+  }
+
+  toggleAdded() {
+    this.onToggle.emit(this.isAdded);
+    if (this.autoIconToggle) this.isAdded = !this.isAdded;
   }
 }

@@ -2,7 +2,7 @@
   <img matListItemAvatar [src]="userImage || './assets/defaultpb.png'" *ngIf="clientUser?.settings?.showAvatar">
   <span matListItemTitle>{{user?.name}} <app-badge-list [user]="user"></app-badge-list></span>
   <span matListItemLine class="username"><a [routerLink]=" '../user/' + user?.id ">@{{user?.username}}</a></span>
-  <button matListItemMeta mat-icon-button id="btn" (click)="onToggle.emit(isAdded)">
+  <button matListItemMeta mat-icon-button id="btn" (click)="toggleAdded()">
     <mat-icon *ngIf="!isAdded">add</mat-icon>
     <mat-icon *ngIf="isAdded">remove</mat-icon>
   </button>
