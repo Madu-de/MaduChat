@@ -87,33 +87,24 @@ export class ChatService {
     return await this.chatRepo.save(chat);
   }
 
-  async updateChat(id: string, newChat: Chat, editor: User): Promise<Chat> {
-    if (newChat.id)
-      throw new HttpException('Cannot change chat id', HttpStatus.BAD_REQUEST);
+  async updateChat(id: string, newChat: Chat, requester: User): Promise<Chat> {
+    if (newChat.id) delete newChat.id;
     let chat = await this.chatRepo.findOne({
       where: { id },
       relations: { admins: true, members: true },
     });
     if (!chat)
       throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
-    if (!chat.admins.find(user => user.id === editor.id))
+    if (!chat.admins.find(user => user.id === requester.id))
       throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
-    chat = { ...chat, ...newChat };
-    return this.chatRepo.save(chat);
-  }
-
-  async removeMember(id: string, memberid: string, requester: User) {
-    const chat = await this.chatRepo.findOne({
-      where: { id },
-      relations: { admins: true, members: true },
-    });
-    if (!chat)
-      throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
-    if (!chat.admins.find(user => user.id == requester.id))
-      throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
-    if (chat.admins.some(user => user.id === memberid))
+    if (
+      newChat.members &&
+      !chat.admins.every(admin =>
+        newChat.members.some(member => admin.id === member.id),
+      )
+    )
       throw new HttpException('You cannot kick admins', HttpStatus.BAD_REQUEST);
-    chat.members = chat.members.filter(member => member.id !== memberid);
+    chat = { ...chat, ...newChat };
     return await this.getChatWithPrivacyUser(
       await this.chatRepo.save(chat),
       requester,

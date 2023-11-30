@@ -1,11 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { catchError, throwError } from 'rxjs';
 import { ChooseUsersPopupComponent } from 'src/app/basic-needs/choose-users-popup/choose-users-popup.component';
 import { Chat } from 'src/app/classes/Chat';
 import { User } from 'src/app/classes/User';
 import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,7 +19,7 @@ export class EditChatPopupComponent implements OnInit {
 
   chat: FormGroup = new FormGroup({
     name: new FormControl(this.data.chat.name, [
-      Validators.minLength(1), 
+      Validators.minLength(1),
       Validators.maxLength(20),
       Validators.required
     ])
@@ -33,8 +35,9 @@ export class EditChatPopupComponent implements OnInit {
     private chatService: ChatService,
     public languageService: LanguageService,
     private userService: UserService,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
+  ) { }
 
   ngOnInit() {
     this.userService.getMe(false, false, true).subscribe((user) => {
@@ -46,9 +49,23 @@ export class EditChatPopupComponent implements OnInit {
   }
 
   saveChat() {
-    this.chatService.editChat(this.data.chat.id, this.chat.value.name).subscribe((chat: Chat) => {
-      this.dialogRef.close(chat);
-    });
+    if (!this.members) return;
+    this.chatService.editChat(this.data.chat.id, {
+      id: this.data.chat.id, 
+      name: this.chat.controls['name'].value, 
+      members: this.members
+    }).pipe(
+      catchError((error) => {
+        if (error.error['message'] === 'You cannot kick admins') {
+          this.snackbarService.open('You cannot kick admins!');
+        }
+        return throwError(() => error);
+      }))
+      .subscribe((chat) => {
+        console.log(chat);
+        this.snackbarService.open('Erfolgreich gespeichert!');
+        this.dialogRef.close(chat);
+      });
   }
 
   openMembersAddMenu() {
@@ -60,14 +77,12 @@ export class EditChatPopupComponent implements OnInit {
         }
       }).afterClosed().subscribe((choosedUsers: User[] | undefined) => {
         if (!choosedUsers) return;
-
+        this.members?.push(...choosedUsers);
       });
     });
   }
 
   removeUserFromChat(user: User) {
-    this.chatService.removeMember(this.data.chat.id, user.id).subscribe((chat) => {
-      this.members = chat.members;
-    });
+    this.members = this.members?.filter((member) => member.id !== user.id);
   }
 }

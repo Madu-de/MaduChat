@@ -31,17 +31,11 @@ export class ChatService {
     });
   }
 
-  editChat(id: string, name: string): Observable<Chat> {
+  editChat(id: string, chat: Chat): Observable<Chat> {
     return this.http.put<Chat>(`${this.auth.baseURL}/chat/${id}`, {
-      name
+      chat
     }, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
-  }
-
-  removeMember(id: string, memberid: string) {
-    return this.http.delete<Chat>(`${this.auth.baseURL}/chat/${id}/member/${memberid}`, {
-      headers: { Authorization: 'Bearer ' + this.auth.token }
-    })
   }
 }
