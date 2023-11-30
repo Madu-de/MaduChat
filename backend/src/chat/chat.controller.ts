@@ -1,7 +1,8 @@
 import {
   Body,
-  Controller, Delete,
-  Get, Logger,
+  Controller,
+  Delete,
+  Get,
   Param,
   Post,
   Put,
