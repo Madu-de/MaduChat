@@ -16,6 +16,15 @@ export class WebsocketService {
     client.join(chatid);
   }
 
+  forceUserLeave(chatid: string, userid: string) {
+    const clients = this.socket.sockets.sockets;
+    clients.forEach(client => {
+      if (!client.rooms.has(chatid)) return;
+      if (client.handshake['user'].id !== userid) return;
+      client.leave(chatid);
+    });
+  }
+
   async sendMessage(client: Socket, msg: string) {
     let chatid: string;
     client.rooms.forEach(room => {

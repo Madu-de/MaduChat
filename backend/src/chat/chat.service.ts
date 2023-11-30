@@ -5,6 +5,7 @@ import { Repository, In } from 'typeorm';
 import { Message } from '../message/message';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
+import { WebsocketService } from 'src/websocket/websocket.service';
 
 @Injectable()
 export class ChatService {
@@ -13,6 +14,7 @@ export class ChatService {
     @InjectRepository(Message) private messageRepo: Repository<Message>,
     @InjectRepository(User) private userRepo: Repository<User>,
     private userService: UserService,
+    private websocketService: WebsocketService,
   ) {}
 
   async getChat(id: string, requester: User, members?: boolean): Promise<Chat> {
@@ -104,6 +106,12 @@ export class ChatService {
       )
     )
       throw new HttpException('You cannot kick admins', HttpStatus.BAD_REQUEST);
+    const removedMembers = chat.members.filter(m =>
+      newChat.members.every(m2 => m.id !== m2.id),
+    );
+    removedMembers.forEach(member => {
+      this.websocketService.forceUserLeave(chat.id, member.id);
+    });
     chat = { ...chat, ...newChat };
     return await this.getChatWithPrivacyUser(
       await this.chatRepo.save(chat),
