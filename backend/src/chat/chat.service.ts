@@ -95,6 +95,10 @@ export class ChatService {
       where: { id },
       relations: { admins: true, members: true },
     });
+    requester = await this.userRepo.findOne({
+      where: { id: requester.id },
+      relations: { friends: true },
+    });
     if (!chat)
       throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
     if (!chat.admins.find(user => user.id === requester.id))
@@ -106,6 +110,15 @@ export class ChatService {
       )
     )
       throw new HttpException('You cannot kick admins', HttpStatus.BAD_REQUEST);
+    const addedMembers = newChat.members.filter(m =>
+      chat.members.every(m2 => m.id !== m2.id),
+    );
+    if (addedMembers.some(m => requester.friends.every(f => f.id !== m.id))) {
+      throw new HttpException(
+        `You can only add friends to your chat`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const removedMembers = chat.members.filter(m =>
       newChat.members.every(m2 => m.id !== m2.id),
     );
