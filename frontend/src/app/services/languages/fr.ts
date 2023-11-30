@@ -64,4 +64,5 @@ export const FR: Language = {
   select: 'Sélectionner',
   savedSuccessfully: 'Enregistré avec succès',
   youCannotKickAdmins: 'Tu ne peux pas supprimer d\'administrateurs',
+  youHaveBeenRemovedFromTheChat: 'Tu as été retiré(e) du chat!',
 };

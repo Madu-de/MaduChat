@@ -64,4 +64,5 @@ export const DE: Language = {
   select: 'Auswählen',
   savedSuccessfully: 'Erfolgreich gespeichert',
   youCannotKickAdmins: 'Du kannst keine Admins entfernen',
+  youHaveBeenRemovedFromTheChat: 'Du wurdest aus dem Chat entfernt!',
 };

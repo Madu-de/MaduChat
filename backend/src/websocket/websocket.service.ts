@@ -22,6 +22,7 @@ export class WebsocketService {
       if (!client.rooms.has(chatid)) return;
       if (client.handshake['user'].id !== userid) return;
       client.leave(chatid);
+      client.emit('kickedFromChat');
     });
   }
 

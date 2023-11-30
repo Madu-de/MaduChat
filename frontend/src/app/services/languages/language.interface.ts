@@ -62,4 +62,5 @@ export interface Language {
   select: string;
   savedSuccessfully: string;
   youCannotKickAdmins: string;
+  youHaveBeenRemovedFromTheChat: string;
 }

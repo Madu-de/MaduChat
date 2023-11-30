@@ -7,6 +7,7 @@ import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Settings } from '../classes/Settings';
+import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +27,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private router: Router,
     private chatService: ChatService,
     private auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private snackbarService: SnackbarService
   ) { }
 
   async ngOnInit() {
@@ -44,6 +46,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         console.log(err);
       });
       this.auth.websocket?.emit('joinChat', { chatid: chatId });
+      this.auth.websocket?.on('kickedFromChat', () => {
+        this.channelExists = false;
+        this.messages = [];
+        this.snackbarService.open(this.languageService.getValue('youHaveBeenRemovedFromTheChat'));
+      });
       this.chatService.getMessages(chatId)
         .pipe(
           catchError((err) => {
