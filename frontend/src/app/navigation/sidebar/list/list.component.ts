@@ -56,6 +56,14 @@ export class ListComponent implements OnInit {
     });
   }
 
+  deleteChat(chat: Chat) {
+    this.chatService.deleteChat(chat.id).subscribe(deletedResult => {
+      if (deletedResult > 0) {
+        this.updateSidebar();
+      }
+    });
+  }
+
   clientIsAdminOfChat(chat: Chat): boolean {
     return chat.admins?.find(admin => admin.id === this.user?.id) !== undefined;
   }

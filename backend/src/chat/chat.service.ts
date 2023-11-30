@@ -97,4 +97,16 @@ export class ChatService {
     chat = { ...chat, ...newChat };
     return this.chatRepo.save(chat);
   }
+  async deleteChat(id: string, deleter: User): Promise<number> {
+    const chat = await this.getChat(id);
+    if (!chat)
+      throw new HttpException('Could not find chat', HttpStatus.BAD_REQUEST);
+    if (
+      chat?.admins?.length &&
+      !chat.admins.find(user => user.id === deleter.id)
+    )
+      throw new HttpException('You are not an admin', HttpStatus.BAD_REQUEST);
+    const deletedResult = await this.chatRepo.delete(id);
+    return deletedResult?.affected;
+  }
 }

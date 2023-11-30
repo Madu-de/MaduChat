@@ -40,7 +40,8 @@
                     {{ chat.name }}
                 </a>
                 <div class="actions" *ngIf="clientIsAdminOfChat(chat)">
-                    <mat-icon (click)="openEditMenu(chat)">edit</mat-icon>
+                  <button mat-icon-button (click)="openEditMenu(chat)"><mat-icon>edit</mat-icon></button>
+                  <button mat-icon-button (click)="deleteChat(chat)" color="warn"><mat-icon>delete</mat-icon></button>
                 </div>
             </mat-card-content>
         </mat-card>

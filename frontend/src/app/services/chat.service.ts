@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Chat } from '../classes/Chat';
 import { Observable } from 'rxjs';
@@ -35,6 +35,12 @@ export class ChatService {
     return this.http.put<Chat>(`${this.auth.baseURL}/chat/${id}`, {
       name
     }, {
+      headers: { Authorization: 'Bearer ' + this.auth.token }
+    });
+  }
+
+  deleteChat(id: string): Observable<number> {
+    return this.http.delete<number>(`${this.auth.baseURL}/chat/${id}`, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
   }
