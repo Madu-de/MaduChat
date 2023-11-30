@@ -57,5 +57,11 @@ export const ES: Language = {
   everyone: 'Todos',
   noone: 'Nadie',
   privacy: 'Privacidad',
-  showOnlineStatus: 'Mostrar estado en línea'
+  showOnlineStatus: 'Mostrar estado en línea',
+  members: 'Miembros',
+  chooseMembers: 'Seleccionar miembros',
+  back: 'Atrás',
+  select: 'Seleccionar',
+  savedSuccessfully: 'Guardado exitosamente',
+  youCannotKickAdmins: 'No puedes eliminar administradores',
 };

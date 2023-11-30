@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/classes/User';
+import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class ChooseUsersPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<ChooseUsersPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { users: User[], clientUser: User },
     public userService: UserService,
+    public languageService: LanguageService
   ) {}
 
   ngOnInit() {

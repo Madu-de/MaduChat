@@ -57,5 +57,11 @@ export const FR: Language = {
   everyone: 'Tout le monde',
   noone: 'Personne',
   privacy: 'Confidentialité',
-  showOnlineStatus: 'Afficher le statut en ligne'
+  showOnlineStatus: 'Afficher le statut en ligne',
+  members: 'Membres',
+  chooseMembers: 'Sélectionner des membres',
+  back: 'Retour',
+  select: 'Sélectionner',
+  savedSuccessfully: 'Enregistré avec succès',
+  youCannotKickAdmins: 'Tu ne peux pas supprimer d\'administrateurs',
 };

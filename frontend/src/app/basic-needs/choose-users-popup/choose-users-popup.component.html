@@ -1,10 +1,10 @@
-<h1 mat-dialog-title>Choose Members</h1>
+<h1 mat-dialog-title>{{languageService.getValue('chooseMembers')}}</h1>
 <mat-dialog-content>
   <mat-list>
     <list-user-item *ngFor="let user of data.users" [user]="user" [isAdded]="false" [clientUser]="data.clientUser" (onToggle)="toggleUserInList(user)" [autoIconToggle]="true"></list-user-item>
   </mat-list>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Back</button>
-  <button mat-button mat-flat-button color="primary" (click)="choose()">Auswählen</button>
+  <button mat-button mat-dialog-close>{{languageService.getValue('back')}}</button>
+  <button mat-button mat-flat-button color="primary" (click)="choose()">{{languageService.getValue('select')}}</button>
 </mat-dialog-actions>

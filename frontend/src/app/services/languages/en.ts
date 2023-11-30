@@ -57,5 +57,11 @@ export const EN: Language = {
   everyone: 'Everyone',
   noone: 'No one',
   privacy: 'Privacy',
-  showOnlineStatus: 'Show online status'
+  showOnlineStatus: 'Show online status',
+  members: 'Members',
+  chooseMembers: 'Choose members',
+  back: 'Back',
+  select: 'Select',
+  savedSuccessfully: 'Saved Successfully',
+  youCannotKickAdmins: 'You cannot kick admins',
 };

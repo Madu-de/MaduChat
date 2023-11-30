@@ -57,13 +57,12 @@ export class EditChatPopupComponent implements OnInit {
     }).pipe(
       catchError((error) => {
         if (error.error['message'] === 'You cannot kick admins') {
-          this.snackbarService.open('You cannot kick admins!');
+          this.snackbarService.open(this.languageService.getValue('youCannotKickAdmins'));
         }
         return throwError(() => error);
       }))
       .subscribe((chat) => {
-        console.log(chat);
-        this.snackbarService.open('Erfolgreich gespeichert!');
+        this.snackbarService.open(this.languageService.getValue('savedSuccessfully'));
         this.dialogRef.close(chat);
       });
   }
