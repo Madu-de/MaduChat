@@ -62,7 +62,7 @@ export class ChatController {
   async deleteChat(
     @Param('id') id: string,
     @Req() request: Request,
-  ): Promise<number> {
+  ): Promise<boolean> {
     return await this.chatService.deleteChat(id, request['user']);
   }
 }

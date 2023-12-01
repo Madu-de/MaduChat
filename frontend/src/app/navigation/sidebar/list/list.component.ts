@@ -60,8 +60,8 @@ export class ListComponent implements OnInit {
 
   openDeleteMenu(chat: Chat) {
     this.dialog.open(DeleteChatPopupComponent, { data: { chat }}).afterClosed().subscribe(
-      deletedResult => {
-          if (deletedResult > 0) {
+      (deletedResult: boolean) => {
+          if (deletedResult) {
             this.snackbar.open(this.language.getValue('chatDeleted'));
             this.updateSidebar();
           }

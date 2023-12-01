@@ -19,7 +19,7 @@ export class DeleteChatPopupComponent {
   ) {}
 
   deleteChat() {
-    this.chatService.deleteChat(this.data.chat.id).subscribe((result: number) => {
+    this.chatService.deleteChat(this.data.chat.id).subscribe((result: boolean) => {
       this.dialogRef.close(result);
     });
   }
