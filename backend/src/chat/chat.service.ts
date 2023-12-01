@@ -5,7 +5,7 @@ import { Repository, In } from 'typeorm';
 import { Message } from '../message/message';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
-import { WebsocketService } from 'src/websocket/websocket.service';
+import { WebsocketService } from '../websocket/websocket.service';
 
 @Injectable()
 export class ChatService {
