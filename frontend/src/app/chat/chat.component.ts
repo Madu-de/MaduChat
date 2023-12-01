@@ -51,6 +51,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.messages = [];
         this.snackbarService.open(this.languageService.getValue('youHaveBeenRemovedFromTheChat'));
       });
+      this.messages = [];
       this.chatService.getMessages(chatId)
         .pipe(
           catchError((err) => {
