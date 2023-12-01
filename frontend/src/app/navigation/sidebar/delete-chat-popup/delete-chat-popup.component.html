@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{languageService.getValue('deleteChat')}}</h1>
+<mat-dialog-content>
+  {{languageService.getValue('confirmDelete')}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
+  <button mat-button mat-flat-button color="warn" (click)="deleteChat()">{{languageService.getValue('delete')}}</button>
+</mat-dialog-actions>

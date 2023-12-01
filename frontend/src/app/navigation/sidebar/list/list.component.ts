@@ -7,6 +7,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
 import { EditChatPopupComponent } from '../edit-chat-popup/edit-chat-popup.component';
+import { DeleteChatPopupComponent } from "../delete-chat-popup/delete-chat-popup.component";
 
 @Component({
   selector: 'sidebar-list',
@@ -56,12 +57,14 @@ export class ListComponent implements OnInit {
     });
   }
 
-  deleteChat(chat: Chat) {
-    this.chatService.deleteChat(chat.id).subscribe(deletedResult => {
-      if (deletedResult > 0) {
-        this.updateSidebar();
+  openDeleteMenu(chat: Chat) {
+    this.dialog.open(DeleteChatPopupComponent, { data: { chat }}).afterClosed().subscribe(
+      deletedResult => {
+          if (deletedResult > 0) {
+            this.updateSidebar();
+          }
       }
-    });
+    )
   }
 
   clientIsAdminOfChat(chat: Chat): boolean {

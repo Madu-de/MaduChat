@@ -15,14 +15,16 @@ import { RouterModule } from '@angular/router';
 import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 
 
 @NgModule({
   declarations: [
     SidebarComponent,
     ListComponent,
-    EditChatPopupComponent
+    EditChatPopupComponent,
+    DeleteChatPopupComponent
   ],
   imports: [
     CommonModule,

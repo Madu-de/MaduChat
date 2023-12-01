@@ -56,4 +56,7 @@ export interface Language {
   noone: string;
   privacy: string;
   showOnlineStatus: string;
+  deleteChat: string;
+  delete: string;
+  confirmDelete: string;
 }

@@ -57,5 +57,8 @@ export const FR: Language = {
   everyone: 'Tout le monde',
   noone: 'Personne',
   privacy: 'Confidentialité',
-  showOnlineStatus: 'Afficher le statut en ligne'
+  showOnlineStatus: 'Afficher le statut en ligne',
+  deleteChat: 'Supprimer le chat',
+  delete: 'Supprimer',
+  confirmDelete: 'Etes-vous sûr de vouloir supprimer ce chat ?'
 };

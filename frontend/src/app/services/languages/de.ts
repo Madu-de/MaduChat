@@ -57,5 +57,8 @@ export const DE: Language = {
   everyone: 'Jeder',
   noone: 'Niemand',
   privacy: 'Privatsphäre',
-  showOnlineStatus: 'Online Status anzeigen'
+  showOnlineStatus: 'Online Status anzeigen',
+  deleteChat: 'Chat verwijderen',
+  delete: 'Verwijderen',
+  confirmDelete: 'Weet je zeker dat je deze chat wilt verwijderen?'
 };
