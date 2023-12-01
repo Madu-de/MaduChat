@@ -59,6 +59,7 @@ export const EN: Language = {
   privacy: 'Privacy',
   showOnlineStatus: 'Show online status',
   deleteChat: 'Delete Chat',
-  delete: 'delete',
-  confirmDelete: 'Are you sure you want to delete this chat?'
+  delete: 'Delete',
+  confirmDelete: 'Are you sure you want to delete this chat?',
+  chatDeleted: 'Chat deleted successfully.'
 };

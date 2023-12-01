@@ -60,5 +60,6 @@ export const DE: Language = {
   showOnlineStatus: 'Online Status anzeigen',
   deleteChat: 'Chat verwijderen',
   delete: 'Verwijderen',
-  confirmDelete: 'Weet je zeker dat je deze chat wilt verwijderen?'
+  confirmDelete: 'Weet je zeker dat je deze chat wilt verwijderen?',
+  chatDeleted: 'Chat succesvol verwijderd.'
 };

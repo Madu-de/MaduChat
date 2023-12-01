@@ -60,5 +60,6 @@ export const FR: Language = {
   showOnlineStatus: 'Afficher le statut en ligne',
   deleteChat: 'Supprimer le chat',
   delete: 'Supprimer',
-  confirmDelete: 'Etes-vous sûr de vouloir supprimer ce chat ?'
+  confirmDelete: 'Etes-vous sûr de vouloir supprimer ce chat ?',
+  chatDeleted: 'Chat a été supprimé.'
 };

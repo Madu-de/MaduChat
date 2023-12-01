@@ -59,4 +59,5 @@ export interface Language {
   deleteChat: string;
   delete: string;
   confirmDelete: string;
+  chatDeleted: string;
 }
