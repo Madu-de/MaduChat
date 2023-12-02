@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Chat } from '../classes/Chat';
 import { Observable } from 'rxjs';
@@ -31,9 +31,9 @@ export class ChatService {
     });
   }
 
-  editChat(id: string, name: string): Observable<Chat> {
+  editChat(id: string, chat: Chat): Observable<Chat> {
     return this.http.put<Chat>(`${this.auth.baseURL}/chat/${id}`, {
-      name
+      chat
     }, {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });

@@ -57,5 +57,12 @@ export const DE: Language = {
   everyone: 'Jeder',
   noone: 'Niemand',
   privacy: 'Privatsphäre',
-  showOnlineStatus: 'Online Status anzeigen'
+  showOnlineStatus: 'Online Status anzeigen',
+  members: 'Mitglieder',
+  chooseMembers: 'Mitglieder auswählen',
+  back: 'Zurück',
+  select: 'Auswählen',
+  savedSuccessfully: 'Erfolgreich gespeichert',
+  youCannotKickAdmins: 'Du kannst keine Admins entfernen',
+  youHaveBeenRemovedFromTheChat: 'Du wurdest aus dem Chat entfernt!',
 };

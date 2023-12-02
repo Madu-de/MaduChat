@@ -56,4 +56,11 @@ export interface Language {
   noone: string;
   privacy: string;
   showOnlineStatus: string;
+  members: string;
+  chooseMembers: string;
+  back: string;
+  select: string;
+  savedSuccessfully: string;
+  youCannotKickAdmins: string;
+  youHaveBeenRemovedFromTheChat: string;
 }
