@@ -1,4 +1,4 @@
-![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/e80d3e3c-53cc-44ff-91c8-4966f5bd2464)
+![repository-open-graph-template](https://github.com/Madu-de/MaduChat/assets/85842735/c021bd44-bacf-45cc-b8a4-9a1b3d241d0e)
 
 ## Getting started without docker
 - Clone this repo
