@@ -517,7 +517,7 @@ None
 ##### Body
 > | name      |  type     | data type               | description                                                           |
 > |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
-> | name      |  optional | string   | N/A  |
+> | chat      |  optional | required   | N/A  |
 
 ##### Parameters
 None
@@ -530,6 +530,8 @@ None
 > | `201`         | `application/json`        | `{ "id": "d178827c-1b1c-41af-b144-ab3d1588323d", "name": "Example chat", "admins": [ { "id": "d41e2822-26a2-441d-8848-08848f82544a", "email": "madu@gmail.com", "name": "Madu", "username": "madu", "isAdmin": false, "isVerified": false, "isOnline": true } ] }`                                |
 > | `400`         | `application/json`                | `{ "statusCode": 400, "message": "Cannot change chat id" }`   
 > | `400`         | `application/json`                | `{ "statusCode": 400, "message": "You are not an admin" }`   
+> | `400`         | `application/json`                | `{ "statusCode": 400, "message": "You cannot kick admins" }`   
+> | `400`         | `application/json`                | `{ "statusCode": 400, "message": "You can only add friends to your chat" }`   
 > | `400`         | `application/json`                | `{    "message": [        "name must be shorter than or equal to 20 characters"    ],    "error": "Bad Request",    "statusCode": 400}`   
 > | `400`         | `application/json`                | `{    "message": [        "name must be longer than or equal to 1 characters"    ],    "error": "Bad Request",    "statusCode": 400}`   
 > | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`     
@@ -539,7 +541,7 @@ None
 ##### Example cURL
 
 > ```js
->  curl -d '{ "name": "New Name" }' -H "Content-Type: application/json" -X POST http://localhost:3000/chat/c5e13bcb-9f5d-483f-ae91-d22728693225
+>  curl -d '{ "name": "New Name", members: [ {HERE USER}, {HERE USER} ] }' -H "Content-Type: application/json" -X POST http://localhost:3000/chat/c5e13bcb-9f5d-483f-ae91-d22728693225
 > ```
 
 </details>
@@ -661,6 +663,9 @@ Message: 'Not Allowed'
 
 ### Client Events
 <summary><code>WS_EVENT</code> <code><b>message</b></code> <code>(Executes on every client when a message has been sent (Client has to be part of the chat))</code></summary>
+</details>
+
+<summary><code>WS_EVENT</code> <code><b>kickedFromChat</b></code> <code>(Executes on a chat kick. Will be emitted on every kicked socket)</code></summary>
 </details>
 
 <summary><code>WS_EVENT</code> <code><b>error</b></code> <code>(More details in serverevents)</code></summary>
