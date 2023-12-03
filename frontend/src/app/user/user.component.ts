@@ -38,7 +38,7 @@ export class UserComponent implements OnInit {
       this.userService.getUser(userid, false, true)
       .pipe(
         catchError((err: HttpErrorResponse) => {
-          this.snackbar.open('User does not exist', '');
+          this.snackbar.open(this.languageService.getValue('userDoesNotExist'));
           this.router.navigate(['/']);
           return throwError(() => new Error(err.error.message));
         })
@@ -56,8 +56,7 @@ export class UserComponent implements OnInit {
         .subscribe((image) => {
           this.profilePicture = image;
           this.loading = false;
-        })
-
+        });
       })
     });
   }
