@@ -18,6 +18,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { of } from 'rxjs';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -27,8 +28,8 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ListComponent],
       providers: [
-        { 
-          provide: LanguageService, 
+        {
+          provide: LanguageService,
           useValue: {
             getValue: () => ''
           }
@@ -40,7 +41,7 @@ describe('ListComponent', () => {
               chats: []
             }),
             getMeChangedEmitter: () => of({
-              
+
             })
           }
         },
@@ -60,6 +61,7 @@ describe('ListComponent', () => {
         MatCardModule,
         RouterTestingModule,
         MatDialogModule,
+        MatSnackBarModule,
       ],
     });
     fixture = TestBed.createComponent(ListComponent);
