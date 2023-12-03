@@ -60,4 +60,12 @@ export interface Language {
   delete: string;
   confirmDelete: string;
   chatDeleted: string;
+  members: string;
+  chooseMembers: string;
+  back: string;
+  select: string;
+  savedSuccessfully: string;
+  youCannotKickAdmins: string;
+  youHaveBeenRemovedFromTheChat: string;
+  userDoesNotExist: string;
 }

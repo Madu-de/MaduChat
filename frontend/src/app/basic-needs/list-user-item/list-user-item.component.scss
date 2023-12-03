@@ -1,0 +1,22 @@
+#btn {
+  position: relative;
+  top: 50%;
+  bottom: 50%;
+  right: 0;
+  translate: 0 -50%;
+  mat-icon {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    right: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+}
+
+a {
+  color: #FFFFFFB3;
+  &:hover {
+    text-decoration: underline;
+  }
+}

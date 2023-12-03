@@ -16,6 +16,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { Message } from '../message/message';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { ChatGuard } from '../websocket/chat/chat.guard';
+import { User } from 'src/user/user';
 
 @Controller('chat')
 export class ChatController {
@@ -26,8 +27,9 @@ export class ChatController {
   async getChat(
     @Param('id') id: string,
     @Query('members', BooleanPipe) members: boolean,
+    @Req() request: Request,
   ): Promise<Chat> {
-    return await this.chatService.getChat(id, members);
+    return await this.chatService.getChat(id, request['user'], members);
   }
 
   @UseGuards(AuthGuard, ChatGuard)
@@ -52,7 +54,7 @@ export class ChatController {
   @Put(':id')
   async updateChat(
     @Param('id') id: string,
-    @Body() chat: Chat,
+    @Body('chat') chat: Chat,
     @Req() request: Request,
   ): Promise<Chat> {
     return await this.chatService.updateChat(id, chat, request['user']);

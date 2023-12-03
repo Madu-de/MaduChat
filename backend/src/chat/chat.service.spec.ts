@@ -5,6 +5,7 @@ import { Chat } from './chat';
 import { Message } from '../message/message';
 import { User } from '../user/user';
 import { UserService } from '../user/user.service';
+import { WebsocketService } from '../websocket/websocket.service';
 
 describe('ChatService', () => {
   let service: ChatService;
@@ -34,6 +35,10 @@ describe('ChatService', () => {
         },
         {
           provide: UserService,
+          useValue: {},
+        },
+        {
+          provide: WebsocketService,
           useValue: {},
         },
       ],

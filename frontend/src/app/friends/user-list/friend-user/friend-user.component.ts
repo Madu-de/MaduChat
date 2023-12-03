@@ -1,17 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from 'src/app/classes/User';
-import { UserService } from 'src/app/services/user.service';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
-import { SnackbarService } from 'src/app/services/snackbar.service';
+import { User } from 'src/app/classes/User';
 import { LanguageService } from 'src/app/services/language.service';
-
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'user-list-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'user-friend-user',
+  templateUrl: './friend-user.component.html',
+  styleUrls: ['./friend-user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class FriendUserComponent implements OnInit {
   @Input()
   user: User | undefined;
 
@@ -20,18 +19,12 @@ export class UserComponent implements OnInit {
 
   isFriend: boolean = false;
 
-  userImage: string = '';
-
   constructor(private userService: UserService, private snackbar: SnackbarService, private languageService: LanguageService) { }
 
   ngOnInit() {
     const friendRequestSent = this.clientUser?.friendRequestsSent?.some(user => user.id === this.user?.id);
     const isFriend = this.clientUser?.friends?.some(user => user.id === this.user?.id);
     this.isFriend = friendRequestSent || isFriend || false;
-    if (!this.user) return;
-    this.userService.getUserProfilePicture(this.user.id).subscribe((image) => {
-      this.userImage = image;
-    });
   }
 
   toggleFriendStatus() {

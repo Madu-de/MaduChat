@@ -17,6 +17,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
+import { FriendsModule } from 'src/app/friends/friends.module';
+import { MatSelectModule } from '@angular/material/select';
+import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
 
 
 @NgModule({
@@ -41,6 +44,9 @@ import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.
     MatInputModule,
     ReactiveFormsModule,
     RouterModule,
+    FriendsModule,
+    MatSelectModule,
+    BasicNeedsModule
   ],
   exports: [
     SidebarComponent

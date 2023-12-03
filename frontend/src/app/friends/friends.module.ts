@@ -11,12 +11,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { UserListComponent } from './user-list/user-list.component';
-import { UserComponent } from './user-list/user/user.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { UserModule } from '../user/user.module';
+import { FriendUserComponent } from './user-list/friend-user/friend-user.component';
+import { BasicNeedsModule } from '../basic-needs/basic-needs.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { UserModule } from '../user/user.module';
     FriendsListComponent,
     FriendRequestsComponent,
     UserListComponent,
-    UserComponent,
+    FriendUserComponent,
   ],
   imports: [
     CommonModule,
@@ -39,11 +39,10 @@ import { UserModule } from '../user/user.module';
     ReactiveFormsModule,
     RouterModule,
     MatProgressBarModule,
-    UserModule
+    BasicNeedsModule
   ],
   exports: [
     FriendsComponent, 
-    UserListComponent
   ]
 })
 export class FriendsModule { }

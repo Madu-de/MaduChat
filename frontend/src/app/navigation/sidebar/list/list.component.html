@@ -33,9 +33,12 @@
         <mat-card>
             <mat-card-content>
                 <a [routerLink]=" '/chat/' + chat.id ">
-                    <mat-icon *ngIf="chat.members?.length == 2; else group">person</mat-icon>
+                    <mat-icon *ngIf="chat.members?.length == 1; else group">person</mat-icon>
                     <ng-template #group>
-                        <mat-icon>group</mat-icon>
+                        <mat-icon *ngIf="chat.members?.length == 2; else groups">group</mat-icon>
+                    </ng-template>
+                    <ng-template #groups>
+                        <mat-icon>groups</mat-icon>
                     </ng-template>
                     {{ chat.name }}
                 </a>

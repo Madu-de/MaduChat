@@ -61,5 +61,13 @@ export const DE: Language = {
   deleteChat: 'Chat verwijderen',
   delete: 'Verwijderen',
   confirmDelete: 'Weet je zeker dat je deze chat wilt verwijderen?',
-  chatDeleted: 'Chat succesvol verwijderd.'
+  chatDeleted: 'Chat succesvol verwijderd.',
+  members: 'Mitglieder',
+  chooseMembers: 'Mitglieder auswählen',
+  back: 'Zurück',
+  select: 'Auswählen',
+  savedSuccessfully: 'Erfolgreich gespeichert',
+  youCannotKickAdmins: 'Du kannst keine Admins entfernen',
+  youHaveBeenRemovedFromTheChat: 'Du wurdest aus dem Chat entfernt!',
+  userDoesNotExist: 'Der Nutzer existiert nicht',
 };

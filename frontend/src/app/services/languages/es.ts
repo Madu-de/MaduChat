@@ -62,4 +62,12 @@ export const ES: Language = {
   delete: 'Eliminar',
   confirmDelete: '¿Estás seguro de que quieres eliminar este chat?',
   chatDeleted: 'Chat eliminado exitosamente.',
+  members: 'Miembros',
+  chooseMembers: 'Seleccionar miembros',
+  back: 'Atrás',
+  select: 'Seleccionar',
+  savedSuccessfully: 'Guardado exitosamente',
+  youCannotKickAdmins: 'No puedes eliminar administradores',
+  youHaveBeenRemovedFromTheChat: '¡Has sido eliminado(a) del chat!',
+  userDoesNotExist: 'El usuario no existe'
 };

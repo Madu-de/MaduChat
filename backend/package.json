@@ -1,6 +1,6 @@
 {
   "name": "maduchat-backend",
-  "version": "1.2.0-SNAPSHOT",
+  "version": "1.2.0",
   "description": "This is the backend of MaduChat. More information here: https://github.com/Madu-de/MaduChat/tree/main/backend",
   "author": "Madu",
   "private": true,
