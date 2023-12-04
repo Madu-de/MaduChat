@@ -16,6 +16,13 @@ export class LoginComponent implements OnInit {
   public hideRegisterConfirm: boolean = true;
   public type: string = 'login';
   public error: string = '';
+  // We need this getter because of #138. subscriptSizing="dynamic" destroys everything...
+  get addPasswordBr(): boolean {
+    const errors = this.registerForm.controls.password.errors;
+    if (!this.registerForm.controls.password.touched) return true;
+    if (!errors) return true;
+    return Object.keys(errors).length < 1;
+  }
 
   public loginForm = new FormGroup({
     username: new FormControl(''),
