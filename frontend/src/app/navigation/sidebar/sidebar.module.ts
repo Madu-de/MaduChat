@@ -16,6 +16,7 @@ import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.compon
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 import { FriendsModule } from 'src/app/friends/friends.module';
 import { MatSelectModule } from '@angular/material/select';
 import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
@@ -26,6 +27,7 @@ import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
     SidebarComponent,
     ListComponent,
     EditChatPopupComponent,
+    DeleteChatPopupComponent
   ],
   imports: [
     CommonModule,

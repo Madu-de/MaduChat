@@ -59,4 +59,12 @@ export class ChatController {
   ): Promise<Chat> {
     return await this.chatService.updateChat(id, chat, request['user']);
   }
+  @UseGuards(AuthGuard, ChatGuard)
+  @Delete(':id')
+  async deleteChat(
+    @Param('id') id: string,
+    @Req() request: Request,
+  ): Promise<boolean> {
+    return await this.chatService.deleteChat(id, request['user']);
+  }
 }
