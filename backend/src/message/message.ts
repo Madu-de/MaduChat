@@ -1,4 +1,4 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import {IsArray, IsString, MaxLength, MinLength} from 'class-validator';
 import { Chat } from '../chat/chat';
 import { User } from '../user/user';
 import {
@@ -20,6 +20,8 @@ export class Message {
   @MinLength(1)
   @MaxLength(1000)
   message: string;
+  @Column({ type: 'text', array: true, default: [] })
+  history: string[];
 
   @ManyToOne(() => Chat, {
     cascade: true,

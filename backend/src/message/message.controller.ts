@@ -3,7 +3,7 @@ import {
   Controller,
   Get,
   Param,
-  Post,
+  Post, Put,
   Query,
   Req,
   UseGuards,
@@ -44,6 +44,20 @@ export class MessageController {
       message,
       chatid,
       request['user'].id,
+    );
+  }
+  // @UseGuards(AuthGuard)
+  @Put(':messageid')
+  async editMessage(
+    @Param('messageid') messageid: string,
+    @Body('message') message: string,
+    @Req() request: Request,
+  ): Promise<boolean> {
+    console.log('entrei 1');
+    return await this.messageService.editMessage(
+      message,
+      messageid,
+      // request['user'].id,
     );
   }
 }

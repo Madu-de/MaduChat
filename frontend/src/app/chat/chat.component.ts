@@ -7,6 +7,7 @@ import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Settings } from '../classes/Settings';
+import { MessageService } from "../services/message.service";
 
 @Component({
   selector: 'app-chat',
@@ -26,7 +27,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private router: Router,
     private chatService: ChatService,
     private auth: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private messageService: MessageService
   ) { }
 
   async ngOnInit() {
@@ -44,7 +46,7 @@ export class ChatComponent implements OnInit, OnDestroy {
         console.log(err);
       });
       this.auth.websocket?.emit('joinChat', { chatid: chatId });
-      this.chatService.getMessages(chatId)
+      this.messageService.getMessages(chatId)
         .pipe(
           catchError((err) => {
             this.loading = false;

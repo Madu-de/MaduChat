@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Repository, UpdateResult} from 'typeorm';
 import { Message } from './message';
 import { Chat } from '../chat/chat';
 import { User } from '../user/user';
@@ -59,5 +59,14 @@ export class MessageService {
       chat,
       author,
     });
+  }
+  async editMessage(message: string, messageid: string): Promise<boolean> {
+    const updateResult: UpdateResult = await this.messageRepo.update(
+      { id: messageid },
+      { message: message },
+    );
+    if (updateResult.affected > 0) {
+      return true;
+    }
   }
 }
