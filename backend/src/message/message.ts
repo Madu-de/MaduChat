@@ -20,7 +20,8 @@ export class Message {
   @MinLength(1)
   @MaxLength(1000)
   message: string;
-  @Column({ type: 'text', array: true, default: [] })
+
+  @Column({ type: 'simple-array' })
   history: string[];
 
   @ManyToOne(() => Chat, {
