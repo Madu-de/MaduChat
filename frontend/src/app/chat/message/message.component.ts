@@ -4,6 +4,7 @@ import { Settings } from 'src/app/classes/Settings';
 import { UserService } from 'src/app/services/user.service';
 import {MatDialog} from "@angular/material/dialog";
 import {EditMessagePopupComponent} from "./edit-message-popup/edit-message-popup.component";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'chat-message',
@@ -17,24 +18,42 @@ export class MessageComponent implements OnInit {
   @Input()
   settings: Settings | undefined;
 
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  @Input()
+  user: string | undefined;
+
+  constructor(private userService: UserService, private dialog: MatDialog, private auth: AuthService) {}
 
   ngOnInit() {
     this.userService.getUserProfilePicture(this.message?.author?.id || '').subscribe(image => {
       if (!this.message) return;
       this.message.author.image = image;
     });
+    this.auth.websocket?.on('messageEdited', (callback: { message: string, id: string }) => {
+      if (this.message?.id === callback.id) {
+        this.message.message = callback.message;
+      }
+    });
+  }
+
+  isMenuVisible(): boolean {
+    return this.canEditMessage();
+  }
+
+  canEditMessage(): boolean {
+    return this.message?.author?.id === this.user;
   }
 
   editMessage() {
-    this.dialog.open(EditMessagePopupComponent, {
-      data: {
-        message: this.message
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        // TODO: add anotation to the message that it was modified. How to know if a message was modified ? Add attribute in the database
-      }
-    })
+    if (this.message?.id) {
+      this.dialog.open(EditMessagePopupComponent, {
+        data: {
+          message: this.message
+        }
+      }).afterClosed().subscribe(editedMessage => {
+        if (editedMessage && this.message?.id) {
+          this.auth.websocket?.emit('editMessage', { message: editedMessage, messageid: this.message.id })
+        }
+      })
+    }
   }
 }

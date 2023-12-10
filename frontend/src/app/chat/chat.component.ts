@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public channelExists: boolean = true;
   public loading: boolean = true;
   public settings: Settings | undefined;
+  public userId: string | undefined;
 
   constructor(
     public languageService: LanguageService,
@@ -33,6 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.userService.getMe(false, false, true).subscribe(user => {
+      this.userId = user.id;
       this.settings = user.settings;
     });
     this.routerSubscription = this.router.events.subscribe(val => {
