@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {Repository, UpdateResult} from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Message } from './message';
 import { Chat } from '../chat/chat';
 import { User } from '../user/user';
@@ -58,15 +58,45 @@ export class MessageService {
       message,
       chat,
       author,
+      history: [],
     });
   }
-  async editMessage(message: string, messageid: string): Promise<boolean> {
-    const updateResult: UpdateResult = await this.messageRepo.update(
-      { id: messageid },
-      { message: message },
-    );
-    if (updateResult.affected > 0) {
-      return true;
+  async editMessage(
+    newMessage: string,
+    messageid: string,
+    authorid: string,
+  ): Promise<boolean> {
+    const message = await this.messageRepo.findOne({
+      where: { id: messageid },
+      relations: { author: true },
+    });
+    if (!message) {
+      throw new HttpException('Message does not exist', HttpStatus.BAD_REQUEST);
+    }
+    if (message.author.id !== authorid) {
+      throw new HttpException(
+        'Author is not allowed to edit this message',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    if (message.history?.length > 0) {
+      message.history.push(newMessage);
+    } else {
+      message.history = [newMessage];
+    }
+    try {
+      const updateResult: UpdateResult = await this.messageRepo.update(
+        { id: messageid },
+        { message: newMessage, history: message.history },
+      );
+      if (updateResult.affected > 0) {
+        return true;
+      }
+    } catch(err) {
+      throw new HttpException(
+        'Could not update message',
+        HttpStatus.NOT_MODIFIED,
+      );
     }
   }
 }
