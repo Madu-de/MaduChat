@@ -33,4 +33,28 @@ export class WebsocketService {
     delete message.author.isOnline;
     this.socket.to(chatid).emit('message', message);
   }
+  async editMessage(
+    client: Socket,
+    data: { message: string; messageid: string },
+  ) {
+    let chatid: string;
+    client.rooms.forEach(room => {
+      if (room === client.id) return;
+      chatid = room;
+    });
+    if (!chatid) return false;
+    const userid = client.handshake['user'].id;
+    try {
+      const editedMessage = await this.messageService.editMessage(
+        data.message,
+        data.messageid,
+        userid,
+      );
+      if (editedMessage) {
+        this.socket
+          .to(chatid)
+          .emit('messageEdited', { message: data.message, id: data.messageid });
+      }
+    } catch (err) {}
+  }
 }

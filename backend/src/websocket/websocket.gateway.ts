@@ -81,4 +81,14 @@ export class WebsocketGateway
     if (!data.message) return false;
     this.socketService.sendMessage(client, data.message);
   }
+  @UseGuards(AuthGuard)
+  @SubscribeMessage('editMessage')
+  async editeMessage(
+    @MessageBody() data: { message: string, messageid: string },
+    @ConnectedSocket() client: Socket,
+  ) {
+    this.logger.log(`${client.id} edit a message`);
+    if (!data.message || !data.messageid) return false;
+    await this.socketService.editMessage(client, data);
+  }
 }
