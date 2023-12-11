@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{languageService.getValue('editChat')}}</h1>
+<mat-dialog-content>
+  <form [formGroup]="editForm">
+    <mat-form-field>
+      <input matInput formControlName="message" type="text">
+      <mat-error *ngIf="editForm.controls['message'].hasError('required')">{{languageService.getValue('name')}} {{languageService.getValue('isTooShort')}}</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
+  <button mat-button mat-flat-button color="primary" (click)="saveEditMessage()" [disabled]="!editForm.valid">{{languageService.getValue('save')}}</button>
+</mat-dialog-actions>

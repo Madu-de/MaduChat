@@ -92,7 +92,7 @@ export class MessageService {
       if (updateResult.affected > 0) {
         return true;
       }
-    } catch(err) {
+    } catch (err) {
       throw new HttpException(
         'Could not update message',
         HttpStatus.NOT_MODIFIED,
