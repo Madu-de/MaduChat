@@ -15,9 +15,14 @@ mat-card-title {
   display: flex;
   gap: 5px;
 }
-
-.message-menu {
+.menu-container {
   flex-grow: 1;
   display: flex;
   justify-content: end;
+  align-items: center;
+
+  .modified-message {
+    font-style: italic;
+    color: grey;
+  }
 }

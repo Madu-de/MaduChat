@@ -30,6 +30,9 @@ export class MessageComponent implements OnInit {
     });
     this.auth.websocket?.on('messageEdited', (callback: { message: string, id: string }) => {
       if (this.message?.id === callback.id) {
+        if (!this.message?.history?.length) {
+          this.message.history.push(this.message.message);
+        }
         this.message.message = callback.message;
       }
     });
