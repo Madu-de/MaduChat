@@ -5,6 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import {MatDialog} from "@angular/material/dialog";
 import {EditMessagePopupComponent} from "./edit-message-popup/edit-message-popup.component";
 import {AuthService} from "../../services/auth.service";
+import {LanguageService} from "../../services/language.service";
 
 @Component({
   selector: 'chat-message',
@@ -21,7 +22,7 @@ export class MessageComponent implements OnInit {
   @Input()
   user: string | undefined;
 
-  constructor(private userService: UserService, private dialog: MatDialog, private auth: AuthService) {}
+  constructor(private userService: UserService, private dialog: MatDialog, private auth: AuthService, public languageService: LanguageService) {}
 
   ngOnInit() {
     this.userService.getUserProfilePicture(this.message?.author?.id || '').subscribe(image => {

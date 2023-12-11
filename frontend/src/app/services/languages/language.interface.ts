@@ -56,4 +56,6 @@ export interface Language {
   noone: string;
   privacy: string;
   showOnlineStatus: string;
+  messageModified: string;
+  edit: string;
 }

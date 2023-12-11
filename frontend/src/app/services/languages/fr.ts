@@ -57,5 +57,7 @@ export const FR: Language = {
   everyone: 'Tout le monde',
   noone: 'Personne',
   privacy: 'Confidentialité',
-  showOnlineStatus: 'Afficher le statut en ligne'
+  showOnlineStatus: 'Afficher le statut en ligne',
+  messageModified: 'modifié',
+  edit: 'Modifier',
 };

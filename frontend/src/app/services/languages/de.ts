@@ -57,5 +57,7 @@ export const DE: Language = {
   everyone: 'Jeder',
   noone: 'Niemand',
   privacy: 'Privatsphäre',
-  showOnlineStatus: 'Online Status anzeigen'
+  showOnlineStatus: 'Online Status anzeigen',
+  messageModified: 'gewijzigd',
+  edit: 'Bewerking',
 };

@@ -57,5 +57,7 @@ export const EN: Language = {
   everyone: 'Everyone',
   noone: 'No one',
   privacy: 'Privacy',
-  showOnlineStatus: 'Show online status'
+  showOnlineStatus: 'Show online status',
+  messageModified: 'modified',
+  edit: 'Edit',
 };
