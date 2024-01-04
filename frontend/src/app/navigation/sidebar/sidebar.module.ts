@@ -15,10 +15,11 @@ import { RouterModule } from '@angular/router';
 import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FriendsModule } from 'src/app/friends/friends.module';
 import { MatSelectModule } from '@angular/material/select';
 import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -44,7 +45,9 @@ import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
     RouterModule,
     FriendsModule,
     MatSelectModule,
-    BasicNeedsModule
+    BasicNeedsModule,
+    MatCheckboxModule,
+    FormsModule
   ],
   exports: [
     SidebarComponent

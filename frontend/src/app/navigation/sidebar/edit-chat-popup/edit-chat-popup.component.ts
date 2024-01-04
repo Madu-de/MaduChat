@@ -51,8 +51,9 @@ export class EditChatPopupComponent implements OnInit {
   saveChat() {
     if (!this.members) return;
     this.chatService.editChat(this.data.chat.id, {
-      id: this.data.chat.id, 
+      id: this.data.chat.id,
       name: this.chat.controls['name'].value, 
+      isPublic: this.data.chat.isPublic,
       members: this.members
     }).pipe(
       catchError((error) => {
