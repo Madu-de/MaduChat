@@ -25,10 +25,12 @@ export class MessageService {
       where: { id },
       relations: { author, chat },
     });
-    message.author = await this.userService.getPrivacyUser(
-      message.author,
-      requester,
-    );
+    if (author) {
+      message.author = await this.userService.getPrivacyUser(
+        message.author,
+        requester,
+      );
+    }
     return message;
   }
 
