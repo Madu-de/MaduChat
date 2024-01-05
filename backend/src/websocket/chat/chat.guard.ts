@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../user/user.service';
-import { ChatService } from 'src/chat/chat.service';
+import { ChatService } from '../../chat/chat.service';
 
 @Injectable()
 export class ChatGuard implements CanActivate {

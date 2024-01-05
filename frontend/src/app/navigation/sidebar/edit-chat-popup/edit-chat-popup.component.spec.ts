@@ -1,3 +1,4 @@
+import { MockModule } from 'ng-mocks';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditChatPopupComponent } from './edit-chat-popup.component';
@@ -6,7 +7,7 @@ import { MatCommonModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ChatService } from 'src/app/services/chat.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
@@ -29,7 +30,8 @@ describe('EditChatPopupComponent', () => {
         ReactiveFormsModule,
         MatListModule,
         MatIconModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MockModule(FormsModule),
       ],
       declarations: [EditChatPopupComponent],
       providers: [
