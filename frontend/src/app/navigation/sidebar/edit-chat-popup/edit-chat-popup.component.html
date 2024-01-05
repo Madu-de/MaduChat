@@ -12,11 +12,11 @@
         {{languageService.getValue('isTooLong')}}</mat-error>
     </mat-form-field>
   </form>
-  <h2>Options</h2>
+  <h2>{{languageService.getValue('options')}}</h2>
   <section style="margin: 0 0 16px;">
     <section>
       <mat-checkbox color="primary" [(ngModel)]="data.chat.isPublic">
-        Public
+        {{languageService.getValue('public')}}
       </mat-checkbox>
     </section>
   </section>
