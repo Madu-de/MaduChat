@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ChatGuard } from './chat.guard';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../user/user.service';
+import { ChatService } from '../../chat/chat.service';
 
 describe('ChatGuard', () => {
   let guard: ChatGuard;
@@ -20,6 +21,12 @@ describe('ChatGuard', () => {
           provide: UserService,
           useValue: {
             getUser: jest.fn(),
+          },
+        },
+        {
+          provide: ChatService,
+          useValue: {
+            getChat: jest.fn(),
           },
         },
       ],
