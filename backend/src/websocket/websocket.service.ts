@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { MessageService } from '../message/message.service';
+import { Message } from 'src/message/message';
 
 @Injectable()
 export class WebsocketService {
@@ -34,13 +35,32 @@ export class WebsocketService {
     });
     if (!chatid) return false;
     const userid = client.handshake['user'].id;
-    const message = await this.messageService.createMessage(
-      msg,
-      chatid,
-      userid,
-    );
+    let message: Message;
+    try {
+      message = await this.messageService.createMessage(msg, chatid, userid);
+    } catch (err: unknown) {
+      this.throwWebsocketAndAPIError(
+        +client.id,
+        (<HttpException>err).message,
+        HttpStatus.BAD_REQUEST,
+      );
+      return;
+    }
     // We cannot check every user in the chat individually. Therefore, we delete it for every member the first time
     delete message.author.isOnline;
     this.socket.to(chatid).emit('message', message);
+  }
+
+  // errors
+  throwWebsocketAndAPIError(
+    websocketId: number | undefined,
+    msg: string,
+    status: HttpStatus,
+  ) {
+    if (websocketId !== 0) {
+      this.socket.in(websocketId.toString()).emit('error', msg);
+    } else {
+      throw new HttpException(msg, status);
+    }
   }
 }
