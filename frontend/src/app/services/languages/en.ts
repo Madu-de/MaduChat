@@ -71,4 +71,5 @@ export const EN: Language = {
   onlyAdmins: 'Only admins',
   everyUserCanSeeTheChat: 'Every user can see the chat',
   onlyAdminsCanWriteMessages: 'Only admins can write messages',
+  notAuthorizedToWriteMessages: 'You are not authorized to write messages here',
 };

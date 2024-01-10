@@ -69,4 +69,5 @@ export interface Language {
   onlyAdmins: string;
   everyUserCanSeeTheChat: string;
   onlyAdminsCanWriteMessages: string;
+  notAuthorizedToWriteMessages: string;
 }

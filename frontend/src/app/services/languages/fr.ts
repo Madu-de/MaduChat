@@ -71,4 +71,5 @@ export const FR: Language = {
   onlyAdmins: 'Seulement les administrateurs',
   everyUserCanSeeTheChat: 'Chaque utilisateur peut voir la discussion',
   onlyAdminsCanWriteMessages: 'Seuls les administrateurs peuvent écrire des messages',
+  notAuthorizedToWriteMessages: 'Vous n\'êtes pas autorisé(e) à écrire des messages ici',
 };

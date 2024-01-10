@@ -40,7 +40,7 @@ export class WebsocketService {
       message = await this.messageService.createMessage(msg, chatid, userid);
     } catch (err: unknown) {
       this.throwWebsocketAndAPIError(
-        +client.id,
+        client.id,
         (<HttpException>err).message,
         HttpStatus.BAD_REQUEST,
       );
@@ -53,12 +53,12 @@ export class WebsocketService {
 
   // errors
   throwWebsocketAndAPIError(
-    websocketId: number | undefined,
+    websocketId: string,
     msg: string,
     status: HttpStatus,
   ) {
-    if (websocketId !== 0) {
-      this.socket.in(websocketId.toString()).emit('error', msg);
+    if (websocketId) {
+      this.socket.in(websocketId).emit('error', msg);
     } else {
       throw new HttpException(msg, status);
     }
