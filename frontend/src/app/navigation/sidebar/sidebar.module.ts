@@ -1,5 +1,5 @@
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar.component';
 import { MatCommonModule } from '@angular/material/core';
@@ -20,6 +20,8 @@ import { FriendsModule } from 'src/app/friends/friends.module';
 import { MatSelectModule } from '@angular/material/select';
 import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     BasicNeedsModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule,
+    MatBadgeModule,
   ],
   exports: [
     SidebarComponent

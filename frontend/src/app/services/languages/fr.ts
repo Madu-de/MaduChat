@@ -68,4 +68,7 @@ export const FR: Language = {
   userDoesNotExist: 'L\'utilisateur n\'existe pas',
   options: 'Options',
   public: 'Public',
+  onlyAdmins: 'Seulement les administrateurs',
+  everyUserCanSeeTheChat: 'Chaque utilisateur peut voir la discussion',
+  onlyAdminsCanWriteMessages: 'Seuls les administrateurs peuvent écrire des messages',
 };
