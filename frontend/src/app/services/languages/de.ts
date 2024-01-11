@@ -70,4 +70,6 @@ export const DE: Language = {
   youCannotKickAdmins: 'Du kannst keine Admins entfernen',
   youHaveBeenRemovedFromTheChat: 'Du wurdest aus dem Chat entfernt!',
   userDoesNotExist: 'Der Nutzer existiert nicht',
+  options: 'Optionen',
+  public: 'Öffentlich',
 };

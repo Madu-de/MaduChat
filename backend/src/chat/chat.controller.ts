@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   Param,
   Post,
@@ -16,7 +15,6 @@ import { AuthGuard } from '../auth/auth.guard';
 import { Message } from '../message/message';
 import { BooleanPipe } from '../pipes/boolean/boolean.pipe';
 import { ChatGuard } from '../websocket/chat/chat.guard';
-import { User } from 'src/user/user';
 
 @Controller('chat')
 export class ChatController {

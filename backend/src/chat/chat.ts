@@ -18,6 +18,11 @@ export class Chat {
   @MaxLength(20)
   name: string;
 
+  @Column({
+    default: false,
+  })
+  isPublic: boolean;
+
   @ManyToMany(() => User, {
     cascade: true,
   })

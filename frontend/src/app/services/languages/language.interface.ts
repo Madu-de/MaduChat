@@ -68,4 +68,6 @@ export interface Language {
   youCannotKickAdmins: string;
   youHaveBeenRemovedFromTheChat: string;
   userDoesNotExist: string;
+  options: string;
+  public: string;
 }
