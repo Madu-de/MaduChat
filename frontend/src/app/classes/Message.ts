@@ -7,4 +7,5 @@ export interface Message {
   chat: Chat;
   createdAt: string;
   id: string;
+  history: string[];
 }

@@ -58,6 +58,8 @@ export const ES: Language = {
   noone: 'Nadie',
   privacy: 'Privacidad',
   showOnlineStatus: 'Mostrar estado en línea',
+  messageModified: 'modificado',
+  edit: 'Editar',
   members: 'Miembros',
   chooseMembers: 'Seleccionar miembros',
   back: 'Atrás',

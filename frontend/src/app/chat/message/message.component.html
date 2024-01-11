@@ -3,6 +3,21 @@
     <img mat-card-avatar [src]="message?.author?.image || 'assets/defaultpb.png'" [alt]="'Profilepicture from' + message?.author?.username" *ngIf="settings?.showAvatar">
     <mat-card-title>{{message?.author?.name}} <app-badge-list [user]="message?.author"></app-badge-list></mat-card-title>
     <mat-card-subtitle><a [routerLink]="'/user/'+message?.author?.id">@{{message?.author?.username}}</a></mat-card-subtitle>
+    <div class="menu-container">
+      <div *ngIf="message?.history?.length"><span class="modified-message">{{languageService.getValue('messageModified')}}</span></div>
+      <div class="message-menu" *ngIf="isMenuVisible()">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <mat-menu #menu="matMenu">
+      <button *ngIf="canEditMessage()" mat-menu-item (click)="editMessage()">
+        <mat-icon>edit</mat-icon>
+        <span>{{languageService.getValue('edit')}}</span>
+      </button>
+    </mat-menu>
   </mat-card-header>
   <mat-card-content>
     {{message?.message}}

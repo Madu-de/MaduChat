@@ -17,12 +17,6 @@ export class ChatService {
     });
   }
 
-  getMessages(id: string): Observable<Message[]> {
-    return this.http.get<Message[]>(`${this.auth.baseURL}/chat/${id}/messages`, {
-      headers: { Authorization: 'Bearer ' + this.auth.token }
-    });
-  }
-
   addChat(memberids: string[]): Observable<Chat> {
     return this.http.post<Chat>(`${this.auth.baseURL}/chat`, {
       memberids

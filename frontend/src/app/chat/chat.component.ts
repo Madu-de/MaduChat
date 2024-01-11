@@ -7,6 +7,7 @@ import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { Settings } from '../classes/Settings';
+import { MessageService } from "../services/message.service";
 import { SnackbarService } from '../services/snackbar.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   public channelExists: boolean = true;
   public loading: boolean = true;
   public settings: Settings | undefined;
+  public userId: string | undefined;
 
   constructor(
     public languageService: LanguageService,
@@ -28,11 +30,13 @@ export class ChatComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private auth: AuthService,
     private userService: UserService,
+    private messageService: MessageService,
     private snackbarService: SnackbarService
   ) { }
 
   async ngOnInit() {
     this.userService.getMe(false, false, true).subscribe(user => {
+      this.userId = user.id;
       this.settings = user.settings;
     });
     this.routerSubscription = this.router.events.subscribe(val => {
