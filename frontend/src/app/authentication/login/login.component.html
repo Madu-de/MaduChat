@@ -69,12 +69,12 @@
         <button mat-icon-button matSuffix (click)="hideRegister = !hideRegister" type="button">
           <mat-icon color="primary">{{hideRegister ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="registerForm.controls.name.hasError('required')">{{languageService.getValue('password')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
+        <mat-error *ngIf="registerForm.controls.password.hasError('required')">{{languageService.getValue('password')}} {{languageService.getValue('isRequiredErr')}}</mat-error>
         <mat-error *ngIf="registerForm.controls.password.hasError('minlength')">{{languageService.getValue('password')}} {{languageService.getValue('isTooShort')}}</mat-error>
         <mat-error *ngIf="registerForm.controls.password.hasError('pattern')">{{languageService.getValue('passwordPatternErr')}}</mat-error>
       </mat-form-field>
-      <br>
-
+      <br *ngIf="addPasswordBr">
+      
       <mat-form-field floatLabel="always">
         <mat-label>{{languageService.getValue('confirmPassword')}}</mat-label>
         <input matInput [type]="hideRegisterConfirm ? 'password' : 'text'" #password formControlName="passwordConfirm" required>

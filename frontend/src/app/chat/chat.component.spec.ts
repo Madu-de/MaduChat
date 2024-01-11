@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
+import { SnackbarService } from '../services/snackbar.service';
 
 describe('ChatComponent', () => {
   let component: ChatComponent;
@@ -55,9 +56,11 @@ describe('ChatComponent', () => {
         },
         {
           provide: UserService,
-          useValue: {
-            
-          }
+          useValue: {}
+        },
+        {
+          provide: SnackbarService,
+          useValue: {}
         }
       ]
     });

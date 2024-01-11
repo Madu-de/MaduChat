@@ -1,12 +1,14 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../../user/user.service';
+import { ChatService } from '../../chat/chat.service';
 
 @Injectable()
 export class ChatGuard implements CanActivate {
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    private chatService: ChatService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -24,7 +26,9 @@ export class ChatGuard implements CanActivate {
       wsContext?.getClient().handshake.user.id || request['user'].id;
     if (!userid) return this.authService.notAllowed(websocketId);
     const user = await this.userService.getUser(userid, request, false, true);
-    const isAbleToJoin = user.chats.some(chat => chat.id === chatid);
+    const chat = await this.chatService.getChat(chatid, user);
+    const isAbleToJoin =
+      chat.isPublic || user.chats.some(chat => chat.id === chatid);
     if (!isAbleToJoin) return this.authService.notAllowed(websocketId);
     return true;
   }

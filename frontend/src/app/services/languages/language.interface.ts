@@ -58,4 +58,14 @@ export interface Language {
   showOnlineStatus: string;
   messageModified: string;
   edit: string;
+  members: string;
+  chooseMembers: string;
+  back: string;
+  select: string;
+  savedSuccessfully: string;
+  youCannotKickAdmins: string;
+  youHaveBeenRemovedFromTheChat: string;
+  userDoesNotExist: string;
+  options: string;
+  public: string;
 }

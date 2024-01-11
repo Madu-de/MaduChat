@@ -1,21 +1,20 @@
+import { MockModule } from 'ng-mocks';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditChatPopupComponent } from './edit-chat-popup.component';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatCommonModule } from '@angular/material/core';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { ChatService } from 'src/app/services/chat.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LanguageService } from 'src/app/services/language.service';
+import { UserService } from 'src/app/services/user.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { of } from 'rxjs';
 
 describe('EditChatPopupComponent', () => {
   let component: EditChatPopupComponent;
@@ -29,7 +28,10 @@ describe('EditChatPopupComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        MatListModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MockModule(FormsModule),
       ],
       declarations: [EditChatPopupComponent],
       providers: [
@@ -47,14 +49,26 @@ describe('EditChatPopupComponent', () => {
         },
         {
           provide: ChatService,
-          useValue: {}
+          useValue: {
+            get: () => of({})
+          }
         },
         {
           provide: LanguageService,
           useValue: {
             getValue: () => ''
           }
-        }
+        },
+        {
+          provide: UserService,
+          useValue: {
+            getMe: () => of({})
+          }
+        },
+        {
+          provide: SnackbarService,
+          useValue: {}
+        },
       ]
     });
     fixture = TestBed.createComponent(EditChatPopupComponent);
