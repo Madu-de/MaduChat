@@ -23,6 +23,7 @@ export class Message {
 
   @ManyToOne(() => Chat, {
     cascade: true,
+    onDelete: 'CASCADE',
   })
   @JoinTable()
   chat: Chat;

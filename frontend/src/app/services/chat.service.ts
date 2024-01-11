@@ -38,4 +38,10 @@ export class ChatService {
       headers: { Authorization: 'Bearer ' + this.auth.token }
     });
   }
+
+  deleteChat(id: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.auth.baseURL}/chat/${id}`, {
+      headers: { Authorization: 'Bearer ' + this.auth.token }
+    });
+  }
 }

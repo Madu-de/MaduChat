@@ -15,6 +15,8 @@ import { RouterModule } from '@angular/router';
 import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FriendsModule } from 'src/app/friends/friends.module';
 import { MatSelectModule } from '@angular/material/select';
@@ -27,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     SidebarComponent,
     ListComponent,
     EditChatPopupComponent,
+    DeleteChatPopupComponent
   ],
   imports: [
     CommonModule,
