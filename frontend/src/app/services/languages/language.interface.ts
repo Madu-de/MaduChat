@@ -66,4 +66,8 @@ export interface Language {
   userDoesNotExist: string;
   options: string;
   public: string;
+  onlyAdmins: string;
+  everyUserCanSeeTheChat: string;
+  onlyAdminsCanWriteMessages: string;
+  notAuthorizedToWriteMessages: string;
 }

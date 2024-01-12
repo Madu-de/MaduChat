@@ -23,6 +23,11 @@ export class Chat {
   })
   isPublic: boolean;
 
+  @Column({
+    default: false,
+  })
+  isAdminChat: boolean;
+
   @ManyToMany(() => User, {
     cascade: true,
   })
