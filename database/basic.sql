@@ -57,3 +57,12 @@ FROM message m
 LEFT JOIN chat c ON c.id = m.chatId
 LEFT JOIN user u ON u.id = m.authorId;
 
+
+
+
+
+
+INSERT INTO review (id, authorId, targetId, text, stars) VALUES (UUID(), '0afefcc5-2b53-43d0-aad0-4f54eb90ee4d', '22094c72-7425-11ee-b3cb-0242ac120003', 'A good person!', 5);
+INSERT INTO review (id, authorId, targetId,text, stars) VALUES (UUID(), '0afefcc5-2b53-43d0-aad0-4f54eb90ee4d', '220ce59f-7425-11ee-b3cb-0242ac120003', 'I hate him!', 1);
+INSERT INTO review (id, authorId, targetId,text, stars) VALUES (UUID(), '0afefcc5-2b53-43d0-aad0-4f54eb90ee4d', '2213cb15-7425-11ee-b3cb-0242ac120003', 'She said, that I am a nerd', 5);
+INSERT INTO review (id, authorId, targetId,text, stars) VALUES (UUID(), '0afefcc5-2b53-43d0-aad0-4f54eb90ee4d', 'fcdc002b-6c59-403b-a2f8-3f59895dcb25', 'I love this guy!', 4);
