@@ -12,6 +12,7 @@ import { Chat } from './chat/chat';
 import { Settings } from './user/settings';
 import { WebsocketModule } from './websocket/websocket.module';
 import 'dotenv/config';
+import { Review } from './user/review/review';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import 'dotenv/config';
       username: process.env.DATABASE_USERNAME || 'root',
       password: process.env.DATABASE_PASSWORD || '',
       database: process.env.DATABASE || 'maduchat',
-      entities: [User, Message, Chat, Settings],
+      entities: [User, Message, Chat, Settings, Review],
       synchronize: true,
     }),
     UserModule,
