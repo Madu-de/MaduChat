@@ -57,6 +57,8 @@ export class UserService {
         settings: true,
         friendRequestsSent: friends,
         friendRequetsReceived: friends,
+        writtenReviews: true,
+        receivedReviews: true,
       },
     });
     if (!user)
