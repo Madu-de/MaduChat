@@ -48,6 +48,7 @@ export class UserService {
     friends?: boolean,
     chats?: boolean,
     settings?: boolean,
+    reviews?: boolean,
   ): Promise<User> {
     let user = await this.userRepo.findOne({
       where: { id },
@@ -57,8 +58,8 @@ export class UserService {
         settings: true,
         friendRequestsSent: friends,
         friendRequetsReceived: friends,
-        writtenReviews: true,
-        receivedReviews: true,
+        writtenReviews: reviews,
+        receivedReviews: reviews,
       },
     });
     if (!user)

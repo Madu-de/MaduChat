@@ -8,11 +8,12 @@ import { Chat } from '../chat/chat';
 import { FriendsController } from './friends/friends.controller';
 import { ReviewController } from './review/review.controller';
 import { Review } from './review/review';
+import { ReviewService } from './review/review.service';
 
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([User, Settings, Chat, Review])],
-  providers: [UserService],
+  providers: [UserService, ReviewService],
   controllers: [UserController, FriendsController, ReviewController],
   exports: [UserService],
 })

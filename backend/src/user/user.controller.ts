@@ -52,6 +52,7 @@ export class UserController {
     @Query('friends', BooleanPipe) friends: boolean,
     @Query('chats', BooleanPipe) chats: boolean,
     @Query('settings', BooleanPipe) settings: boolean,
+    @Query('reviews', BooleanPipe) reviews: boolean,
     @Req() request: Request,
   ): Promise<User> {
     if (id === 'me') id = request['user'].id;
@@ -61,6 +62,7 @@ export class UserController {
       friends,
       chats,
       settings,
+      reviews,
     );
   }
 
