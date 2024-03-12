@@ -1,0 +1,68 @@
+<mat-grid-list cols="6" rowHeight="1:4" class="review-grid">
+  <mat-grid-tile colspan="2">
+    <mat-card class="overview">
+      <mat-card-header>
+        <mat-card-title>
+          Overview
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        Average stars: 3,54
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            5 Sterne
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            4 Sterne
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            3 Sterne
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            2 Sterne
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            1 Stern
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" value="5"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="4" id="review-comment-section">
+    <mat-form-field>
+      <mat-label>Write a review</mat-label>
+      <textarea matInput rows="1"></textarea>
+    </mat-form-field>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+    <app-comment></app-comment>
+  </mat-grid-tile>
+</mat-grid-list>
