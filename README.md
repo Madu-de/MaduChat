@@ -26,6 +26,11 @@
 - Call the CreateGlobalchat procedure
 - Go to "localhost:4200" in your browser and enjoy!
 
+## MaduChat CLI
+[![MaduChat-CLI](https://github-readme-stats.vercel.app/api/pin/?username=Madu-de&repo=MaduChat-CLI&theme=dark&show_owner=true)](https://github.com/Madu-de/MaduChat-CLI)
+
+
 ## Docs
 [Frontend](https://github.com/Madu-de/MaduChat/blob/main/frontend/README.md)
 [Backend](https://github.com/Madu-de/MaduChat/blob/main/backend/README.md)
+[CLI](https://github.com/Madu-de/MaduChat-CLI/blob/main/backend/README.md)
