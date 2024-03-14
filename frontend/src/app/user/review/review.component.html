@@ -56,13 +56,10 @@
       <mat-label>Write a review</mat-label>
       <textarea matInput rows="1"></textarea>
     </mat-form-field>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
-    <app-comment></app-comment>
+    @if (user?.receivedReviews) {
+      @for (review of user?.receivedReviews; track review.id) {
+        <app-comment [review]="review"></app-comment>
+      }
+    }
   </mat-grid-tile>
 </mat-grid-list>
