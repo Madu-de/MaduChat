@@ -21,6 +21,6 @@
   <mat-tab [label]="languageService.getValue('stats')"></mat-tab>
   <mat-tab [label]="languageService.getValue('feed')"></mat-tab>
   <mat-tab [label]="languageService.getValue('reviews')">
-    <app-review [clientUser]="clientUser"></app-review>
+    <app-review [user]="user" [clientUser]="clientUser"></app-review>
   </mat-tab>
 </mat-tab-group>

@@ -8,9 +8,8 @@ import { User } from 'src/app/classes/User';
 })
 export class ReviewComponent {
   @Input()
-  clientUser: User | undefined;
+  user: User | undefined;
 
-  ngOnInit() {
-    console.log(this.clientUser);
-  }
+  @Input()
+  clientUser: User | undefined;
 }

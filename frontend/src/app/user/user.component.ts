@@ -23,41 +23,41 @@ export class UserComponent implements OnInit {
   profilePicture: string = '';
 
   constructor(
-    public userService: UserService, 
-    private route: ActivatedRoute, 
-    private snackbar: SnackbarService, 
-    private router: Router, 
+    public userService: UserService,
+    private route: ActivatedRoute,
+    private snackbar: SnackbarService,
+    private router: Router,
     public languageService: LanguageService,
     public chatService: ChatService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const userid = this.route.snapshot.paramMap.get('id') || '';
     this.userService.getMe(false, true).subscribe((clientUser) => {
       this.clientUser = clientUser;
-      this.userService.getUser(userid, false, true)
-      .pipe(
-        catchError((err: HttpErrorResponse) => {
-          this.snackbar.open(this.languageService.getValue('userDoesNotExist'));
-          this.router.navigate(['/']);
-          return throwError(() => new Error(err.error.message));
-        })
-      )
-      .subscribe((user) => {
-        this.user = user;
-        this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
-        this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
-        this.userService.getUserProfilePicture(this.user.id)
+      this.userService.getUser(userid, false, true, false, true)
         .pipe(
-          catchError(() => {
-            return of('');
+          catchError((err: HttpErrorResponse) => {
+            this.snackbar.open(this.languageService.getValue('userDoesNotExist'));
+            this.router.navigate(['/']);
+            return throwError(() => new Error(err.error.message));
           })
         )
-        .subscribe((image) => {
-          this.profilePicture = image;
-          this.loading = false;
-        });
-      })
+        .subscribe((user) => {
+          this.user = user;
+          this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
+          this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
+          this.userService.getUserProfilePicture(this.user.id)
+            .pipe(
+              catchError(() => {
+                return of('');
+              })
+            )
+            .subscribe((image) => {
+              this.profilePicture = image;
+              this.loading = false;
+            });
+        })
     });
   }
 
@@ -66,11 +66,13 @@ export class UserComponent implements OnInit {
     let snackRef: MatSnackBarRef<TextOnlySnackBar>;
     if (this.isFriend || this.isAdded) {
       snackRef = this.snackbar.open(this.languageService.getValue('removedFriendMessage').replace('{username}', `@${this.user.username}`), this.languageService.getValue('undo'));
-      this.userService.removeFriend(this.user.id).subscribe((friend) => {{
-        this.isFriend = false;
-        this.isAdded = false;
-        this.user = friend;
-      }});
+      this.userService.removeFriend(this.user.id).subscribe((friend) => {
+        {
+          this.isFriend = false;
+          this.isAdded = false;
+          this.user = friend;
+        }
+      });
     } else {
       snackRef = this.snackbar.open(this.languageService.getValue('addedFriendMessage').replace('{username}', `@${this.user.username}`), this.languageService.getValue('undo'));
       this.userService.addFriend(this.user.id).subscribe((friend) => {

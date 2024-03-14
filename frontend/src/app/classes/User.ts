@@ -1,4 +1,5 @@
 import { Chat } from "./Chat";
+import { Review } from "./Review";
 import { Settings } from "./Settings";
 
 export class User {
@@ -14,6 +15,8 @@ export class User {
   friendRequetsReceived?: User[];
   friends?: User[];
   settings?: Settings;
+  writtenReviews?: Review[];
+  receivedReviews?: Review[];
 
   constructor(id: string, username: string, name: string, image: string, isVerified: boolean, isAdmin: boolean, isOnline: boolean) {
     this.id = id;

@@ -14,16 +14,16 @@ export class UserService {
 
   constructor(private http: HttpClient, private auth: AuthService, private imageService: ImageService) { }
 
-  getMe(chats?: boolean, friends?: boolean, settings?: boolean) {
-    return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}`, {
+  getMe(chats?: boolean, friends?: boolean, settings?: boolean, review?: boolean) {
+    return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}&review=${review}`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
     });
   }
 
-  getUser(id: string, chats?: boolean, friends?: boolean, settings?: boolean) {
-    return this.http.get<User>(`${this.auth.baseURL}/users/${id}?chats=${chats}&friends=${friends}&settings=${settings}`, {
+  getUser(id: string, chats?: boolean, friends?: boolean, settings?: boolean, review?: boolean) {
+    return this.http.get<User>(`${this.auth.baseURL}/users/${id}?chats=${chats}&friends=${friends}&settings=${settings}&review=${review}`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
