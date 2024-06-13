@@ -8,12 +8,14 @@ import { Chat } from '../chat/chat';
 import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import type { Response } from 'express';
+import { Review } from './review/review';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(Chat) private chatRepo: Repository<Chat>,
+    @InjectRepository(Review) private reviewRepo: Repository<Review>,
   ) {}
 
   async getPrivacyUser(user: User, requester: User): Promise<User> {
@@ -82,6 +84,16 @@ export class UserService {
             u,
             requester,
           );
+        }),
+      );
+    }
+    if (reviews) {
+      await Promise.all(
+        user.receivedReviews.map(async (review, i) => {
+          user.receivedReviews[i] = await this.reviewRepo.findOne({
+            where: { id: review.id },
+            relations: { author: true, target: true },
+          });
         }),
       );
     }

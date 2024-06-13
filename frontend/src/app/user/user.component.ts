@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
           })
         )
         .subscribe((user) => {
-          this.user = user;
+          this.user = Object.assign({}, user);
           this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
           this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
           this.userService.getUserProfilePicture(this.user.id)

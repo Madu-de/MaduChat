@@ -55,8 +55,8 @@
     <mat-form-field>
       <mat-label>Write a review</mat-label>
       <textarea matInput rows="1"></textarea>
-    </mat-form-field>
-    @if (user?.receivedReviews) {
+    </mat-form-field> 
+    @if (user?.receivedReviews?.length) {
       @for (review of user?.receivedReviews; track review.id) {
         <app-comment [review]="review"></app-comment>
       }

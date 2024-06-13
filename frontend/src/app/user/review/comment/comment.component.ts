@@ -9,4 +9,8 @@ import { Review } from '../../../classes/Review';
 export class CommentComponent {
   @Input()
   review: Review | undefined;
+
+  ngOnInit() {
+    console.log(this.review);
+  }
 }
