@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Review } from '../../../classes/Review';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
@@ -10,7 +11,5 @@ export class CommentComponent {
   @Input()
   review: Review | undefined;
 
-  ngOnInit() {
-    console.log(this.review);
-  }
+  constructor(private router: Router) { }
 }

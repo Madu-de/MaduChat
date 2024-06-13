@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../classes/User';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarService } from '../services/snackbar.service';
-import { catchError, of, throwError } from 'rxjs';
+import { Subscription, catchError, of, throwError } from 'rxjs';
 import { LanguageService } from '../services/language.service';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ChatService } from '../services/chat.service';
@@ -21,6 +21,7 @@ export class UserComponent implements OnInit {
   isFriend: boolean = false;
   isAdded: boolean = false;
   profilePicture: string = '';
+  updateRouteSubscribtion: Subscription | undefined;
 
   constructor(
     public userService: UserService,
@@ -57,8 +58,22 @@ export class UserComponent implements OnInit {
               this.profilePicture = image;
               this.loading = false;
             });
-        })
+        });
     });
+    if (this.updateRouteSubscribtion) {
+      this.updateRouteSubscribtion.unsubscribe();
+    }
+    this.updateRouteSubscribtion = this.router.events.subscribe((val) => {
+      if (val.type == 15) {
+        this.ngOnInit();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.updateRouteSubscribtion) {
+      this.updateRouteSubscribtion.unsubscribe();
+    }
   }
 
   toggleFriendStatus() {
