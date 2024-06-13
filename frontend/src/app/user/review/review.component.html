@@ -54,7 +54,7 @@
   <mat-grid-tile colspan="4" id="review-comment-section">
     <mat-form-field>
       <mat-label>Write a review</mat-label>
-      <textarea matInput rows="1"></textarea>
+      <textarea matInput rows="1" (keyup.enter)="sendReview(message.value)" #message></textarea>
     </mat-form-field> 
     @if (user?.receivedReviews?.length) {
       @for (review of user?.receivedReviews; track review.id) {

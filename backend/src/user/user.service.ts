@@ -94,6 +94,23 @@ export class UserService {
             where: { id: review.id },
             relations: { author: true, target: true },
           });
+          user.receivedReviews[i].author = await this.getPrivacyUser(
+            user.receivedReviews[i].author,
+            requester,
+          );
+        }),
+      );
+
+      await Promise.all(
+        user.writtenReviews.map(async (review, i) => {
+          user.writtenReviews[i] = await this.reviewRepo.findOne({
+            where: { id: review.id },
+            relations: { author: true, target: true },
+          });
+          user.writtenReviews[i].author = await this.getPrivacyUser(
+            user.writtenReviews[i].author,
+            requester,
+          );
         }),
       );
     }

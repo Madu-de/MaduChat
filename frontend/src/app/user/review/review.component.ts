@@ -13,4 +13,8 @@ export class ReviewComponent {
 
   @Input()
   clientUser: User | undefined;
+
+  sendReview(review: string) {
+    
+  }
 }
