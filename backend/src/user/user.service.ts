@@ -98,6 +98,10 @@ export class UserService {
             user.receivedReviews[i].author,
             requester,
           );
+          user.receivedReviews[i].target = await this.getPrivacyUser(
+            user.receivedReviews[i].target,
+            requester,
+          );
         }),
       );
 
@@ -109,6 +113,10 @@ export class UserService {
           });
           user.writtenReviews[i].author = await this.getPrivacyUser(
             user.writtenReviews[i].author,
+            requester,
+          );
+          user.writtenReviews[i].target = await this.getPrivacyUser(
+            user.writtenReviews[i].target,
             requester,
           );
         }),
