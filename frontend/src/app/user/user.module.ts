@@ -17,6 +17,9 @@ import { MatListModule } from '@angular/material/list';
 import { RouterLink } from '@angular/router';
 import { CommentComponent } from './review/comment/comment.component';
 import { StarsComponent } from './review/comment/stars/stars.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateReviewMockComponent } from './review/create-review-mock/create-review-mock.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { StarsComponent } from './review/comment/stars/stars.component';
     BadgeListComponent,
     ReviewComponent,
     CommentComponent,
-    StarsComponent
+    StarsComponent,
+    CreateReviewMockComponent,
   ],
   imports: [
     CommonModule,
@@ -41,7 +45,10 @@ import { StarsComponent } from './review/comment/stars/stars.component';
     MatInputModule,
     MatProgressBarModule,
     MatListModule,
-    RouterLink
+    RouterLink,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   exports: [
     BadgeListComponent

@@ -352,4 +352,43 @@ export class UserService {
     user.image = '';
     await this.userRepo.save(user);
   }
+
+  async createReview(
+    targetId: string,
+    requesterId: string,
+    reviewBody: { review: string; stars: number },
+  ) {
+    const requester = await this.userRepo.findOne({
+      where: { id: requesterId },
+    });
+    const target = await this.userRepo.findOne({
+      where: { id: targetId },
+      relations: {
+        receivedReviews: {
+          author: true,
+        },
+      },
+    });
+    if (!target.receivedReviews.some(r => r.author.id === targetId)) {
+      throw new HttpException(
+        'User is not allowed to review this user twice',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const review = new Review();
+    review.author = requester;
+    review.target = target;
+    review.text = reviewBody.review;
+    review.stars = reviewBody.stars;
+    const savedReview = await this.reviewRepo.save(review);
+    savedReview.target = await this.getPrivacyUser(
+      savedReview.target,
+      requester,
+    );
+    savedReview.author = await this.getPrivacyUser(
+      savedReview.author,
+      requester,
+    );
+    return savedReview;
+  }
 }

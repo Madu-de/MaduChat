@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Rezension schreiben</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="review" (ngSubmit)="send()">
+    <div>
+      @for (i of [1,2,3,4,5]; track i) {
+        <button mat-icon-button (click)="setCurrentStars(i)">
+          <mat-icon [id]="'star-' + i">star_outline</mat-icon>
+        </button>
+      }
+    </div>
+    <mat-form-field>
+      <mat-label>Rezension</mat-label>
+      <input formControlName="text" matInput type="text">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
+  <button mat-button mat-flat-button color="primary" (click)="send()"
+    [disabled]="!review.valid || stars == 0">{{languageService.getValue('send')}}</button>
+</mat-dialog-actions>

@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseFilePipe,
+  Post,
   Put,
   Query,
   Req,
@@ -22,6 +23,7 @@ import { Settings } from './settings';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
 import { SharpPipe } from './sharp.pipe';
+import { Review } from './review/review';
 
 @Controller('users')
 export class UserController {
@@ -112,5 +114,15 @@ export class UserController {
   @Delete('/me/profilepicture')
   async deleteProfilePicture(@Req() request: Request) {
     return await this.userService.deleteProfilePicture(request['user'].id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/review')
+  async createReview(
+    @Param('id') id: string,
+    @Body() body: { review: string; stars: number },
+    @Req() request: Request,
+  ): Promise<Review> {
+    return await this.userService.createReview(id, request['user'].id, body);
   }
 }

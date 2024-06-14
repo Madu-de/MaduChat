@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/classes/User';
+import { CreateReviewMockComponent } from './create-review-mock/create-review-mock.component';
 
 @Component({
   selector: 'app-review',
@@ -14,7 +15,14 @@ export class ReviewComponent {
   @Input()
   clientUser: User | undefined;
 
-  sendReview(review: string) {
-    
+  constructor(private dialog: MatDialog) {}
+
+  openMock() {
+    this.dialog.open(CreateReviewMockComponent, {
+      hasBackdrop: true,
+      data: {
+        targetid: this.user?.id,
+      }
+    });
   }
 }

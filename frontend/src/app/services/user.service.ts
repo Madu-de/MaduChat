@@ -5,6 +5,7 @@ import { User } from '../classes/User';
 import { AuthService } from './auth.service';
 import { from, switchMap, throwError } from 'rxjs';
 import { ImageService } from './image.service';
+import { Review } from '../classes/Review';
 
 @Injectable({
   providedIn: 'root'
@@ -101,6 +102,17 @@ export class UserService {
   setSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
     return this.http.put<Settings>(`${this.auth.baseURL}/users/me/settings`, {
       [key]: value,
+    }, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
+  }
+
+  createReview(targetId: string, review: string, stars: number) {
+    return this.http.post<Review>(`${this.auth.baseURL}/users/${targetId}/review`, {
+      review,
+      stars,
     }, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
