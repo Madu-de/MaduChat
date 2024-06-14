@@ -12,11 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class CreateReviewMockComponent {
 
   review: FormGroup = new FormGroup({
-    text: new FormControl('', [
-      Validators.minLength(1),
-      Validators.maxLength(20),
-      Validators.required
-    ]),
+    text: new FormControl(''),
   });
 
   stars: number = 0;

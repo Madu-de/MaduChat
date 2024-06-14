@@ -9,9 +9,10 @@
         </button>
       }
     </div>
+    <br>
     <mat-form-field>
       <mat-label>Rezension</mat-label>
-      <input formControlName="text" matInput type="text">
+      <textarea formControlName="text" matInput></textarea>
     </mat-form-field>
   </form>
 </mat-dialog-content>
@@ -19,5 +20,5 @@
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>{{languageService.getValue('close')}}</button>
   <button mat-button mat-flat-button color="primary" (click)="send()"
-    [disabled]="!review.valid || stars == 0">{{languageService.getValue('send')}}</button>
+    [disabled]="stars == 0">{{languageService.getValue('send')}}</button>
 </mat-dialog-actions>

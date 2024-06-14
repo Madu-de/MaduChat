@@ -358,6 +358,12 @@ export class UserService {
     requesterId: string,
     reviewBody: { review: string; stars: number },
   ) {
+    if (reviewBody.stars < 1 || reviewBody.stars > 5) {
+      throw new HttpException(
+        'Invalid review. Stars must be between 1 and 5',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const requester = await this.userRepo.findOne({
       where: { id: requesterId },
     });
