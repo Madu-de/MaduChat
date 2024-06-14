@@ -1,16 +1,15 @@
-::ng-deep .review-grid .mat-grid-tile-content {
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
-  margin: 20px !important;
-}
+.review-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
-::ng-deep .overview-grid .mat-grid-tile-content {
-  justify-content: center !important;
-  align-items: center !important;
-}
+  @media (max-width: 1500px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
 
-::ng-deep .mat-grid-tile-content {
-  flex-direction: column;
+  div {
+    padding: 20px;
+  }
 }
 
 mat-form-field {
@@ -32,11 +31,8 @@ mat-card {
 }
 
 app-comment {
-  width: 100%;
-}
-
-.review-grid {
-  height: 5000px !important;
+  width: 100% !important;
+  display: block;
 }
 
 #review-comment-section {

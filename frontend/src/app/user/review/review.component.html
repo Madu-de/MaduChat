@@ -1,5 +1,5 @@
-<mat-grid-list cols="6" rowHeight="fit" class="review-grid">
-  <mat-grid-tile colspan="2">
+<div class="review-grid">
+  <div>
     <mat-card class="overview">
       <mat-card-header>
         <mat-card-title>
@@ -50,13 +50,13 @@
         </mat-grid-list>
       </mat-card-content>
     </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4" id="review-comment-section">
+  </div>
+  <div>
     <button mat-button (click)="openMock()">Rezension schreiben</button>
     @if (user?.receivedReviews?.length) {
       @for (review of user?.receivedReviews; track review.id) {
         <app-comment [review]="review"></app-comment>
       }
     }
-  </mat-grid-tile>
-</mat-grid-list>
+  </div>
+</div>
