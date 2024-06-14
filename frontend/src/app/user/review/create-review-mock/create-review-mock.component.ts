@@ -1,7 +1,7 @@
 import { LanguageService } from './../../../services/language.service';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -19,13 +19,14 @@ export class CreateReviewMockComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { targetid: string },
+    public dialogRef: MatDialogRef<CreateReviewMockComponent>,
     public languageService: LanguageService,
     public userService: UserService,
   ) {}
 
   send() {
     this.userService.createReview(this.data.targetid, this.review.controls['text'].value, this.stars).subscribe(data => {
-      console.log(data);
+      this.dialogRef.close(data);
     });
   }
 

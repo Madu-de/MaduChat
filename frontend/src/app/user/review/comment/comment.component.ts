@@ -10,6 +10,4 @@ import { Router } from '@angular/router';
 export class CommentComponent {
   @Input()
   review: Review | undefined;
-
-  constructor(private router: Router) { }
 }

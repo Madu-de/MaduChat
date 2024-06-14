@@ -125,4 +125,10 @@ export class UserController {
   ): Promise<Review> {
     return await this.userService.createReview(id, request['user'].id, body);
   }
+
+  @UseGuards(AuthGuard)
+  @Delete(':id/review')
+  async deleteReview(@Param('id') id: string, @Req() request: Request) {
+    return await this.userService.deleteReview(id, request['user'].id);
+  }
 }

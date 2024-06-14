@@ -397,4 +397,25 @@ export class UserService {
     );
     return savedReview;
   }
+
+  async deleteReview(targetId: string, requesterId: string) {
+    const requester = await this.userRepo.findOne({
+      where: { id: requesterId },
+      relations: {
+        writtenReviews: {
+          target: true,
+        },
+      },
+    });
+    const review: Review = requester.writtenReviews.find(
+      r => r.target.id === targetId,
+    );
+    if (!review) {
+      throw new HttpException(
+        'There is no review written by the requester',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    return await this.reviewRepo.remove(review);
+  }
 }

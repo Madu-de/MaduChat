@@ -120,6 +120,14 @@ export class UserService {
     });
   }
 
+  deleteReview(targetId: string) {
+    return this.http.delete<Review>(`${this.auth.baseURL}/users/${targetId}/review`, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
+  }
+
   emitMeChanged() {
     this.meChanged.emit();
   }

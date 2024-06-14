@@ -53,6 +53,8 @@
   </div>
   <div>
     <button mat-button (click)="openMock()">Rezension schreiben</button>
+    <button mat-button (click)="openMock()">Rezension bearbeiten</button>
+    <button mat-button (click)="deleteReview()">Rezension löschen</button>
     @if (user?.receivedReviews?.length) {
       @for (review of user?.receivedReviews; track review.id) {
         <app-comment [review]="review"></app-comment>
