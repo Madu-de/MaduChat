@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Rezension schreiben</h1>
 
 <mat-dialog-content>
-  <form [formGroup]="review" (ngSubmit)="send()">
+  <form [formGroup]="review">
     <div>
       @for (i of [1,2,3,4,5]; track i) {
         <button mat-icon-button (click)="setCurrentStars(i)">

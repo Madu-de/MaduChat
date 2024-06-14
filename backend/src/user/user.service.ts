@@ -375,7 +375,7 @@ export class UserService {
         },
       },
     });
-    if (!target.receivedReviews.some(r => r.author.id === targetId)) {
+    if (target.receivedReviews.some(r => r.author.id === requesterId)) {
       throw new HttpException(
         'User is not allowed to review this user twice',
         HttpStatus.BAD_REQUEST,
