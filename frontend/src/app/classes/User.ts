@@ -17,6 +17,7 @@ export class User {
   settings?: Settings;
   writtenReviews?: Review[];
   receivedReviews?: Review[];
+  avarageStars?: number;
 
   constructor(id: string, username: string, name: string, image: string, isVerified: boolean, isAdmin: boolean, isOnline: boolean) {
     this.id = id;

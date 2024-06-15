@@ -16,12 +16,10 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  getRepository,
 } from 'typeorm';
 import { Settings } from './settings';
 import { Chat } from '../chat/chat';
 import { Review } from './review/review';
-import { getRepositoryToken } from '@nestjs/typeorm';
 
 @Entity()
 export class User {
@@ -101,7 +99,10 @@ export class User {
   })
   chats: Chat[];
 
-  @Column()
+  @Column({
+    type: 'double',
+    default: 0,
+  })
   @Min(0)
   @Max(5)
   avarageStars: number;
@@ -118,14 +119,27 @@ export class User {
   })
   receivedReviews: Review[];
 
-  @BeforeUpdate()
-  async calculateAvarageStars() {
-    if (this.receivedReviews && this.receivedReviews.length > 0) {
-      const totalStars = this.receivedReviews.reduce(
+  calculateAvarageStars(starsOnTop?: number) {
+    if (
+      this.receivedReviews &&
+      (this.receivedReviews.length > 0 || starsOnTop > 0 || starsOnTop < 0)
+    ) {
+      let totalStars = this.receivedReviews.reduce(
         (total, next) => total + next.stars,
         0,
       );
-      this.avarageStars = totalStars / this.receivedReviews.length;
+      if (starsOnTop > 0) {
+        totalStars += starsOnTop;
+        return totalStars / (this.receivedReviews.length + 1);
+      }
+      if (starsOnTop < 0) {
+        totalStars += starsOnTop;
+        if (totalStars === 0) {
+          return 0;
+        }
+        return totalStars / (this.receivedReviews.length - 1);
+      }
+      return totalStars / this.receivedReviews.length;
     }
   }
 }

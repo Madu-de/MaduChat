@@ -387,14 +387,7 @@ export class UserService {
     review.text = reviewBody.review;
     review.stars = reviewBody.stars;
     const savedReview = await this.reviewRepo.save(review);
-    savedReview.target = await this.getPrivacyUser(
-      savedReview.target,
-      requester,
-    );
-    savedReview.author = await this.getPrivacyUser(
-      savedReview.author,
-      requester,
-    );
+    await this.userRepo.save(savedReview.target);
     return savedReview;
   }
 
@@ -403,7 +396,9 @@ export class UserService {
       where: { id: requesterId },
       relations: {
         writtenReviews: {
-          target: true,
+          target: {
+            receivedReviews: true,
+          },
         },
       },
     });
@@ -416,6 +411,12 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return await this.reviewRepo.remove(review);
+    review.target.avarageStars = review.target.calculateAvarageStars(
+      -review.stars,
+    );
+    console.log(review.target.avarageStars);
+    await this.userRepo.save(review.target);
+    const deletedReview = await this.reviewRepo.remove(review);
+    return deletedReview;
   }
 }
