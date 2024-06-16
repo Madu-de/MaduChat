@@ -43,4 +43,10 @@ export class ReviewComponent {
       this.snackbar.open('Du hast deine Rezension gelöscht!');
     });
   }
+
+  calcProgressbarValue(numberOfStars: number) {
+    if (!this.user) return 0;
+    if (!this.user.reviewStats) return 0;
+    return (numberOfStars / this.user.reviewStats.totalReceivedReviews) * 100;
+  }
 }

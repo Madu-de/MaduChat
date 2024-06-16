@@ -7,13 +7,13 @@
         </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        Average stars: {{user?.avarageStars | number : '1.0-2'}}
+        Average stars: {{user?.reviewStats?.avarageReceivedStars | number : '1.0-2'}}
         <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
           <mat-grid-tile colspan="5">
             5 Sterne
           </mat-grid-tile>
           <mat-grid-tile colspan="15">
-            <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived5Stars || 0)"></mat-progress-bar>
           </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
@@ -21,7 +21,7 @@
             4 Sterne
           </mat-grid-tile>
           <mat-grid-tile colspan="15">
-            <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived4Stars || 0)"></mat-progress-bar>
           </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
@@ -29,7 +29,7 @@
             3 Sterne
           </mat-grid-tile>
           <mat-grid-tile colspan="15">
-            <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived3Stars || 0)"></mat-progress-bar>
           </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
@@ -37,7 +37,7 @@
             2 Sterne
           </mat-grid-tile>
           <mat-grid-tile colspan="15">
-            <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived2Stars || 0)"></mat-progress-bar>
           </mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
@@ -45,7 +45,7 @@
             1 Stern
           </mat-grid-tile>
           <mat-grid-tile colspan="15">
-            <mat-progress-bar mode="determinate" value="5"></mat-progress-bar>
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived1Star || 0)"></mat-progress-bar>
           </mat-grid-tile>
         </mat-grid-list>
       </mat-card-content>

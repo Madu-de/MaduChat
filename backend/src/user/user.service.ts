@@ -62,6 +62,7 @@ export class UserService {
         friendRequetsReceived: friends,
         writtenReviews: reviews,
         receivedReviews: reviews,
+        reviewStats: reviews,
       },
     });
     if (!user)
@@ -358,6 +359,12 @@ export class UserService {
     requesterId: string,
     reviewBody: { review: string; stars: number },
   ) {
+    if (targetId === requesterId) {
+      throw new HttpException(
+        'User is not allowed to review himself',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     if (reviewBody.stars < 1 || reviewBody.stars > 5) {
       throw new HttpException(
         'Invalid review. Stars must be between 1 and 5',
@@ -373,6 +380,7 @@ export class UserService {
         receivedReviews: {
           author: true,
         },
+        reviewStats: true,
       },
     });
     if (target.receivedReviews.some(r => r.author.id === requesterId)) {
@@ -381,13 +389,14 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
+    target.addReview(reviewBody.stars);
+    const newtarget = await this.userRepo.save(target);
     const review = new Review();
     review.author = requester;
-    review.target = target;
+    review.target = newtarget;
     review.text = reviewBody.review;
     review.stars = reviewBody.stars;
     const savedReview = await this.reviewRepo.save(review);
-    await this.userRepo.save(savedReview.target);
     return savedReview;
   }
 
@@ -398,6 +407,7 @@ export class UserService {
         writtenReviews: {
           target: {
             receivedReviews: true,
+            reviewStats: true,
           },
         },
       },
@@ -411,10 +421,8 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    review.target.avarageStars = review.target.calculateAvarageStars(
-      -review.stars,
-    );
-    console.log(review.target.avarageStars);
+    review.target.removeReview(review.stars);
+    console.log(review.target);
     await this.userRepo.save(review.target);
     const deletedReview = await this.reviewRepo.remove(review);
     return deletedReview;

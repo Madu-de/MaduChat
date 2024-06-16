@@ -9,10 +9,13 @@ import { FriendsController } from './friends/friends.controller';
 import { ReviewController } from './review/review.controller';
 import { Review } from './review/review';
 import { ReviewService } from './review/review.service';
+import { ReviewStats } from './review/reviewStats';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Settings, Chat, Review])],
+  imports: [
+    TypeOrmModule.forFeature([User, Settings, Chat, Review, ReviewStats]),
+  ],
   providers: [UserService, ReviewService],
   controllers: [UserController, FriendsController, ReviewController],
   exports: [UserService],

@@ -1,7 +1,4 @@
 import {
-  AfterRemove,
-  BeforeInsert,
-  BeforeRemove,
   Column,
   CreateDateColumn,
   Entity,
@@ -50,10 +47,4 @@ export class Review {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @BeforeInsert()
-  async beforeInsert() {
-    this.target.avarageStars = this.target.calculateAvarageStars(this.stars);
-    console.log(this.target.avarageStars);
-  }
 }

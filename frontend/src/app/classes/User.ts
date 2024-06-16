@@ -1,5 +1,6 @@
 import { Chat } from "./Chat";
 import { Review } from "./Review";
+import { ReviewStats } from "./ReviewStats";
 import { Settings } from "./Settings";
 
 export class User {
@@ -17,7 +18,7 @@ export class User {
   settings?: Settings;
   writtenReviews?: Review[];
   receivedReviews?: Review[];
-  avarageStars?: number;
+  reviewStats?: ReviewStats;
 
   constructor(id: string, username: string, name: string, image: string, isVerified: boolean, isAdmin: boolean, isOnline: boolean) {
     this.id = id;
