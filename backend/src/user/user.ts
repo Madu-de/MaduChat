@@ -137,7 +137,7 @@ export class User {
       return;
     }
     this.reviewStats.avarageReceivedStars =
-      this.reviewStats.avarageReceivedStars /
+      this.reviewStats.totalReceivedStars /
       this.reviewStats.totalReceivedReviews;
   }
 
