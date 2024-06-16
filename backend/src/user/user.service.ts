@@ -9,6 +9,7 @@ import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import type { Response } from 'express';
 import { Review } from './review/review';
+import { ReviewStats } from './review/reviewStats';
 
 @Injectable()
 export class UserService {
@@ -165,6 +166,7 @@ export class UserService {
     user.username = user.username.toLocaleLowerCase();
     const language = user.settings?.language;
     user.settings = new Settings();
+    user.reviewStats = new ReviewStats();
     user.settings.language = language || user.settings.language;
     const globalchat = await this.chatRepo.findOne({ where: { id: 'global' } });
     user.chats = [globalchat];
