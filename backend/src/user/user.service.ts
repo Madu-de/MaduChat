@@ -422,7 +422,6 @@ export class UserService {
       );
     }
     review.target.removeReview(review.stars);
-    console.log(review.target);
     await this.userRepo.save(review.target);
     const deletedReview = await this.reviewRepo.remove(review);
     return deletedReview;
