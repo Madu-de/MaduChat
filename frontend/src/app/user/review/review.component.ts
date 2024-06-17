@@ -55,12 +55,15 @@ export class ReviewComponent {
         this.snackbar.open('Du hast deine Rezension bearbeitet!');
         this.user!.receivedReviews = this.user?.receivedReviews?.filter(r => r.id !== this.reviewWrittenByClientUser?.id)
         this.user!.receivedReviews?.push(data);
+        this.updateOverview(this.reviewWrittenByClientUser.stars, -1);
+        this.updateOverview(data.stars, 1);
         this.reviewWrittenByClientUser = data;
         return;
       }
       this.snackbar.open('Du hast ' + this.user?.name + ' eine Rezension geschrieben!');
       this.user?.receivedReviews?.push(data);
       this.reviewWrittenByClientUser = data;
+      this.updateOverview(data.stars, 1);
     });
   }
 
@@ -68,15 +71,42 @@ export class ReviewComponent {
     this.userService.deleteReview(this.user!.id).subscribe(data => {
       this.user!.receivedReviews = this.user?.receivedReviews?.filter((review) => review.author.id !== this.clientUser!.id);
       this.reviewWrittenByClientUser = undefined;
+      this.updateOverview(data.stars, -1);
       this.snackbar.open('Du hast deine Rezension gelöscht!', this.languageService.getValue('undo'))
         .onAction()
         .subscribe(() => {
           this.userService.createReview(data.target.id, data.text, data.stars).subscribe((data) => {
             this.user!.receivedReviews?.push(data);
             this.reviewWrittenByClientUser = data;
+            this.updateOverview(data.stars, 1);
           });
         });
     });
+  }
+
+  updateOverview(stars: number, multiplier: number) {
+    this.user!.reviewStats!.totalReceivedReviews += multiplier;
+    this.user!.reviewStats!.totalReceivedStars += stars * multiplier;
+    this.user!.reviewStats!.avarageReceivedStars = this.user!.reviewStats!.totalReceivedStars / this.user!.reviewStats!.totalReceivedReviews;
+    switch (stars) {
+      case 1:
+        this.user!.reviewStats!.totalReceived1Star += multiplier;
+        break;
+      case 2:
+        this.user!.reviewStats!.totalReceived2Stars += multiplier;
+        break;
+      case 3:
+        this.user!.reviewStats!.totalReceived3Stars += multiplier;
+        break;
+      case 4:
+        this.user!.reviewStats!.totalReceived4Stars += multiplier;
+        break;
+      case 5:
+        this.user!.reviewStats!.totalReceived5Stars += multiplier;
+        break;
+      default:
+        break;
+    }
   }
 
   calcProgressbarValue(numberOfStars: number) {
