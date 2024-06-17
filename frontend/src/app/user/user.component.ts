@@ -85,7 +85,7 @@ export class UserComponent implements OnInit {
         {
           this.isFriend = false;
           this.isAdded = false;
-          this.user = friend;
+          this.user!.friendRequetsReceived = friend.friendRequetsReceived;
         }
       });
     } else {
@@ -93,7 +93,7 @@ export class UserComponent implements OnInit {
       this.userService.addFriend(this.user.id).subscribe((friend) => {
         this.isAdded = true;
         this.isFriend = false;
-        this.user = friend;
+        this.user!.friendRequetsReceived = friend.friendRequetsReceived;
       });
     }
     snackRef.onAction().subscribe(() => {

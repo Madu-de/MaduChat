@@ -109,6 +109,14 @@ export class UserService {
     });
   }
 
+  getMyReviewOfTarget(targetId: string) {
+    return this.http.get<Review>(`${this.auth.baseURL}/users/me/review/${targetId}`, {
+      headers: {
+        ['Authorization']: 'Bearer '+ this.auth.token,
+      },
+    });
+  }
+
   createReview(targetId: string, review: string, stars: number) {
     return this.http.post<Review>(`${this.auth.baseURL}/users/${targetId}/review`, {
       review,

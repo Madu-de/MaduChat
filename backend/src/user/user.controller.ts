@@ -117,6 +117,18 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard)
+  @Get('me/review/:targetid')
+  async getFriends(
+    @Param('targetid') targetid: string,
+    @Req() request: Request,
+  ) {
+    return await this.userService.getMyReviewOfTarget(
+      targetid,
+      request['user'].id,
+    );
+  }
+
+  @UseGuards(AuthGuard)
   @Post(':id/review')
   async createReview(
     @Param('id') id: string,

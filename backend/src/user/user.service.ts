@@ -356,6 +356,19 @@ export class UserService {
     await this.userRepo.save(user);
   }
 
+  async getMyReviewOfTarget(targetId: string, requesterId: string) {
+    const review = await this.reviewRepo.findOne({
+      where: {
+        target: { id: targetId },
+        author: { id: requesterId },
+      },
+    });
+    if (!review) {
+      throw new HttpException('Review not found', HttpStatus.BAD_REQUEST);
+    }
+    return review;
+  }
+
   async createReview(
     targetId: string,
     requesterId: string,

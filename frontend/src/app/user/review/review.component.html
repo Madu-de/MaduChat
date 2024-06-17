@@ -53,9 +53,9 @@
   </div>
   <div>
     <span [ngStyle]="{'display': user?.id === clientUser?.id ? 'none' : 'inline'}">
-      <button mat-button (click)="openMock()">Rezension schreiben</button>
-      <button mat-button (click)="openMock()">Rezension bearbeiten</button>
-      <button mat-button (click)="deleteReview()">Rezension löschen</button>
+      <button mat-button (click)="openMock()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'inline' : 'none'}">Rezension schreiben</button>
+      <button mat-button (click)="openMock()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'none' : 'inline'}">Rezension bearbeiten</button>
+      <button mat-button (click)="deleteReview()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'none' : 'inline'}">Rezension löschen</button>
     </span>
     @if (user?.receivedReviews?.length) {
       @for (review of user?.receivedReviews; track review.id) {
