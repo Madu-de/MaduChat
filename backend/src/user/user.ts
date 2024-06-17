@@ -117,19 +117,19 @@ export class User {
   })
   reviewStats: ReviewStats;
 
-  addReview(stars: number) {
+  addReviewOnTarget(stars: number) {
     this.reviewStats.totalReceivedReviews++;
     this.reviewStats.totalReceivedStars += stars;
     this.reviewStats.avarageReceivedStars =
       this.reviewStats.totalReceivedStars /
       this.reviewStats.totalReceivedReviews;
-    this.editStarSpred(stars, 1);
+    this.editStarSpredOfTarget(stars, 1);
   }
 
-  removeReview(stars: number) {
+  removeReviewOfTarget(stars: number) {
     this.reviewStats.totalReceivedReviews--;
     this.reviewStats.totalReceivedStars -= stars;
-    this.editStarSpred(stars, -1);
+    this.editStarSpredOfTarget(stars, -1);
     if (this.reviewStats.totalReceivedReviews <= 0) {
       this.reviewStats.totalReceivedReviews = 0;
       this.reviewStats.totalReceivedStars = 0;
@@ -141,11 +141,41 @@ export class User {
       this.reviewStats.totalReceivedReviews;
   }
 
-  private editStarSpred(stars: number, add: number) {
+  private editStarSpredOfTarget(stars: number, add: number) {
     this.reviewStats.totalReceived1Star += stars === 1 ? add : 0;
     this.reviewStats.totalReceived2Stars += stars === 2 ? add : 0;
     this.reviewStats.totalReceived3Stars += stars === 3 ? add : 0;
     this.reviewStats.totalReceived4Stars += stars === 4 ? add : 0;
     this.reviewStats.totalReceived5Stars += stars === 5 ? add : 0;
+  }
+
+  addReviewOnRequester(stars: number) {
+    this.reviewStats.totalSentReviews++;
+    this.reviewStats.totalSentStars += stars;
+    this.reviewStats.avarageSentStars =
+      this.reviewStats.totalSentStars / this.reviewStats.totalSentReviews;
+    this.editStarSpredOfRequester(stars, 1);
+  }
+
+  removeReviewOfRequester(stars: number) {
+    this.reviewStats.totalSentReviews--;
+    this.reviewStats.totalSentStars -= stars;
+    this.editStarSpredOfRequester(stars, -1);
+    if (this.reviewStats.totalSentReviews <= 0) {
+      this.reviewStats.totalSentReviews = 0;
+      this.reviewStats.totalSentStars = 0;
+      this.reviewStats.avarageSentStars = 0;
+      return;
+    }
+    this.reviewStats.avarageSentStars =
+      this.reviewStats.totalSentStars / this.reviewStats.totalSentReviews;
+  }
+
+  private editStarSpredOfRequester(stars: number, add: number) {
+    this.reviewStats.totalSent1Star += stars === 1 ? add : 0;
+    this.reviewStats.totalSent2Stars += stars === 2 ? add : 0;
+    this.reviewStats.totalSent3Stars += stars === 3 ? add : 0;
+    this.reviewStats.totalSent4Stars += stars === 4 ? add : 0;
+    this.reviewStats.totalSent5Stars += stars === 5 ? add : 0;
   }
 }

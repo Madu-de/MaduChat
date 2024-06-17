@@ -15,6 +15,14 @@ export class ReviewStats {
   avarageReceivedStars: number;
 
   @Column({
+    type: 'double',
+    default: 0,
+  })
+  @Min(0)
+  @Max(5)
+  avarageSentStars: number;
+
+  @Column({
     default: 0,
   })
   totalReceivedStars: number;
@@ -22,7 +30,17 @@ export class ReviewStats {
   @Column({
     default: 0,
   })
+  totalSentStars: number;
+
+  @Column({
+    default: 0,
+  })
   totalReceivedReviews: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSentReviews: number;
 
   @Column({
     default: 0,
@@ -48,4 +66,29 @@ export class ReviewStats {
     default: 0,
   })
   totalReceived5Stars: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSent1Star: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSent2Stars: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSent3Stars: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSent4Stars: number;
+
+  @Column({
+    default: 0,
+  })
+  totalSent5Stars: number;
 }

@@ -388,6 +388,9 @@ export class UserService {
     }
     const requester = await this.userRepo.findOne({
       where: { id: requesterId },
+      relations: {
+        reviewStats: true,
+      },
     });
     const target = await this.userRepo.findOne({
       where: { id: targetId },
@@ -404,10 +407,12 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    target.addReview(reviewBody.stars);
+    target.addReviewOnTarget(reviewBody.stars);
+    requester.addReviewOnRequester(reviewBody.stars);
     const newtarget = await this.userRepo.save(target);
+    const newrequester = await this.userRepo.save(requester);
     const review = new Review();
-    review.author = requester;
+    review.author = newrequester;
     review.target = newtarget;
     review.text = reviewBody.review;
     review.stars = reviewBody.stars;
@@ -425,6 +430,7 @@ export class UserService {
             reviewStats: true,
           },
         },
+        reviewStats: true,
       },
     });
     const review: Review = requester.writtenReviews.find(
@@ -436,8 +442,10 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    review.target.removeReview(review.stars);
+    review.target.removeReviewOfTarget(review.stars);
+    requester.removeReviewOfRequester(review.stars);
     await this.userRepo.save(review.target);
+    await this.userRepo.save(requester);
     const deletedReview = await this.reviewRepo.remove(review);
     return deletedReview;
   }
