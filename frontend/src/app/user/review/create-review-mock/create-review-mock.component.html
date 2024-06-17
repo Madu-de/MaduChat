@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Rezension schreiben</h1>
+<h1 mat-dialog-title>{{this.languageService.getValue('writeReview')}}</h1>
 
 <mat-dialog-content>
   <form [formGroup]="review">
@@ -11,7 +11,7 @@
     </div>
     <br>
     <mat-form-field>
-      <mat-label>Rezension</mat-label>
+      <mat-label>{{this.languageService.getValue('review')}}</mat-label>
       <textarea formControlName="text" matInput></textarea>
     </mat-form-field>
   </form>

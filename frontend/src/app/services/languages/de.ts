@@ -1,4 +1,4 @@
-import { Language } from "./language.interface";
+import { Language } from './language.interface';
 
 export const DE: Language = {
   publicChat: 'Öffentlich',
@@ -73,4 +73,15 @@ export const DE: Language = {
   onlyAdminsCanWriteMessages: 'Nur Admins können Nachrichten schreiben',
   notAuthorizedToWriteMessages: 'Du bist nicht dazu berechtigt, hier Nachrichten zu schreiben',
   send: 'Senden',
+  youEditedYourReview: 'Du hast deine Rezension bearbeitet!',
+  youWroteAReview: 'Du hast eine Rezension geschrieben!',
+  youRemovedYourReview: 'Du hast deine Rezension gelöscht!',
+  stars: 'Sterne',
+  star: 'Stern',
+  overview: 'Übersicht',
+  averageStars: 'Durchschnittliche Sterne',
+  writeReview: 'Rezension schreiben',
+  editReview: 'Rezension bearbeiten',
+  deleteReview: 'Rezension löschen',
+  review: 'Rezension',
 };

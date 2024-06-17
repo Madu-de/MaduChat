@@ -26,7 +26,7 @@ export class ReviewComponent {
     private dialog: MatDialog, 
     private snackbar: SnackbarService, 
     private userService: UserService,
-    private languageService: LanguageService,
+    public languageService: LanguageService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,7 +52,7 @@ export class ReviewComponent {
     }).afterClosed().subscribe((data: Review) => {
       if (!data) return;
       if (this.reviewWrittenByClientUser) {
-        this.snackbar.open('Du hast deine Rezension bearbeitet!');
+        this.snackbar.open(this.languageService.getValue('youEditedYourReview'));
         this.user!.receivedReviews = this.user?.receivedReviews?.filter(r => r.id !== this.reviewWrittenByClientUser?.id)
         this.user!.receivedReviews?.push(data);
         this.updateOverview(this.reviewWrittenByClientUser.stars, -1);
@@ -60,7 +60,7 @@ export class ReviewComponent {
         this.reviewWrittenByClientUser = data;
         return;
       }
-      this.snackbar.open('Du hast ' + this.user?.name + ' eine Rezension geschrieben!');
+      this.snackbar.open(this.languageService.getValue('youWroteAReview'));
       this.user?.receivedReviews?.push(data);
       this.reviewWrittenByClientUser = data;
       this.updateOverview(data.stars, 1);
@@ -72,7 +72,7 @@ export class ReviewComponent {
       this.user!.receivedReviews = this.user?.receivedReviews?.filter((review) => review.author.id !== this.clientUser!.id);
       this.reviewWrittenByClientUser = undefined;
       this.updateOverview(data.stars, -1);
-      this.snackbar.open('Du hast deine Rezension gelöscht!', this.languageService.getValue('undo'))
+      this.snackbar.open(this.languageService.getValue('youRemovedYourReview'), this.languageService.getValue('undo'))
         .onAction()
         .subscribe(() => {
           this.userService.createReview(data.target.id, data.text, data.stars).subscribe((data) => {
