@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { Review } from './review';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from '../../auth/auth.guard';
 
 @Controller('review')
 export class ReviewController {
