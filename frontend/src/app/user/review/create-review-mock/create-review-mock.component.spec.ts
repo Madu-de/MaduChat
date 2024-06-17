@@ -1,6 +1,13 @@
+import { MockModule } from 'ng-mocks';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateReviewMockComponent } from './create-review-mock.component';
+import { LanguageService } from 'src/app/services/language.service';
+import { UserService } from 'src/app/services/user.service';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('CreateReviewMockComponent', () => {
   let component: CreateReviewMockComponent;
@@ -8,7 +15,35 @@ describe('CreateReviewMockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateReviewMockComponent]
+      imports: [
+        MockModule(MatDialogModule),
+        MockModule(MatFormFieldModule),
+        MockModule(ReactiveFormsModule),
+        MockModule(MatIconModule),
+      ],
+      declarations: [CreateReviewMockComponent],
+      providers: [
+        {
+          provide: LanguageService,
+          useValue: {
+            getValue: () => '',
+          }
+        },
+        {
+          provide: UserService,
+          useValue: {}
+        },
+        {
+          provide: MatDialogRef,
+          useValue: {}
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: {
+            targetId: '',
+          }
+        },
+      ]
     })
     .compileComponents();
     
