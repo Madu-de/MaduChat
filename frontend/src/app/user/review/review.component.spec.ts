@@ -9,6 +9,9 @@ import { MockModule } from 'ng-mocks';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ScrollService } from 'src/app/services/scroll.service';
+import { ReviewService } from 'src/app/services/review.service';
+import { of } from 'rxjs';
 
 describe('ReviewComponent', () => {
   let component: ReviewComponent;
@@ -39,6 +42,16 @@ describe('ReviewComponent', () => {
         },
         {
           provide: SnackbarService,
+          useValue: {}
+        },
+        {
+          provide: ScrollService,
+          useValue: {
+            onScroll: of(),
+          }
+        },
+        {
+          provide: ReviewService,
           useValue: {}
         }
       ]

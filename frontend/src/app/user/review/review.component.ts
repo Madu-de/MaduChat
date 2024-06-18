@@ -26,6 +26,8 @@ export class ReviewComponent {
 
   reviewWrittenByClientUser: Review | undefined;
 
+  allReviewsLoaded: boolean = false;
+
   constructor(
     private dialog: MatDialog, 
     private snackbar: SnackbarService, 
@@ -41,7 +43,7 @@ export class ReviewComponent {
       const boundedRect = this.loadingElement.nativeElement.getBoundingClientRect();
 
       if (boundedRect.top >= 0 && boundedRect.bottom <= windowHeight) {
-        this.loadMoreReviews();
+        if (!this.allReviewsLoaded) this.loadMoreReviews();
       }
     });
   }
@@ -104,8 +106,10 @@ export class ReviewComponent {
 
   loadMoreReviews() {
     this.reviewService.getRecivedReviews(this.user!.id, this.user!.receivedReviews!.length).subscribe((reviews) => {
-      console.log(reviews);
       this.user!.receivedReviews = [...this.user!.receivedReviews!,...reviews];
+      if (reviews.length === 0) {
+        this.allReviewsLoaded = true;
+      }
     });
   }
 
