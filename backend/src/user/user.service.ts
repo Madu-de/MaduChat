@@ -463,7 +463,7 @@ export class UserService {
         createdAt: 'DESC',
       },
       skip: offset,
-      take: 2,
+      take: 20,
       relations: {
         author: true,
         target: true,
@@ -483,7 +483,7 @@ export class UserService {
         createdAt: 'DESC',
       },
       skip: offset,
-      take: 2,
+      take: 20,
       relations: {
         author: true,
         target: true,

@@ -19,7 +19,7 @@ import { CommentComponent } from './review/comment/comment.component';
 import { StarsComponent } from './review/comment/stars/stars.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateReviewMockComponent } from './review/create-review-mock/create-review-mock.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({

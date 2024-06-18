@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/classes/User';
 import { CreateReviewMockComponent } from './create-review-mock/create-review-mock.component';
@@ -8,6 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { catchError, of } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
 import { ReviewService } from 'src/app/services/review.service';
+import { ScrollService } from 'src/app/services/scroll.service';
 
 @Component({
   selector: 'app-review',
@@ -21,6 +22,8 @@ export class ReviewComponent {
   @Input()
   clientUser: User | undefined;
 
+  @ViewChild('loadingElement', { static: false }) loadingElement!: ElementRef;
+
   reviewWrittenByClientUser: Review | undefined;
 
   constructor(
@@ -29,7 +32,19 @@ export class ReviewComponent {
     private userService: UserService,
     public languageService: LanguageService,
     private reviewService: ReviewService,
+    private scrollService: ScrollService,
   ) {}
+
+  ngOnInit() {
+    this.scrollService.onScroll.subscribe(() => {
+      const windowHeight = window.innerHeight;
+      const boundedRect = this.loadingElement.nativeElement.getBoundingClientRect();
+
+      if (boundedRect.top >= 0 && boundedRect.bottom <= windowHeight) {
+        this.loadMoreReviews();
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['user'] === undefined || this.user === undefined) return;

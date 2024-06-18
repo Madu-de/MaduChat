@@ -29,7 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   exports: [
     ChooseUsersPopupComponent,
-    ListUserItem
+    ListUserItem,
   ]
 })
 export class BasicNeedsModule { }
