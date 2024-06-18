@@ -18,8 +18,13 @@ export class ReviewController {
   async getRecievedReviews(
     @Param('userid') userid: string,
     @Query('offset') offset: number,
+    @Req() request: Request,
   ) {
-    return await this.reviewService.getRecievedReviews(userid, offset);
+    return await this.reviewService.getRecievedReviews(
+      userid,
+      offset,
+      request['user'],
+    );
   }
 
   @UseGuards(AuthGuard)
@@ -27,7 +32,12 @@ export class ReviewController {
   async getWrittenReviews(
     @Param('userid') userid: string,
     @Query('offset') offset: number,
+    @Req() request: Request,
   ) {
-    return await this.reviewService.getWrittenReviews(userid, offset);
+    return await this.reviewService.getWrittenReviews(
+      userid,
+      offset,
+      request['user'],
+    );
   }
 }

@@ -65,8 +65,8 @@ export class UserService {
       },
     });
     if (reviews) {
-      user.receivedReviews = await this.getRecievedReviews(id, 0);
-      user.writtenReviews = await this.getWrittenReviews(id, 0);
+      user.receivedReviews = await this.getRecievedReviews(id, 0, requester);
+      user.writtenReviews = await this.getWrittenReviews(id, 0, requester);
     }
     if (!user)
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
@@ -419,6 +419,10 @@ export class UserService {
     review.text = reviewBody.review;
     review.stars = reviewBody.stars;
     const savedReview = await this.reviewRepo.save(review);
+    savedReview.target = await this.getPrivacyUser(
+      savedReview.target,
+      requester,
+    );
     return savedReview;
   }
 
@@ -449,10 +453,14 @@ export class UserService {
     await this.userRepo.save(review.target);
     await this.userRepo.save(requester);
     const deletedReview = await this.reviewRepo.remove(review);
+    deletedReview.target = await this.getPrivacyUser(
+      deletedReview.target,
+      requester,
+    );
     return deletedReview;
   }
 
-  async getWrittenReviews(authorId: string, offset: number) {
+  async getWrittenReviews(authorId: string, offset: number, requester: User) {
     const reviews = await this.reviewRepo.find({
       where: {
         author: {
@@ -469,10 +477,14 @@ export class UserService {
         target: true,
       },
     });
+    reviews.forEach(async review => {
+      review.author = await this.getPrivacyUser(review.author, requester);
+      review.target = await this.getPrivacyUser(review.target, requester);
+    });
     return reviews;
   }
 
-  async getRecievedReviews(targetId: string, offset: number) {
+  async getRecievedReviews(targetId: string, offset: number, requester: User) {
     const reviews = await this.reviewRepo.find({
       where: {
         target: {
@@ -488,6 +500,10 @@ export class UserService {
         author: true,
         target: true,
       },
+    });
+    reviews.forEach(async review => {
+      review.author = await this.getPrivacyUser(review.author, requester);
+      review.target = await this.getPrivacyUser(review.target, requester);
     });
     return reviews;
   }
