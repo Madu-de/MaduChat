@@ -37,15 +37,16 @@ export class UserComponent implements OnInit {
     this.userService.getMe(false, true).subscribe((clientUser) => {
       this.clientUser = clientUser;
       this.userService.getUser(userid, false, true, false, true)
-        .pipe(
-          catchError((err: HttpErrorResponse) => {
-            this.snackbar.open(this.languageService.getValue('userDoesNotExist'));
-            this.router.navigate(['/']);
-            return throwError(() => new Error(err.error.message));
-          })
-        )
-        .subscribe((user) => {
-          this.user = Object.assign({}, user);
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.snackbar.open(this.languageService.getValue('userDoesNotExist'));
+          this.router.navigate(['/']);
+          return throwError(() => new Error(err.error.message));
+        })
+      )
+      .subscribe((user) => {
+        this.user = Object.assign({}, user);
+        console.log(this.user);
           this.isFriend = this.clientUser?.friends?.some((friend) => friend.id === this.user?.id) || false;
           this.isAdded = this.clientUser?.friendRequestsSent?.some((friend) => friend.id === this.user?.id) || false;
           this.userService.getUserProfilePicture(this.user.id)

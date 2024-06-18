@@ -61,11 +61,13 @@ export class UserService {
         settings: true,
         friendRequestsSent: friends,
         friendRequetsReceived: friends,
-        writtenReviews: reviews,
-        receivedReviews: reviews,
         reviewStats: reviews,
       },
     });
+    if (reviews) {
+      user.receivedReviews = await this.getRecievedReviews(id, 0);
+      user.writtenReviews = await this.getWrittenReviews(id, 0);
+    }
     if (!user)
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     user = await this.getPrivacyUser(user, requester);
@@ -448,5 +450,45 @@ export class UserService {
     await this.userRepo.save(requester);
     const deletedReview = await this.reviewRepo.remove(review);
     return deletedReview;
+  }
+
+  async getWrittenReviews(authorId: string, offset: number) {
+    const reviews = await this.reviewRepo.find({
+      where: {
+        author: {
+          id: authorId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      skip: offset,
+      take: 2,
+      relations: {
+        author: true,
+        target: true,
+      },
+    });
+    return reviews;
+  }
+
+  async getRecievedReviews(targetId: string, offset: number) {
+    const reviews = await this.reviewRepo.find({
+      where: {
+        target: {
+          id: targetId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      skip: offset,
+      take: 2,
+      relations: {
+        author: true,
+        target: true,
+      },
+    });
+    return reviews;
   }
 }

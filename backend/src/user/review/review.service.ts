@@ -24,4 +24,12 @@ export class ReviewService {
 
     return review;
   }
+
+  async getRecievedReviews(userId: string, offset: number) {
+    return await this.userService.getRecievedReviews(userId, offset);
+  }
+
+  async getWrittenReviews(userId: string, offset: number) {
+    return await this.userService.getWrittenReviews(userId, offset);
+  }
 }

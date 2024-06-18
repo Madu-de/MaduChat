@@ -7,6 +7,7 @@ import { Review } from 'src/app/classes/Review';
 import { UserService } from 'src/app/services/user.service';
 import { catchError, of } from 'rxjs';
 import { LanguageService } from 'src/app/services/language.service';
+import { ReviewService } from 'src/app/services/review.service';
 
 @Component({
   selector: 'app-review',
@@ -27,6 +28,7 @@ export class ReviewComponent {
     private snackbar: SnackbarService, 
     private userService: UserService,
     public languageService: LanguageService,
+    private reviewService: ReviewService,
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -45,6 +47,7 @@ export class ReviewComponent {
   openMock() {
     this.dialog.open(CreateReviewMockComponent, {
       hasBackdrop: true,
+      width: '500px',
       data: {
         targetid: this.user?.id,
         review: this.reviewWrittenByClientUser,
@@ -81,6 +84,13 @@ export class ReviewComponent {
             this.updateOverview(data.stars, 1);
           });
         });
+    });
+  }
+
+  loadMoreReviews() {
+    this.reviewService.getRecivedReviews(this.user!.id, this.user!.receivedReviews!.length).subscribe((reviews) => {
+      console.log(reviews);
+      this.user!.receivedReviews = [...this.user!.receivedReviews!,...reviews];
     });
   }
 
