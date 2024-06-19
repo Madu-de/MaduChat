@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'chat/:id', component: ChatComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'friends', component: FriendsComponent },
-  { path: 'user/:id', component: UserComponent }
+  { path: 'user/:id', component: UserComponent, pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -135,6 +135,7 @@ None
 > | friends      |  optional | boolean   | Get friend data too  |
 > | chats      |  optional | boolean   | Get chats too  |
 > | settings      |  optional | boolean   | Get settings too  |
+> | reviews      |  optional | boolean   | Get writtenReviews, recievedReviews and reviewStats too  |
 
 
 ##### Responses
@@ -336,6 +337,78 @@ None
 
 > ```js
 >  curl -d '{"value":true}' -H "Content-Type: application/json" -X POST http://localhost:3000/users/me/settings/showAvatar
+> ```
+
+</details>
+
+#### User reviews
+<details>
+<summary><code>POST</code> <code><b>/users/{id}/review</b></code> <code>(Returns the written review)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Body
+> | name      |  type     | data type               | examples                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | stars      |  required | number between 1 and 5 | 3  |
+> | review      |  optional | string   | "This is the review text"  |
+
+##### Parameters
+None
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `201`         | `application/json`        | Written review                                |
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User is not allowed to review himself"}`   
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "User is not allowed to review this user twice"}`   
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "Invalid review. Stars must be between 1 and 5"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -d '{"review": "Test", "stars": 4}' -H "Content-Type: application/json" -X POST http://localhost:3000/users/9c970b65-073b-4515-9d19-5207da6abc28/review
+> ```
+
+</details>
+
+<details>
+<summary><code>DELETE</code> <code><b>/users/{id}/review</b></code> <code>(Returns the deleted review)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Body
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | friendId      |  required | string   | N/A  |
+
+##### Parameters
+None
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json`        | Deleted review                                |
+> | `400`         | `application/json`                | `{"statusCode": 400, "message": "There is no review written by the requester"}`   
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -H "Content-Type: application/json" -X DELETE http://localhost:3000/users/9c970b65-073b-4515-9d19-5207da6abc28/review
 > ```
 
 </details>
@@ -609,6 +682,68 @@ None
 
 > ```js
 >  curl -d '{"message":"Hello World!"}' -H "Content-Type: application/json" -X POST http://localhost:3000/message/global
+> ```
+
+</details>
+
+### Reviews
+
+<details>
+<summary><code>GET</code> <code><b>/review/written/{userid}</b></code> <code>(Returns 20 written reviews)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Parameters
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | offset      |  required | number   | N/A  |
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json`        | `Review[]`                                |
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:3000/review/written/9c970b65-073b-4515-9d19-5207da6abc28?offset=5
+> ```
+
+</details>
+
+<details>
+<summary><code>GET</code> <code><b>/review/recieved/{userid}</b></code> <code>(Returns 20 recieved reviews)</code></summary>
+
+##### Headers
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | authorization      |  required | string   | N/A |
+
+##### Parameters
+> | name      |  type     | data type               | description                                                           |
+> |-----------|-----------|-------------------------|-----------------------------------------------------------------------|
+> | offset      |  required | number   | N/A  |
+
+
+##### Responses
+
+> | http code     | content-type                      | response                                                            |
+> |---------------|-----------------------------------|---------------------------------------------------------------------|
+> | `200`         | `application/json`        | `Review[]`                                |
+> | `401`         | `application/json`                | `{"message": "Unauthorized","statusCode": 401}`                            |
+
+
+##### Example cURL
+
+> ```js
+>  curl -H "Authorization: Bearer <ACCESS_TOKEN>" http://localhost:3000/review/recieved/9c970b65-073b-4515-9d19-5207da6abc28?offset=5
 > ```
 
 </details>

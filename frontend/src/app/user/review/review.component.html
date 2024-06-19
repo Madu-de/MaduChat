@@ -1,0 +1,67 @@
+<div class="review-grid">
+  <div>
+    <mat-card class="overview">
+      <mat-card-header>
+        <mat-card-title>
+          {{this.languageService.getValue('overview')}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{this.languageService.getValue('averageStars')}}: {{user?.reviewStats?.avarageReceivedStars | number : '1.0-2'}}
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            5 {{this.languageService.getValue('stars')}}
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived5Stars || 0)"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            4 {{this.languageService.getValue('stars')}}
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived4Stars || 0)"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            3 {{this.languageService.getValue('stars')}}
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived3Stars || 0)"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            2 {{this.languageService.getValue('stars')}}
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived2Stars || 0)"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="50px" class="overview-grid">
+          <mat-grid-tile colspan="5">
+            1 {{this.languageService.getValue('star')}}
+          </mat-grid-tile>
+          <mat-grid-tile colspan="15">
+            <mat-progress-bar mode="determinate" [value]="calcProgressbarValue(user?.reviewStats?.totalReceived1Star || 0)"></mat-progress-bar>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div>
+    <span [ngStyle]="{'display': user?.id === clientUser?.id ? 'none' : 'inline'}">
+      <button mat-button (click)="openMock()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'inline' : 'none'}">{{this.languageService.getValue('writeReview')}}</button>
+      <button mat-button (click)="openMock()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'none' : 'inline'}">{{this.languageService.getValue('editReview')}}</button>
+      <button mat-button (click)="deleteReview()" [ngStyle]="{'display': reviewWrittenByClientUser === undefined ? 'none' : 'inline'}">{{this.languageService.getValue('deleteReview')}}</button>
+    </span>
+    @if (user?.receivedReviews?.length) {
+      @for (review of user?.receivedReviews; track review.id) {
+        <app-comment [review]="review"></app-comment>
+      }
+    }
+    <div #loadingElement></div>
+  </div>
+</div>

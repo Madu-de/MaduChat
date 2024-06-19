@@ -5,6 +5,7 @@ import { User } from '../classes/User';
 import { AuthService } from './auth.service';
 import { from, switchMap, throwError } from 'rxjs';
 import { ImageService } from './image.service';
+import { Review } from '../classes/Review';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,16 @@ export class UserService {
 
   constructor(private http: HttpClient, private auth: AuthService, private imageService: ImageService) { }
 
-  getMe(chats?: boolean, friends?: boolean, settings?: boolean) {
-    return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}`, {
+  getMe(chats?: boolean, friends?: boolean, settings?: boolean, reviews?: boolean) {
+    return this.http.get<User>(`${this.auth.baseURL}/users/me?chats=${chats}&friends=${friends}&settings=${settings}&reviews=${reviews}`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
     });
   }
 
-  getUser(id: string, chats?: boolean, friends?: boolean, settings?: boolean) {
-    return this.http.get<User>(`${this.auth.baseURL}/users/${id}?chats=${chats}&friends=${friends}&settings=${settings}`, {
+  getUser(id: string, chats?: boolean, friends?: boolean, settings?: boolean, reviews?: boolean) {
+    return this.http.get<User>(`${this.auth.baseURL}/users/${id}?chats=${chats}&friends=${friends}&settings=${settings}&reviews=${reviews}`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       }
@@ -102,6 +103,33 @@ export class UserService {
     return this.http.put<Settings>(`${this.auth.baseURL}/users/me/settings`, {
       [key]: value,
     }, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
+  }
+
+  getMyReviewOfTarget(targetId: string) {
+    return this.http.get<Review>(`${this.auth.baseURL}/users/me/review/${targetId}`, {
+      headers: {
+        ['Authorization']: 'Bearer '+ this.auth.token,
+      },
+    });
+  }
+
+  createReview(targetId: string, review: string, stars: number) {
+    return this.http.post<Review>(`${this.auth.baseURL}/users/${targetId}/review`, {
+      review,
+      stars,
+    }, {
+      headers: {
+        ['Authorization']: 'Bearer ' + this.auth.token,
+      },
+    });
+  }
+
+  deleteReview(targetId: string) {
+    return this.http.delete<Review>(`${this.auth.baseURL}/users/${targetId}/review`, {
       headers: {
         ['Authorization']: 'Bearer ' + this.auth.token,
       },
