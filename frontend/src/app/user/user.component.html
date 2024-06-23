@@ -18,7 +18,9 @@
   </mat-card-actions>
 </mat-card>
 <mat-tab-group>
-  <mat-tab [label]="languageService.getValue('stats')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('stats')" style="height: 5000px">
+    <app-stats></app-stats>
+  </mat-tab>
   <mat-tab [label]="languageService.getValue('feed')"></mat-tab>
   <mat-tab [label]="languageService.getValue('reviews')" style="height: 5000px;">
     <app-review [user]="user" [clientUser]="clientUser"></app-review>

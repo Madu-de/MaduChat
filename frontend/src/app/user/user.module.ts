@@ -20,7 +20,7 @@ import { StarsComponent } from './review/comment/stars/stars.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CreateReviewMockComponent } from './review/create-review-mock/create-review-mock.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommentComponent,
     StarsComponent,
     CreateReviewMockComponent,
+    StatsComponent,
   ],
   imports: [
     CommonModule,
