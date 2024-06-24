@@ -152,7 +152,7 @@ export class ChatService {
     return chat;
   }
   async deleteChat(id: string, deleter: User): Promise<boolean> {
-    const chat = await this.getChat(id);
+    const chat = await this.getChat(id, deleter);
     if (!chat) return;
     if (
       chat?.admins?.length &&
