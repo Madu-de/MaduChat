@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from './user';
+import { Review } from './review/review';
 
 describe('UserService', () => {
   let service: UserService;
@@ -45,6 +46,10 @@ describe('UserService', () => {
             }),
             save: jest.fn(),
           },
+        },
+        {
+          provide: getRepositoryToken(Review),
+          useValue: {},
         },
       ],
     }).compile();

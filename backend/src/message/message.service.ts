@@ -42,7 +42,7 @@ export class MessageService {
     const author = await this.userRepo.findOne({ where: { id: authorid } });
     const chat = await this.chatRepo.findOne({
       where: { id: chatid },
-      relations: { members: true },
+      relations: { members: true, admins: true },
     });
     if (!author) {
       throw new HttpException('Author does not exist', HttpStatus.BAD_REQUEST);
@@ -50,10 +50,13 @@ export class MessageService {
     if (!chat) {
       throw new HttpException('Chat does not exist', HttpStatus.BAD_REQUEST);
     }
-    if (
-      !chat.isPublic &&
-      !chat.members.find(member => member.id === author.id)
-    ) {
+    const isAdmin = chat.admins.some(admin => admin.id === author.id);
+    const isMember = chat.members.some(member => member.id === author.id);
+    const canWriteAMessage =
+      isAdmin ||
+      (!chat.isAdminChat && chat.isPublic) ||
+      (isMember && !chat.isAdminChat);
+    if (!canWriteAMessage) {
       throw new HttpException(
         'Author is not allowed to write a message in this chat',
         HttpStatus.BAD_REQUEST,

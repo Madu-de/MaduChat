@@ -3,7 +3,7 @@
   <mat-card-header>
     <img [src]="profilePicture || './assets/defaultpb.png'" alt="Profile picture" mat-card-lg-image mat-card-avatar>
     <mat-card-title>{{user?.name || 'Loading...'}} <app-badge-list [user]="user"></app-badge-list></mat-card-title>
-    <mat-card-subtitle id="username">@{{user?.username || 'loading...'}}</mat-card-subtitle>
+    <mat-card-subtitle id="username">&#64;{{user?.username || 'loading...'}}</mat-card-subtitle>
     <mat-card-subtitle id="description">
       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque ea quasi inventore odit cupiditate nihil modi laudantium, sapiente quaerat error perspiciatis reprehenderit, quidem labore tenetur commodi, iure aliquid impedit esse.
     </mat-card-subtitle>
@@ -20,5 +20,7 @@
 <mat-tab-group>
   <mat-tab [label]="languageService.getValue('stats')"></mat-tab>
   <mat-tab [label]="languageService.getValue('feed')"></mat-tab>
-  <mat-tab [label]="languageService.getValue('reviews')"></mat-tab>
+  <mat-tab [label]="languageService.getValue('reviews')" style="height: 5000px;">
+    <app-review [user]="user" [clientUser]="clientUser"></app-review>
+  </mat-tab>
 </mat-tab-group>

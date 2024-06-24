@@ -1,5 +1,5 @@
 import { MatDialogModule } from '@angular/material/dialog';
-import { NgModule } from '@angular/core';
+import { NgModule, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from './sidebar.component';
 import { MatCommonModule } from '@angular/material/core';
@@ -15,13 +15,14 @@ import { RouterModule } from '@angular/router';
 import { EditChatPopupComponent } from './edit-chat-popup/edit-chat-popup.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FriendsModule } from 'src/app/friends/friends.module';
 import { MatSelectModule } from '@angular/material/select';
 import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
+import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 
 
 @NgModule({
@@ -50,7 +51,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatSelectModule,
     BasicNeedsModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule,
+    MatBadgeModule,
   ],
   exports: [
     SidebarComponent

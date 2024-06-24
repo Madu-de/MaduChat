@@ -24,6 +24,8 @@ import { UserModule } from './user/user.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { OnlineService } from './services/online.service';
 import { ImageService } from './services/image.service';
+import { ReviewService } from './services/review.service';
+import { ScrollService } from './services/scroll.service';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { ImageService } from './services/image.service';
     ChatService, 
     CookieService, 
     OnlineService,
-    ImageService
+    ImageService,
+    ReviewService,
+    ScrollService,
   ],
   bootstrap: [AppComponent],
 })

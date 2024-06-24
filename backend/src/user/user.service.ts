@@ -8,12 +8,15 @@ import { Chat } from '../chat/chat';
 import { createReadStream, existsSync } from 'fs';
 import { join } from 'path';
 import type { Response } from 'express';
+import { Review } from './review/review';
+import { ReviewStats } from './review/reviewStats';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepo: Repository<User>,
     @InjectRepository(Chat) private chatRepo: Repository<Chat>,
+    @InjectRepository(Review) private reviewRepo: Repository<Review>,
   ) {}
 
   async getPrivacyUser(user: User, requester: User): Promise<User> {
@@ -48,6 +51,7 @@ export class UserService {
     friends?: boolean,
     chats?: boolean,
     settings?: boolean,
+    reviews?: boolean,
   ): Promise<User> {
     let user = await this.userRepo.findOne({
       where: { id },
@@ -57,8 +61,13 @@ export class UserService {
         settings: true,
         friendRequestsSent: friends,
         friendRequetsReceived: friends,
+        reviewStats: reviews,
       },
     });
+    if (reviews) {
+      user.receivedReviews = await this.getRecievedReviews(id, 0, requester);
+      user.writtenReviews = await this.getWrittenReviews(id, 0, requester);
+    }
     if (!user)
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     user = await this.getPrivacyUser(user, requester);
@@ -77,6 +86,41 @@ export class UserService {
         user.friendRequetsReceived.map?.(async (u, i) => {
           user.friendRequetsReceived[i] = await this.getPrivacyUser(
             u,
+            requester,
+          );
+        }),
+      );
+    }
+    if (reviews) {
+      await Promise.all(
+        user.receivedReviews.map(async (review, i) => {
+          user.receivedReviews[i] = await this.reviewRepo.findOne({
+            where: { id: review.id },
+            relations: { author: true, target: true },
+          });
+          user.receivedReviews[i].author = await this.getPrivacyUser(
+            user.receivedReviews[i].author,
+            requester,
+          );
+          user.receivedReviews[i].target = await this.getPrivacyUser(
+            user.receivedReviews[i].target,
+            requester,
+          );
+        }),
+      );
+
+      await Promise.all(
+        user.writtenReviews.map(async (review, i) => {
+          user.writtenReviews[i] = await this.reviewRepo.findOne({
+            where: { id: review.id },
+            relations: { author: true, target: true },
+          });
+          user.writtenReviews[i].author = await this.getPrivacyUser(
+            user.writtenReviews[i].author,
+            requester,
+          );
+          user.writtenReviews[i].target = await this.getPrivacyUser(
+            user.writtenReviews[i].target,
             requester,
           );
         }),
@@ -124,6 +168,7 @@ export class UserService {
     user.username = user.username.toLocaleLowerCase();
     const language = user.settings?.language;
     user.settings = new Settings();
+    user.reviewStats = new ReviewStats();
     user.settings.language = language || user.settings.language;
     const globalchat = await this.chatRepo.findOne({ where: { id: 'global' } });
     user.chats = [globalchat];
@@ -311,5 +356,155 @@ export class UserService {
       throw new HttpException('User not found', HttpStatus.BAD_REQUEST);
     user.image = '';
     await this.userRepo.save(user);
+  }
+
+  async getMyReviewOfTarget(targetId: string, requesterId: string) {
+    const review = await this.reviewRepo.findOne({
+      where: {
+        target: { id: targetId },
+        author: { id: requesterId },
+      },
+    });
+    if (!review) {
+      throw new HttpException('Review not found', HttpStatus.BAD_REQUEST);
+    }
+    return review;
+  }
+
+  async createReview(
+    targetId: string,
+    requesterId: string,
+    reviewBody: { review: string; stars: number },
+  ) {
+    if (targetId === requesterId) {
+      throw new HttpException(
+        'User is not allowed to review himself',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    if (reviewBody.stars < 1 || reviewBody.stars > 5) {
+      throw new HttpException(
+        'Invalid review. Stars must be between 1 and 5',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const requester = await this.userRepo.findOne({
+      where: { id: requesterId },
+      relations: {
+        reviewStats: true,
+      },
+    });
+    const target = await this.userRepo.findOne({
+      where: { id: targetId },
+      relations: {
+        receivedReviews: {
+          author: true,
+        },
+        reviewStats: true,
+      },
+    });
+    if (target.receivedReviews.some(r => r.author.id === requesterId)) {
+      throw new HttpException(
+        'User is not allowed to review this user twice',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    target.addReviewOnTarget(reviewBody.stars);
+    requester.addReviewOnRequester(reviewBody.stars);
+    const newtarget = await this.userRepo.save(target);
+    const newrequester = await this.userRepo.save(requester);
+    const review = new Review();
+    review.author = newrequester;
+    review.target = newtarget;
+    review.text = reviewBody.review;
+    review.stars = reviewBody.stars;
+    const savedReview = await this.reviewRepo.save(review);
+    savedReview.target = await this.getPrivacyUser(
+      savedReview.target,
+      requester,
+    );
+    return savedReview;
+  }
+
+  async deleteReview(targetId: string, requesterId: string) {
+    const requester = await this.userRepo.findOne({
+      where: { id: requesterId },
+      relations: {
+        writtenReviews: {
+          target: {
+            receivedReviews: true,
+            reviewStats: true,
+          },
+        },
+        reviewStats: true,
+      },
+    });
+    const review: Review = requester.writtenReviews.find(
+      r => r.target.id === targetId,
+    );
+    if (!review) {
+      throw new HttpException(
+        'There is no review written by the requester',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    review.target.removeReviewOfTarget(review.stars);
+    requester.removeReviewOfRequester(review.stars);
+    await this.userRepo.save(review.target);
+    await this.userRepo.save(requester);
+    const deletedReview = await this.reviewRepo.remove(review);
+    deletedReview.target = await this.getPrivacyUser(
+      deletedReview.target,
+      requester,
+    );
+    return deletedReview;
+  }
+
+  async getWrittenReviews(authorId: string, offset: number, requester: User) {
+    const reviews = await this.reviewRepo.find({
+      where: {
+        author: {
+          id: authorId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      skip: offset,
+      take: 20,
+      relations: {
+        author: true,
+        target: true,
+      },
+    });
+    reviews.forEach(async review => {
+      review.author = await this.getPrivacyUser(review.author, requester);
+      review.target = await this.getPrivacyUser(review.target, requester);
+    });
+    return reviews;
+  }
+
+  async getRecievedReviews(targetId: string, offset: number, requester: User) {
+    const reviews = await this.reviewRepo.find({
+      where: {
+        target: {
+          id: targetId,
+        },
+      },
+      order: {
+        createdAt: 'DESC',
+      },
+      skip: offset,
+      take: 20,
+      relations: {
+        author: true,
+        target: true,
+      },
+    });
+    reviews.forEach(async review => {
+      review.author = await this.getPrivacyUser(review.author, requester);
+      review.target = await this.getPrivacyUser(review.target, requester);
+    });
+    return reviews;
   }
 }

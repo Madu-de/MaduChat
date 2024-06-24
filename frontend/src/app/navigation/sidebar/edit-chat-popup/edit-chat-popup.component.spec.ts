@@ -15,6 +15,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 describe('EditChatPopupComponent', () => {
   let component: EditChatPopupComponent;
@@ -32,6 +33,7 @@ describe('EditChatPopupComponent', () => {
         MatIconModule,
         BrowserAnimationsModule,
         MockModule(FormsModule),
+        MatTooltipModule,
       ],
       declarations: [EditChatPopupComponent],
       providers: [

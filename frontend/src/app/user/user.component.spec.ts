@@ -16,6 +16,8 @@ import { ChatService } from '../services/chat.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockBadgeListComponent } from './badge-list/mock-badge-list.component';
+import { MockComponent } from 'ng-mocks';
+import { ReviewComponent } from './review/review.component';
 
 describe('UserComponent /user', () => {
   let component: UserComponent;
@@ -36,7 +38,8 @@ describe('UserComponent /user', () => {
       ],
       declarations: [
         UserComponent, 
-        MockBadgeListComponent
+        MockBadgeListComponent,
+        MockComponent(ReviewComponent),
       ],
       providers: [
         {

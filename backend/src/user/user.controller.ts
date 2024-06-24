@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseFilePipe,
+  Post,
   Put,
   Query,
   Req,
@@ -22,6 +23,7 @@ import { Settings } from './settings';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
 import { SharpPipe } from './sharp.pipe';
+import { Review } from './review/review';
 
 @Controller('users')
 export class UserController {
@@ -52,6 +54,7 @@ export class UserController {
     @Query('friends', BooleanPipe) friends: boolean,
     @Query('chats', BooleanPipe) chats: boolean,
     @Query('settings', BooleanPipe) settings: boolean,
+    @Query('reviews', BooleanPipe) reviews: boolean,
     @Req() request: Request,
   ): Promise<User> {
     if (id === 'me') id = request['user'].id;
@@ -61,6 +64,7 @@ export class UserController {
       friends,
       chats,
       settings,
+      reviews,
     );
   }
 
@@ -110,5 +114,33 @@ export class UserController {
   @Delete('/me/profilepicture')
   async deleteProfilePicture(@Req() request: Request) {
     return await this.userService.deleteProfilePicture(request['user'].id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('me/review/:targetid')
+  async getFriends(
+    @Param('targetid') targetid: string,
+    @Req() request: Request,
+  ) {
+    return await this.userService.getMyReviewOfTarget(
+      targetid,
+      request['user'].id,
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @Post(':id/review')
+  async createReview(
+    @Param('id') id: string,
+    @Body() body: { review: string; stars: number },
+    @Req() request: Request,
+  ): Promise<Review> {
+    return await this.userService.createReview(id, request['user'].id, body);
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete(':id/review')
+  async deleteReview(@Param('id') id: string, @Req() request: Request) {
+    return await this.userService.deleteReview(id, request['user'].id);
   }
 }

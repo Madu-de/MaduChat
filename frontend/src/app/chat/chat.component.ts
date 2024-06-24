@@ -6,8 +6,8 @@ import { ChatService } from '../services/chat.service';
 import { Subscription, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { Settings } from '../classes/Settings';
 import { SnackbarService } from '../services/snackbar.service';
+import { User } from '../classes/User';
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +19,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   public routerSubscription: Subscription | undefined;
   public channelExists: boolean = true;
   public loading: boolean = true;
-  public settings: Settings | undefined;
+  public clientUser: User | undefined;
+  public isAbleToWrite: boolean = false;
 
   constructor(
     public languageService: LanguageService,
@@ -33,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.userService.getMe(false, false, true).subscribe(user => {
-      this.settings = user.settings;
+      this.clientUser = user;
     });
     this.routerSubscription = this.router.events.subscribe(val => {
       if (val.type !== 15) return;
@@ -42,6 +43,11 @@ export class ChatComponent implements OnInit, OnDestroy {
       const chatId = this.route.snapshot.paramMap.get('id');
       if (!chatId) return;
       this.auth.websocket?.on('error', (err: string) => {
+        if (err === 'Author is not allowed to write a message in this chat') {
+          this.isAbleToWrite = false;
+          this.snackbarService.open(this.languageService.getValue('notAuthorizedToWriteMessages'));
+          return;
+        }
         this.channelExists = false;
         console.log(err);
       });
@@ -52,6 +58,14 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.snackbarService.open(this.languageService.getValue('youHaveBeenRemovedFromTheChat'));
       });
       this.messages = [];
+      this.chatService.get(chatId, true).subscribe(chat => {
+        const isAdmin = chat.admins?.some(admin => admin.id === this.clientUser?.id) || false;
+        if (chat.isAdminChat) {
+          this.isAbleToWrite = isAdmin;
+        } else {
+          this.isAbleToWrite = true;
+        }
+      });
       this.chatService.getMessages(chatId)
         .pipe(
           catchError((err) => {

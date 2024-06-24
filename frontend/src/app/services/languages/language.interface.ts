@@ -70,4 +70,20 @@ export interface Language {
   userDoesNotExist: string;
   options: string;
   public: string;
+  onlyAdmins: string;
+  everyUserCanSeeTheChat: string;
+  onlyAdminsCanWriteMessages: string;
+  notAuthorizedToWriteMessages: string;
+  send: string;
+  youEditedYourReview: string;
+  youWroteAReview: string;
+  youRemovedYourReview: string;
+  stars: string;
+  star: string;
+  overview: string;
+  averageStars: string;
+  writeReview: string;
+  editReview: string;
+  deleteReview: string;
+  review: string;
 }
