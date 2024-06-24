@@ -7,6 +7,7 @@ import {
 } from 'class-validator';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -67,6 +68,9 @@ export class User {
     default: false,
   })
   isOnline: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ManyToMany(() => User, user => user.friendRequetsReceived)
   @JoinTable({

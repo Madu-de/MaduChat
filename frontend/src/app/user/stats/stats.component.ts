@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { User } from 'src/app/classes/User';
 
 @Component({
   selector: 'app-stats',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrl: './stats.component.scss'
 })
 export class StatsComponent {
+  @Input()
+  user!: User;
 
+  @Input()
+  clientUser!: User;
 }
