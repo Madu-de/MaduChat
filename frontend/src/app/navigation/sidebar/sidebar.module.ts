@@ -22,6 +22,7 @@ import { BasicNeedsModule } from 'src/app/basic-needs/basic-needs.module';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatBadgeModule } from '@angular/material/badge';
+import { DeleteChatPopupComponent } from "./delete-chat-popup/delete-chat-popup.component";
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     SidebarComponent,
     ListComponent,
     EditChatPopupComponent,
+    DeleteChatPopupComponent
   ],
   imports: [
     CommonModule,

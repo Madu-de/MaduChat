@@ -7,6 +7,8 @@ import { ChatService } from 'src/app/services/chat.service';
 import { LanguageService } from 'src/app/services/language.service';
 import { UserService } from 'src/app/services/user.service';
 import { EditChatPopupComponent } from '../edit-chat-popup/edit-chat-popup.component';
+import { DeleteChatPopupComponent } from "../delete-chat-popup/delete-chat-popup.component";
+import { SnackbarService } from "../../../services/snackbar.service";
 
 @Component({
   selector: 'sidebar-list',
@@ -18,7 +20,7 @@ export class ListComponent implements OnInit {
   urlPosition: string = '';
   user: User | undefined;
 
-  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router, private dialog: MatDialog) {}
+  constructor(public language: LanguageService, private userService: UserService, private chatService: ChatService, private router: Router, private dialog: MatDialog, private snackbar: SnackbarService) {}
 
   ngOnInit() {
     this.updateSidebar();
@@ -54,6 +56,17 @@ export class ListComponent implements OnInit {
       const indexOfChat = this.chats.findIndex(searchChat => chat.id === searchChat.id);
       this.chats[indexOfChat] = chat;
     });
+  }
+
+  openDeleteMenu(chat: Chat) {
+    this.dialog.open(DeleteChatPopupComponent, { data: { chat }}).afterClosed().subscribe(
+      (deletedResult: boolean) => {
+          if (deletedResult) {
+            this.snackbar.open(this.language.getValue('chatDeleted'));
+            this.updateSidebar();
+          }
+      }
+    )
   }
 
   clientIsAdminOfChat(chat: Chat): boolean {

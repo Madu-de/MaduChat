@@ -151,4 +151,15 @@ export class ChatService {
     );
     return chat;
   }
+  async deleteChat(id: string, deleter: User): Promise<boolean> {
+    const chat = await this.getChat(id, deleter);
+    if (!chat) return;
+    if (
+      chat?.admins?.length &&
+      !chat.admins.find(user => user.id === deleter.id)
+    )
+      return;
+    const deletedResult = await this.chatRepo.delete(id);
+    return deletedResult?.affected > 0;
+  }
 }
