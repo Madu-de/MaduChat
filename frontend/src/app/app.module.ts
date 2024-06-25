@@ -12,7 +12,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { AuthService } from './services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ChatService } from './services/chat.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CookieService } from './services/cookie.service';
@@ -27,45 +27,39 @@ import { ImageService } from './services/image.service';
 import { ReviewService } from './services/review.service';
 import { ScrollService } from './services/scroll.service';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SocketIoModule,
-    BrowserAnimationsModule,
-    ChatModule,
-    NavigationModule,
-    MatListModule,
-    MatSlideToggleModule,
-    MatTooltipModule,
-    MatSelectModule,
-    HttpClientModule,
-    AuthenticationModule,
-    SettingsModule,
-    FriendsModule,
-    MatSnackBarModule,
-    UserModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: false,
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-  ],
-  providers: [
-    LanguageService, 
-    AuthService, 
-    ChatService, 
-    CookieService, 
-    OnlineService,
-    ImageService,
-    ReviewService,
-    ScrollService,
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        SocketIoModule,
+        BrowserAnimationsModule,
+        ChatModule,
+        NavigationModule,
+        MatListModule,
+        MatSlideToggleModule,
+        MatTooltipModule,
+        MatSelectModule,
+        AuthenticationModule,
+        SettingsModule,
+        FriendsModule,
+        MatSnackBarModule,
+        UserModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: false,
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        })], providers: [
+        LanguageService,
+        AuthService,
+        ChatService,
+        CookieService,
+        OnlineService,
+        ImageService,
+        ReviewService,
+        ScrollService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
